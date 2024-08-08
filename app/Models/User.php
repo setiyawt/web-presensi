@@ -12,6 +12,10 @@ class User extends Authenticatable
 {
     use HasFactory, Notifiable, HasRoles;
 
+    protected $guarded = [
+        'id',
+    ];
+
     /**
      * The attributes that are mass assignable.
      *
@@ -44,5 +48,13 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function Schedules(){
+        return $this->hasMany(Schedules::class, 'schedules', 'user_id');
+    }
+
+    public function attendance(){
+        return $this->hasMany(Attendance::class, 'attendances', 'user_id');
     }
 }
