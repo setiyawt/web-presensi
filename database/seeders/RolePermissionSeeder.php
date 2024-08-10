@@ -51,5 +51,6 @@ class RolePermissionSeeder extends Seeder
         ]);
 
         $user->assignRole($adminRole);
+        $user->assignRole($studentRole);
     }
 }

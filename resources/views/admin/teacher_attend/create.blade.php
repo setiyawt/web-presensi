@@ -1,0 +1,1 @@
+<!-- untuk membuat qrcode untuk guru -->
