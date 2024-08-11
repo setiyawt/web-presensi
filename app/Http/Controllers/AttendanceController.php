@@ -12,7 +12,7 @@ class AttendanceController extends Controller
      */
     public function index()
     {
-        //
+        
     }
 
     /**
@@ -20,7 +20,8 @@ class AttendanceController extends Controller
      */
     public function create()
     {
-        //
+        dd('Create Method Called');
+        return view('admin.schedule.create');
     }
 
     /**
