@@ -1876,6 +1876,7 @@ function init_charts() {
         });
 
     }
+    
 
     // Bar chart
 

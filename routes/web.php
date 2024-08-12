@@ -6,6 +6,7 @@ use App\Http\Controllers\CourseController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\QrcodeController;
 use App\Http\Controllers\SchedulesController;
+use App\Http\Controllers\TeacherController;
 use App\Models\Attendance;
 use App\Models\Schedules;
 use Illuminate\Support\Facades\Route;
@@ -32,10 +33,16 @@ Route::middleware('auth')->group(function () {
         ->middleware('role:admin')
         ->name('index');
 
-        //Untuk menampilkan seluruh kehadiran teacher dan student
-        Route::get('/attendance/show/{attendance}', [AttendanceController::class, 'index'])
+        //Untuk menampilkan seluruh kehadiran teacher
+        Route::get('/attendance/show/teachers', [TeacherController::class, 'index'])
         ->middleware('role:admin')
-        ->name('attendance.index');
+        ->name('tables.table_teacher');
+        
+
+        //Untuk menampilkan seluruh kehadiran student
+        Route::get('/attendance/show/students/{attendance}', [AttendanceController::class, 'index'])
+        ->middleware('role:admin')
+        ->name('attendance.student.index');
 
         //Untuk menambahkan kehadiran secara manual (tanpa qr code) untuk student
         Route::get('/attendance/students/create/{student}', [AttendanceController::class, 'create_students_attendance'])
