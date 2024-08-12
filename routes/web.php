@@ -25,8 +25,12 @@ Route::middleware('auth')->group(function () {
 
     Route::prefix('dashboard')->name('dashboard.')->group(function(){
 
-        Route::resource('attendance', AttendanceController::class)
+        Route::resource('index', AttendanceController::class)
         ->middleware('role:admin');
+
+        Route::get('index', [AttendanceController::class, 'index'])
+        ->middleware('role:admin')
+        ->name('index');
 
         //Untuk menampilkan seluruh kehadiran teacher dan student
         Route::get('/attendance/show/{attendance}', [AttendanceController::class, 'index'])
