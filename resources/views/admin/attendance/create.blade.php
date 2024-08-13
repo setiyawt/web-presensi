@@ -1,17 +1,15 @@
-
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <!-- Meta, title, CSS, favicons, etc. -->
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="icon" href="{{asset('lte/images/favicon.ico')}}" type="image/ico" />
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<!-- Meta, title, CSS, favicons, etc. -->
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Gentelella Alela!</title>
+	<title>Gentelella Alela! | </title>
 
-    <!-- Bootstrap -->
+	<!-- Bootstrap -->
     <link href="{{asset('lte/vendors/bootstrap/dist/css/bootstrap.min.css')}}" rel="stylesheet">
     <!-- Font Awesome -->
     <link href="{{asset('lte/vendors/font-awesome/css/font-awesome.min.css')}}" rel="stylesheet">
@@ -26,12 +24,21 @@
     <link href="{{asset('lte/vendors/jqvmap/dist/jqvmap.min.css')}}" rel="stylesheet"/>
     <!-- bootstrap-daterangepicker -->
     <link href="{{asset('lte/vendors/bootstrap-daterangepicker/daterangepicker.css')}}" rel="stylesheet">
-
     <!-- Custom Theme Style -->
     <link href="{{asset('lte/build/css/custom.min.css')}}" rel="stylesheet">
-  </head>
+	<!-- bootstrap-wysiwyg -->
+	<link href="{{asset('ltevendors/google-code-prettify/bin/prettify.min.css')}}" rel="stylesheet">
+	<!-- Select2 -->
+	<link href="{{asset('lte/vendors/select2/dist/css/select2.min.css')}}" rel="stylesheet">
+	<!-- Switchery -->
+	<link href="{{asset('lte/vendors/switchery/dist/switchery.min.css')}}" rel="stylesheet">
+	<!-- starrr -->
+	<link href="{{asset('lte/vendors/starrr/dist/starrr.css')}}" rel="stylesheet">
+	
 
-  <body class="nav-md">
+</head>
+
+<body class="nav-md">
   
     <div class="container body">
       <div class="main_container">
@@ -191,86 +198,126 @@
         </div>
         <!-- /top navigation -->
 
-        <!-- page content -->
-        <div class="right_col" role="main">
-          <!-- top tiles -->
-          <div class="row" style="display: inline-block;" >
-          <div class="tile_count">
-            <div class="col-md-4 col-sm-6  tile_stats_count">
-              <span class="count_top"><i class="fa fa-users"></i> Siswa Hadir</span>
-              <div class="count">250</div>
-              
-            </div>
-            
-            <div class="col-md-4 col-sm-6  tile_stats_count">
-              <span class="count_top"><i class="fa fa-times"></i> Siswa Absent</span>
-              <div class="count green">2</div>
-              
-            </div>
-            <div class="col-md-4 col-sm-6  tile_stats_count">
-              <span class="count_top"><i class="fa fa-users"></i> Total Siswa</span>
-              <div class="count">47</div>
-              
-            </div>
+		<!-- page content -->
+		<div class="right_col" role="main">
+			<div class="">
+				<div class="page-title">
+					<div class="title_left">
+						<h3>Form Elements</h3>
+					</div>
 
-            <div class="col-md-4 col-sm-6  tile_stats_count">
-              <span class="count_top"><i class="fa fa-users"></i> Guru Hadir</span>
-              <div class="count">23</div>
-              
-            </div>
-            <div class="col-md-4 col-sm-6  tile_stats_count">
-              <span class="count_top"><i class="fa fa-times"></i> Guru Absent</span>
-              <div class="count">248</div>
-              
-            </div>
-            <div class="col-md-4 col-sm-6  tile_stats_count">
-              <span class="count_top"><i class="fa fa-users"></i> Total Guru</span>
-              <div class="count">7</div>
-              
-            </div>
-          </div>
-        </div>
+					<div class="title_right">
+						<div class="col-md-5 col-sm-5  form-group pull-right top_search">
+							<div class="input-group">
+								<input type="text" class="form-control" placeholder="Search for...">
+								<span class="input-group-btn">
+									<button class="btn btn-default" type="button">Go!</button>
+								</span>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="clearfix"></div>
+				<div class="row">
+					<div class="col-md-12 col-sm-12 ">
+						<div class="x_panel">
+							<div class="x_title">
+								<h2>Form Design <small>different form elements</small></h2>
+								<ul class="nav navbar-right panel_toolbox">
+									<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+									</li>
+									<li class="dropdown">
+										<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+										<ul class="dropdown-menu" role="menu">
+											<li><a class="dropdown-item" href="#">Settings 1</a>
+											</li>
+											<li><a class="dropdown-item" href="#">Settings 2</a>
+											</li>
+										</ul>
+									</li>
+									<li><a class="close-link"><i class="fa fa-close"></i></a>
+									</li>
+								</ul>
+								<div class="clearfix"></div>
+							</div>
+							<div class="x_content">
+								<br />
+								<form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
+
+									<div class="item form-group">
+										<label class="col-form-label col-md-3 col-sm-3 label-align" for="first-name">First Name <span class="required">*</span>
+										</label>
+										<div class="col-md-6 col-sm-6 ">
+											<input type="text" id="first-name" required="required" class="form-control ">
+										</div>
+									</div>
+									<div class="item form-group">
+										<label class="col-form-label col-md-3 col-sm-3 label-align" for="last-name">Last Name <span class="required">*</span>
+										</label>
+										<div class="col-md-6 col-sm-6 ">
+											<input type="text" id="last-name" name="last-name" required="required" class="form-control">
+										</div>
+									</div>
+									<div class="item form-group">
+										<label for="middle-name" class="col-form-label col-md-3 col-sm-3 label-align">Middle Name / Initial</label>
+										<div class="col-md-6 col-sm-6 ">
+											<input id="middle-name" class="form-control" type="text" name="middle-name">
+										</div>
+									</div>
+									<div class="item form-group">
+										<label class="col-form-label col-md-3 col-sm-3 label-align">Gender</label>
+										<div class="col-md-6 col-sm-6 ">
+											<div id="gender" class="btn-group" data-toggle="buttons">
+												<label class="btn btn-secondary" data-toggle-class="btn-primary" data-toggle-passive-class="btn-default">
+													<input type="radio" name="gender" value="male" class="join-btn"> &nbsp; Male &nbsp;
+												</label>
+												<label class="btn btn-primary" data-toggle-class="btn-primary" data-toggle-passive-class="btn-default">
+													<input type="radio" name="gender" value="female" class="join-btn"> Female
+												</label>
+											</div>
+										</div>
+									</div>
+									<div class="item form-group">
+										<label class="col-form-label col-md-3 col-sm-3 label-align">Date Of Birth <span class="required">*</span>
+										</label>
+										<div class="col-md-6 col-sm-6 ">
+											<input id="birthday" class="date-picker form-control" placeholder="dd-mm-yyyy" type="text" required="required" type="text" onfocus="this.type='date'" onmouseover="this.type='date'" onclick="this.type='date'" onblur="this.type='text'" onmouseout="timeFunctionLong(this)">
+											<script>
+												function timeFunctionLong(input) {
+													setTimeout(function() {
+														input.type = 'text';
+													}, 60000);
+												}
+											</script>
+										</div>
+									</div>
+									<div class="ln_solid"></div>
+									<div class="item form-group">
+										<div class="col-md-6 col-sm-6 offset-md-3">
+											<button class="btn btn-primary" type="button">Cancel</button>
+											<button class="btn btn-primary" type="reset">Reset</button>
+											<button type="submit" class="btn btn-success">Submit</button>
+										</div>
+									</div>
+
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				
 
 
-        <!-- Grafik -->
+				
+			</div>
+		</div>
+		<!-- /page content -->
+		
+		
+		
+		
 
-        <div class="page-title">
-              <div class="title_left">
-                <h3>Grafik Kehadiran Siswa &</h3>
-                
-              </div>
-              <div class="title_right">
-                <div class="col-md-5 col-sm-5   form-group pull-right top_search"></div>
-              </div>
-        </div>
-
-          <!-- /top tiles -->
-        <div class="row">
-          <div class="col-md-12 col-sm-8  ">
-                <div class="x_panel">
-                  <div class="x_title">
-                    <h2>Line graph<small>Sessions</small></h2>
-                    <ul class="nav navbar-left panel_toolbox">
-                      <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
-                      
-                      
-                    </ul>
-                    <div class="clearfix"></div>
-                  </div>
-                  <div class="x_content">
-                    <canvas id="lineChart"></canvas>
-                  </div>
-                </div>
-              </div>
-
-        </div>
-
-
-
-        
-        
-        
-        <!-- /page content -->
 
         <!-- footer content -->
         <footer>
@@ -299,30 +346,29 @@
     <script src="{{asset('lte/vendors/bootstrap-progressbar/bootstrap-progressbar.min.js')}}"></script>
     <!-- iCheck -->
     <script src="{{asset('lte/vendors/iCheck/icheck.min.js')}}"></script>
-    <!-- Skycons -->
-    <script src="{{asset('lte/vendors/skycons/skycons.js')}}"></script>
-    <!-- Flot -->
-    <script src="{{asset('lte/vendors/Flot/jquery.flot.js')}}"></script>
-    <script src="{{asset('lte/vendors/Flot/jquery.flot.pie.js')}}"></script>
-    <script src="{{asset('lte/vendors/Flot/jquery.flot.time.js')}}"></script>
-    <script src="{{asset('lte/vendors/Flot/jquery.flot.stack.js')}}"></script>
-    <script src="{{asset('lte/vendors/Flot/jquery.flot.resize.js')}}"></script>
-    <!-- Flot plugins -->
-    <script src="{{asset('lte/vendors/flot.orderbars/js/jquery.flot.orderBars.js')}}"></script>
-    <script src="{{asset('lte/vendors/flot-spline/js/jquery.flot.spline.min.js')}}"></script>
-    <script src="{{asset('lte/vendors/flot.curvedlines/curvedLines.js')}}"></script>
-    <!-- DateJS -->
-    <script src="{{asset('lte/vendors/DateJS/build/date.js')}}"></script>
-    <!-- JQVMap -->
-    <script src="{{asset('lte/vendors/jqvmap/dist/jquery.vmap.js')}}"></script>
-    <script src="{{asset('lte/vendors/jqvmap/dist/maps/jquery.vmap.world.js')}}"></script>
-    <script src="{{asset('lte/vendors/jqvmap/examples/js/jquery.vmap.sampledata.js')}}"></script>
-    <!-- bootstrap-daterangepicker -->
-    <script src="{{asset('lte/vendors/moment/min/moment.min.js')}}"></script>
-    <script src="{{asset('lte/vendors/bootstrap-daterangepicker/daterangepicker.js')}}"></script>
-
-    <!-- Custom Theme Scripts -->
-    <script src="{{asset('lte/build/js/custom.min.js')}}"></script>
+	<!-- bootstrap-daterangepicker -->
+	<script src="{{asset('lte/vendors/moment/min/moment.min.js')}}"></script>
+	<script src="{{asset('lte/vendors/bootstrap-daterangepicker/daterangepicker.js')}}"></script>
+	<!-- bootstrap-wysiwyg -->
+	<script src="{{asset('lte/vendors/bootstrap-wysiwyg/js/bootstrap-wysiwyg.min.js')}}"></script>
+	<script src="{{asset('lte/vendors/jquery.hotkeys/jquery.hotkeys.js')}}"></script>
+	<script src="{{asset('lte/vendors/google-code-prettify/src/prettify.js')}}"></script>
+	<!-- jQuery Tags Input -->
+	<script src="{{asset('lte/vendors/jquery.tagsinput/src/jquery.tagsinput.js')}}"></script>
+	<!-- Switchery -->
+	<script src="{{asset('lte/vendors/switchery/dist/switchery.min.js')}}"></script>
+	<!-- Select2 -->
+	<script src="{{asset('lte/vendors/select2/dist/js/select2.full.min.js')}}"></script>
+	<!-- Parsley -->
+	<script src="{{asset('lte/vendors/parsleyjs/dist/parsley.min.js')}}"></script>
+	<!-- Autosize -->
+	<script src="{{asset('lte/vendors/autosize/dist/autosize.min.js')}}"></script>
+	<!-- jQuery autocomplete -->
+	<script src="{{asset('lte/vendors/devbridge-autocomplete/dist/jquery.autocomplete.min.js')}}"></script>
+	<!-- starrr -->
+	<script src="{{asset('lte/vendors/starrr/dist/starrr.js')}}"></script>
+	<!-- Custom Theme Scripts -->
+	<script src="{{asset('lte/build/js/custom.min.js')}}"></script>
     
   </body>
 

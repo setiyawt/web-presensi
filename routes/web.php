@@ -6,6 +6,7 @@ use App\Http\Controllers\CourseController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\QrcodeController;
 use App\Http\Controllers\SchedulesController;
+use App\Http\Controllers\StudentController;
 use App\Http\Controllers\TeacherController;
 use App\Models\Attendance;
 use App\Models\Schedules;
@@ -33,26 +34,32 @@ Route::middleware('auth')->group(function () {
         ->middleware('role:admin')
         ->name('index');
 
+        //Form Teacher
+        Route::get('index', [TeacherController::class, 'form_teacher'])
+        ->middleware('role:teacher')
+        ->name('index');
+
         //Untuk menampilkan seluruh kehadiran teacher
         Route::get('/attendance/show/teachers', [TeacherController::class, 'index'])
         ->middleware('role:admin')
-        ->name('tables.table_teacher');
-        
+        ->name('tables_attend.table_teacher');
 
         //Untuk menampilkan seluruh kehadiran student
-        Route::get('/attendance/show/students/{attendance}', [AttendanceController::class, 'index'])
+        Route::get('/attendance/show/students', [StudentController::class, 'index'])
         ->middleware('role:admin')
-        ->name('attendance.student.index');
-
-        //Untuk menambahkan kehadiran secara manual (tanpa qr code) untuk student
-        Route::get('/attendance/students/create/{student}', [AttendanceController::class, 'create_students_attendance'])
-        ->middleware('role:admin')
-        ->name('attendance.students.create');
+        ->name('tables_attend.table_student');
         
-        //Untuk menambahkan kehadiran secara manual (tanpa qr code) untuk teacher
-        Route::get('/attendance/teachers/create/{teacher}', [AttendanceController::class, 'create_teachers_attendance'])
+
+        //Untuk menambahkan kehadiran secara manual (tanpa qr code) untuk student & teacher
+        Route::get('/attendance/create', [AttendanceController::class, 'create'])
         ->middleware('role:admin')
-        ->name('attendance.teachers.create');
+        ->name('attendance.create');
+
+        //Untuk mengedit kehadiran teacher
+        Route::get('/attendance/edit', [AttendanceController::class, 'edit'])
+        ->middleware('role:admin')
+        ->name('attendance.edit');
+        
     
         //Untuk menyimpan kehadiran secara manual (tanpa qr code) untuk student
         Route::post('/attendance/students/save/{student}', [AttendanceController::class, 'store_students_attendance'])
@@ -95,15 +102,11 @@ Route::middleware('auth')->group(function () {
         ->name('qrcode.teachers.create');
 
         
-        //Untuk menampilkan seluruh jadwal student
-        Route::get('/schedule/show/{student}', [SchedulesController::class, 'index'])
-        ->middleware('role:student')
+        //Untuk menampilkan seluruh jadwal pelajaran
+        Route::get('/schedule/show/{course}', [SchedulesController::class, 'index'])
+        ->middleware('role:admin', 'role:')
         ->name('schedule.index');
 
-        //Untuk menampilkan seluruh jadwal teacher
-        Route::get('/schedule/show/{teacher}', [SchedulesController::class, 'index'])
-        ->middleware('role:teacher')
-        ->name('schedule.index');
 
         //Untuk create course
         Route::get('/course/create/{course}', [CourseController::class, 'create'])

@@ -12,6 +12,7 @@ class AttendanceController extends Controller
      */
     public function index()
     {
+        
         return view('admin.dashboard.index');
         
     }
@@ -22,7 +23,7 @@ class AttendanceController extends Controller
     public function create()
     {
 
-        return view('admin.teacher_attend.create');
+        return view('admin.attendance.create');
     }
 
     /**
@@ -46,7 +47,7 @@ class AttendanceController extends Controller
      */
     public function edit(Attendance $attendance)
     {
-        //
+        return view('admin.attendance.edit');
     }
 
     /**

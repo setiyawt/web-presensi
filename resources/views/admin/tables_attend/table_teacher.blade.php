@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -7,9 +6,8 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="icon" href="{{asset('lte/images/favicon.ico')}}" type="image/ico" />
-
-    <title>Gentelella Alela!</title>
+    
+    <title>Gentelella Alela! | </title>
 
     <!-- Bootstrap -->
     <link href="{{asset('lte/vendors/bootstrap/dist/css/bootstrap.min.css')}}" rel="stylesheet">
@@ -27,12 +25,19 @@
     <!-- bootstrap-daterangepicker -->
     <link href="{{asset('lte/vendors/bootstrap-daterangepicker/daterangepicker.css')}}" rel="stylesheet">
 
+    <!-- Datatables -->
+    
+    <link href="{{asset('lte/vendors/datatables.net-bs/css/dataTables.bootstrap.min.css')}}" rel="stylesheet">
+    <link href="{{asset('lte/vendors/datatables.net-buttons-bs/css/buttons.bootstrap.min.css')}}" rel="stylesheet">
+    <link href="{{asset('lte/vendors/datatables.net-fixedheader-bs/css/fixedHeader.bootstrap.min.css')}}" rel="stylesheet">
+    <link href="{{asset('lte/vendors/datatables.net-responsive-bs/css/responsive.bootstrap.min.css')}}" rel="stylesheet">
+    <link href="{{asset('lte/vendors/datatables.net-scroller-bs/css/scroller.bootstrap.min.css')}}" rel="stylesheet">
+
     <!-- Custom Theme Style -->
     <link href="{{asset('lte/build/css/custom.min.css')}}" rel="stylesheet">
   </head>
 
   <body class="nav-md">
-  
     <div class="container body">
       <div class="main_container">
         <div class="col-md-3 left_col">
@@ -74,8 +79,7 @@
                       <li><a href="{{route('dashboard.tables_attend.table_student')}}">Siswa</a></li>
                     </ul>
                   </li>
-                  <li><a href="{{route('dashboard.attendance.create')}}"><i class="fa fa-plus"></i>Kehadiran Manual</a>
-                  </li>
+                  <li><a><i class="fa fa-plus"></i>Kehadiran Manual </a></li>
                   <li><a href="chartjs.html"><i class="fa fa-clipboard"></i> Jadwal Pelajaran </a></li>
                   <li><a href="contacts.html"><i class="fa fa-users"></i></i> Daftar Admin</a></li>
                   <li><a href="profile.html"><i class="fa fa-user"></i>Profile</a></li>
@@ -189,93 +193,91 @@
             </nav>
           </div>
         </div>
-        <!-- /top navigation -->
 
         <!-- page content -->
         <div class="right_col" role="main">
-          <!-- top tiles -->
-          <div class="row" style="display: inline-block;" >
-          <div class="tile_count">
-            <div class="col-md-4 col-sm-6  tile_stats_count">
-              <span class="count_top"><i class="fa fa-users"></i> Siswa Hadir</span>
-              <div class="count">250</div>
-              
-            </div>
-            
-            <div class="col-md-4 col-sm-6  tile_stats_count">
-              <span class="count_top"><i class="fa fa-times"></i> Siswa Absent</span>
-              <div class="count green">2</div>
-              
-            </div>
-            <div class="col-md-4 col-sm-6  tile_stats_count">
-              <span class="count_top"><i class="fa fa-users"></i> Total Siswa</span>
-              <div class="count">47</div>
-              
-            </div>
-
-            <div class="col-md-4 col-sm-6  tile_stats_count">
-              <span class="count_top"><i class="fa fa-users"></i> Guru Hadir</span>
-              <div class="count">23</div>
-              
-            </div>
-            <div class="col-md-4 col-sm-6  tile_stats_count">
-              <span class="count_top"><i class="fa fa-times"></i> Guru Absent</span>
-              <div class="count">248</div>
-              
-            </div>
-            <div class="col-md-4 col-sm-6  tile_stats_count">
-              <span class="count_top"><i class="fa fa-users"></i> Total Guru</span>
-              <div class="count">7</div>
-              
-            </div>
-          </div>
-        </div>
-
-
-        <!-- Grafik -->
-
-        <div class="page-title">
+          <div class="">
+            <div class="page-title">
               <div class="title_left">
-                <h3>Grafik Kehadiran Siswa &</h3>
-                
+                <h3>Tabel Kehadiran Guru</h3>
               </div>
-              <div class="title_right">
-                <div class="col-md-5 col-sm-5   form-group pull-right top_search"></div>
-              </div>
-        </div>
 
-          <!-- /top tiles -->
-        <div class="row">
-          <div class="col-md-12 col-sm-8  ">
-                <div class="x_panel">
-                  <div class="x_title">
-                    <h2>Line graph<small>Sessions</small></h2>
-                    <ul class="nav navbar-left panel_toolbox">
-                      <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
-                      
-                      
-                    </ul>
-                    <div class="clearfix"></div>
-                  </div>
-                  <div class="x_content">
-                    <canvas id="lineChart"></canvas>
+              <div class="title_right">
+                <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
+                  <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Search for...">
+                    <span class="input-group-btn">
+                      <button class="btn btn-secondary" type="button">Go!</button>
+                    </span>
                   </div>
                 </div>
               </div>
+            </div>
 
+            <div class="clearfix"></div>
+
+            <div class="row">
+              <div class="col-md-12 col-sm-12 ">
+                <div class="x_panel">
+                  
+                  <div class="x_content">
+                      <div class="row">
+                          <div class="col-sm-12">
+                            <div class="card-box table-responsive">
+                  
+                    <table id="datatable-buttons" class="table table-striped table-bordered" style="width:100%">
+                      
+                      <thead>
+                        <tr>
+                          <th>ID</th>
+                          <th>Nama</th>
+                          <th>Kelas</th>
+                          <th>Tanggal Hadir</th>
+                          <th>Waktu Scan</th>
+                          <th>ID QrCode</th>
+                          <th>Aksi</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        @foreach($attendances as $attendance)
+                          <tr>
+                            <td>{{ $attendance->id}}</td>
+                            <td>{{ $attendance->schedules && $attendance->schedules->users ? $attendance->schedules->users->name : 'N/A' }}</td>
+                            <td>{{ $attendance->schedules && $attendance->schedules->classroom ? $attendance->schedules->classroom->name : 'N/A' }}</td>
+                            <td>{{ $attendance->date }}</td>
+                            
+                            <td>{{ $attendance->qrcodes ? $attendance->qrcodes->id : 'N/A' }}</td>
+                            <td>{{ $attendance->status }}</td>
+                            <td>
+                              <a href="{{ route('dashboard.attendance.edit', $attendance->id) }}" class="btn btn-primary btn-sm">
+                                Edit   </a>
+                                {{-- <a href="{{ route('dashboard.attendance.delete', $attendance->id) }}" class="btn btn-danger btn-sm">
+                                  Delete   </a> --}}
+                            </td> 
+                            @endforeach 
+                          </tr>
+                      </tbody>
+
+                      
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+                </div>
+              </div>
+              
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-
-
-
-        
-        
-        
         <!-- /page content -->
 
         <!-- footer content -->
         <footer>
           <div class="pull-right">
-            SMPN 3 Muhammadiyah
+            Gentelella - Bootstrap Admin Template by <a href="https://colorlib.com">Colorlib</a>
           </div>
           <div class="clearfix"></div>
         </footer>
@@ -291,39 +293,25 @@
     <script src="{{asset('lte/vendors/fastclick/lib/fastclick.js')}}"></script>
     <!-- NProgress -->
     <script src="{{asset('lte/vendors/nprogress/nprogress.js')}}"></script>
-    <!-- Chart.js -->
-    <script src="{{asset('lte/vendors/Chart.js/dist/Chart.min.js')}}"></script>
-    <!-- gauge.js -->
-    <script src="{{asset('lte/vendors/gauge.js/dist/gauge.min.js')}}"></script>
-    <!-- bootstrap-progressbar -->
-    <script src="{{asset('lte/vendors/bootstrap-progressbar/bootstrap-progressbar.min.js')}}"></script>
     <!-- iCheck -->
     <script src="{{asset('lte/vendors/iCheck/icheck.min.js')}}"></script>
-    <!-- Skycons -->
-    <script src="{{asset('lte/vendors/skycons/skycons.js')}}"></script>
-    <!-- Flot -->
-    <script src="{{asset('lte/vendors/Flot/jquery.flot.js')}}"></script>
-    <script src="{{asset('lte/vendors/Flot/jquery.flot.pie.js')}}"></script>
-    <script src="{{asset('lte/vendors/Flot/jquery.flot.time.js')}}"></script>
-    <script src="{{asset('lte/vendors/Flot/jquery.flot.stack.js')}}"></script>
-    <script src="{{asset('lte/vendors/Flot/jquery.flot.resize.js')}}"></script>
-    <!-- Flot plugins -->
-    <script src="{{asset('lte/vendors/flot.orderbars/js/jquery.flot.orderBars.js')}}"></script>
-    <script src="{{asset('lte/vendors/flot-spline/js/jquery.flot.spline.min.js')}}"></script>
-    <script src="{{asset('lte/vendors/flot.curvedlines/curvedLines.js')}}"></script>
-    <!-- DateJS -->
-    <script src="{{asset('lte/vendors/DateJS/build/date.js')}}"></script>
-    <!-- JQVMap -->
-    <script src="{{asset('lte/vendors/jqvmap/dist/jquery.vmap.js')}}"></script>
-    <script src="{{asset('lte/vendors/jqvmap/dist/maps/jquery.vmap.world.js')}}"></script>
-    <script src="{{asset('lte/vendors/jqvmap/examples/js/jquery.vmap.sampledata.js')}}"></script>
-    <!-- bootstrap-daterangepicker -->
-    <script src="{{asset('lte/vendors/moment/min/moment.min.js')}}"></script>
-    <script src="{{asset('lte/vendors/bootstrap-daterangepicker/daterangepicker.js')}}"></script>
-
+    <!-- Datatables -->
+    <script src="{{asset('lte/vendors/datatables.net/js/jquery.dataTables.min.js')}}"></script>
+    <script src="{{asset('lte/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js')}}"></script>
+    <script src="{{asset('lte/vendors/datatables.net-buttons/js/dataTables.buttons.min.js')}}"></script>
+    <script src="{{asset('lte/vendors/datatables.net-buttons-bs/js/buttons.bootstrap.min.js')}}"></script>
+    <script src="{{asset('lte/vendors/datatables.net-buttons/js/buttons.flash.min.js')}}"></script>
+    <script src="{{asset('lte/vendors/datatables.net-buttons/js/buttons.html5.min.js')}}"></script>
+    <script src="{{asset('lte/vendors/datatables.net-buttons/js/buttons.print.min.js')}}"></script>
+    <script src="{{asset('lte/vendors/datatables.net-fixedheader/js/dataTables.fixedHeader.min.js')}}"></script>
+    <script src="{{asset('lte/vendors/datatables.net-keytable/js/dataTables.keyTable.min.js')}}"></script>
+    <script src="{{asset('lte/vendors/datatables.net-responsive/js/dataTables.responsive.min.js')}}"></script>
+    <script src="{{asset('lte/vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js')}}"></script>
+    <script src="{{asset('lte/vendors/datatables.net-scroller/js/dataTables.scroller.min.js')}}"></script>
+    <script src="{{asset('lte/vendors/jszip/dist/jszip.min.js')}}"></script>
+    <script src="{{asset('lte/vendors/pdfmake/build/pdfmake.min.js')}}"></script>
+    <script src="{{asset('lte/vendors/pdfmake/build/vfs_fonts.js')}}"></script>
     <!-- Custom Theme Scripts -->
     <script src="{{asset('lte/build/js/custom.min.js')}}"></script>
-    
   </body>
-
 </html>

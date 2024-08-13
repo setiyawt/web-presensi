@@ -70,11 +70,11 @@
                   <li><a><i class="fa fa-table"></i> Kehadiran <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                       
-                    <li><a href="{{route('dashboard.tables_attend.table_teacher')}}">Guru</a></li>
-                      <li><a href="{{route('dashboard.tables_attend.table_student')}}">Siswa</a></li>
+                    <li><a href="#">Guru</a></li>
+                      <li><a href="#">Siswa</a></li>
                     </ul>
                   </li>
-                  <li><a href="{{route('dashboard.attendance.create')}}"><i class="fa fa-plus"></i>Kehadiran Manual</a>
+                  <li><a href="#"><i class="fa fa-plus"></i>Kehadiran Manual</a>
                   </li>
                   <li><a href="chartjs.html"><i class="fa fa-clipboard"></i> Jadwal Pelajaran </a></li>
                   <li><a href="contacts.html"><i class="fa fa-users"></i></i> Daftar Admin</a></li>
