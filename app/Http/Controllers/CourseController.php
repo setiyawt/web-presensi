@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Course;
 use Illuminate\Http\Request;
+use App\Models\Classroom;
 
 class CourseController extends Controller
 {
@@ -13,6 +14,16 @@ class CourseController extends Controller
     public function index()
     {
         //
+    }
+
+    public function take_course()
+    {
+        $courses = Course::all(); // Mengambil semua data dari tabel 'course'
+        $classrooms = Classroom::all(); // Mengambil semua data dari tabel 'classroom'
+        return view('teacher.dashboard.index', [
+            'courses' => $courses,
+            'classrooms' => $classrooms
+        ]);
     }
 
     /**

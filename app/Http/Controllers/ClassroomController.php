@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Classroom;
+use App\Models\Course;
 use Illuminate\Http\Request;
 
 class ClassroomController extends Controller
@@ -14,6 +15,17 @@ class ClassroomController extends Controller
     {
         //
     }
+
+    public function take_classroom()
+    {
+        $courses = Course::all(); // Mengambil semua data dari tabel 'course'
+        $classrooms = Classroom::all(); // Mengambil semua data dari tabel 'classroom'
+        return view('teacher.dashboard.index', [
+            'courses' => $courses,
+            'classrooms' => $classrooms
+        ]);
+    }
+
 
     /**
      * Show the form for creating a new resource.

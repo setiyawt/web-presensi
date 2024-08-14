@@ -14,7 +14,8 @@ return new class extends Migration
         Schema::create('qrcodes', function (Blueprint $table) {
             $table->id();
             $table->foreignId('course_id')->constrained()->onDelete('cascade');
-            $table->string('qrcode');
+            $table->timestamp('lesson_time');
+            $table->string('qr_code_path');
             $table->softDeletes();
             $table->timestamps();
         });

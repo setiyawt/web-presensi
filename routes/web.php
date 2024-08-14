@@ -9,6 +9,7 @@ use App\Http\Controllers\SchedulesController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\TeacherController;
 use App\Models\Attendance;
+use App\Models\Course;
 use App\Models\Schedules;
 use Illuminate\Support\Facades\Route;
 
@@ -35,9 +36,17 @@ Route::middleware('auth')->group(function () {
         ->name('index');
 
         //Form Teacher
-        Route::get('index', [TeacherController::class, 'form_teacher'])
+        //Untuk menampilkan seluruh courses oleh teacher
+        Route::get('index', [CourseController::class, 'take_course'])
         ->middleware('role:teacher')
         ->name('index');
+
+        Route::get('index', [ClassroomController::class, 'take_classroom'])
+        ->middleware('role:teacher')
+        ->name('index');
+     
+        
+
 
         //Untuk menampilkan seluruh kehadiran teacher
         Route::get('/attendance/show/teachers', [TeacherController::class, 'index'])
@@ -92,9 +101,11 @@ Route::middleware('auth')->group(function () {
         ->name('attendance.teachers.finished');
 
         //Untuk create qr code kehadiran students 
-        Route::get('/qrcode/students/{student}', [QrcodeController::class, 'qrcode_students'])
+        Route::post('/qrcode/students', [QrcodeController::class, 'qrcode_generate'])
         ->middleware(['role:teacher', 'role:admin'])
-        ->name('qrcode.students.create');
+        ->name('dashboard.create');
+
+
 
         //Untuk create qr code kehadiran teacher 
         Route::get('/qrcode/teachers/{teacher}', [QrcodeController::class, 'qrcode_students'])

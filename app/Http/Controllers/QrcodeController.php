@@ -15,6 +15,13 @@ class QrcodeController extends Controller
         return('this is qrcode.com');
     }
 
+    //Generate QR Code
+
+    public function qrcode_generate(Request $request)
+    {
+        return view ('teacher.dashboard.create');
+    }
+
     /**
      * Show the form for creating a new resource.
      */
