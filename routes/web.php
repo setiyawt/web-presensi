@@ -44,8 +44,16 @@ Route::middleware('auth')->group(function () {
         Route::get('index', [ClassroomController::class, 'take_classroom'])
         ->middleware('role:teacher')
         ->name('index');
-     
+
+        Route::get('/qrcode/create', [QRCodeController::class, 'create'])
+        ->middleware('role:teacher')
+        ->name('qrcode.create');
         
+        
+        Route::post('/qrcode/create', [QRCodeController::class, 'store'])
+        ->middleware('role:teacher')
+        ->name('qrcode.store');
+
 
 
         //Untuk menampilkan seluruh kehadiran teacher

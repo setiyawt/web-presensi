@@ -12,6 +12,9 @@ class Qrcode extends Model
 
     protected $guarded = [
         'id',
+        'course_id',
+        'lesson_time',
+        'qr_code_path',
     ];
 
     public function course(){

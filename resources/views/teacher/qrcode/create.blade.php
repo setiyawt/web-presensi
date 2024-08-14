@@ -243,53 +243,21 @@
 							<div class="x_content">
 								<br />
                                 
-                                
-								
-                                <form action="{{ route('dashboard.qrcode.create') }}" method="POST" id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
-                                    @csrf
-									<div class="item form-group">
-										<label class="col-form-label col-md-3 col-sm-3 label-align" for="nama-pelajaran">Nama Pelajaran <span class="required">*</span>
-										</label>
-										<div class="col-md-6 col-sm-6 ">
-											<select id="nama-pelajaran" name="id" required="required" class="form-control">
-                                                <option value="">Nama Pelajaran</option>
-                                                @foreach($courses as $course)
-                                                    <option value="{{ $course->id }}">{{ $course->name }}</option>
-                                                @endforeach
-                                            </select>
-										</div>
-									</div>
-									<div class="item form-group">
-										<label class="col-form-label col-md-3 col-sm-3 label-align" for="kelas">Kelas <span class="required">*</span>
-										</label>
-										<div class="col-md-6 col-sm-6 ">
-											<select id="kelas" name="id" required="required" class="form-control">
-                                                <option value="">Kelas</option>
-                                                @foreach($classrooms as $classroom)
-                                                    <option value="{{ $classroom->id }}">{{ $classroom->name }}</option>
-                                                @endforeach
-                                            </select>
-										</div>
-									</div>
-									
-									<div class="item form-group">
-										<label class="col-form-label col-md-3 col-sm-3 label-align">Waktu Pelajaran <span class="required">*</span>
-										</label>
-										<div class="col-md-6 col-sm-6 ">
-											<input type="datetime-local" name="lesson_time" id="lesson_time" class="form-control" required>
-			
-										</div>
-									</div>
-									<div class="ln_solid"></div>
-									<div class="item form-group">
-										<div class="col-md-6 col-sm-6 offset-md-3">
-											<button class="btn btn-primary" type="button">Cancel</button>
-											<button class="btn btn-primary" type="reset">Reset</button>
-											<button type="submit" class="btn btn-success">Submit</button>
-										</div>
-									</div>
+                                @if(session('success'))
+                                    <div class="alert alert-success">
+                                        {{ session('success') }}
+                                    </div>
 
-								</form>
+                                    {{-- Tampilkan QR Code yang baru saja dibuat --}}
+                                    @if(session('qr_code_path'))
+                                        <div class="mt-4">
+                                            <h4>QR Code:</h4>
+                                            <img src="{{ asset(session('qr_code_path')) }}" alt="QR Code">
+                                        </div>
+                                    @endif
+                                @endif
+								
+                                
 							</div>
 						</div>
 					</div>
