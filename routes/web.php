@@ -45,12 +45,12 @@ Route::middleware('auth')->group(function () {
         ->middleware('role:teacher')
         ->name('index');
 
-        Route::get('/qrcode/create', [QRCodeController::class, 'create'])
+        Route::get('qrcode/create', [QRCodeController::class, 'create'])
         ->middleware('role:teacher')
         ->name('qrcode.create');
         
         
-        Route::post('/qrcode/create', [QRCodeController::class, 'store'])
+        Route::post('qrcode/create', [QRCodeController::class, 'store'])
         ->middleware('role:teacher')
         ->name('qrcode.store');
 
