@@ -1,3 +1,4 @@
+
 let html5QrCode;
 
 function initializeScanner() {
@@ -26,31 +27,30 @@ function initializeScanner() {
 }
 
 // Function to handle successful QR code scan
-function onScanSuccess(decodedText, decodedResult) {
-    document.getElementById('result').textContent = `QR Code Data: ${decodedText}`;
-
+function onScanSuccess(decodedText) {
+    console.log('Scanned QR code data:', decodedText);
+ 
     fetch('/scan-qr', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
             'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
         },
-        body: JSON.stringify({ qrData: decodedText })
+        body: JSON.stringify({ qr_code_path: decodedText })
     })
-    .then(response => response.json())
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.json();
+    })
     .then(data => {
-        console.log('Success:', data);
+        console.log('Server response:', data);
         alert('Data successfully recorded!');
     })
     .catch(error => {
         console.error('Error:', error);
-    });
-
-    // Stop scanning after successful scan
-    html5QrCode.stop().then(() => {
-        console.log('QR Code scanning stopped.');
-    }).catch(err => {
-        console.error('Error stopping QR Code scanning:', err);
+        alert('Failed to record data. Please try again.');
     });
 }
 

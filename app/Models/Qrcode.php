@@ -10,15 +10,21 @@ class Qrcode extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $guarded = [
-        'id',
+    protected $fillable = [
         'course_id',
+        'classroom_id',
         'lesson_time',
         'qr_code_path',
     ];
 
+
     public function course(){
-        return $this->belongsTo(Course::class, 'courses_id');
+        return $this->belongsTo(Course::class);
+    }
+
+    public function classroom()
+    {
+        return $this->belongsTo(Classroom::class);
     }
 
     public function attendance(){

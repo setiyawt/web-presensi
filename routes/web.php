@@ -31,21 +31,21 @@ Route::middleware('auth')->group(function () {
         Route::resource('index', AttendanceController::class)
         ->middleware('role:admin');
 
-        Route::get('index', [AttendanceController::class, 'index'])
+        Route::get('admin/index', [AttendanceController::class, 'index'])
         ->middleware('role:admin')
-        ->name('index');
+        ->name('admin.index');
 
         //Form Teacher
         //Untuk menampilkan seluruh courses oleh teacher
-        Route::get('index', [CourseController::class, 'take_course'])
+        Route::get('teacher/index', [CourseController::class, 'take_course'])
         ->middleware('role:teacher')
         ->name('index');
 
-        Route::get('index', [ClassroomController::class, 'take_classroom'])
+        Route::get('teacher/index', [ClassroomController::class, 'take_classroom'])
         ->middleware('role:teacher')
         ->name('index');
 
-        Route::get('qrcode/create', [QRCodeController::class, 'create'])
+        Route::get('qrcode/create/', [QRCodeController::class, 'create'])
         ->middleware('role:teacher')
         ->name('qrcode.create');
         
@@ -55,6 +55,18 @@ Route::middleware('auth')->group(function () {
         ->name('qrcode.store');
 
 
+        // Form Student Role
+        Route::post('/scan-qr', [QRCodeController::class, 'store'])
+        ->middleware('student')
+        ->name('student.store');
+
+        Route::get('/student/index', [AttendanceController::class, 'student_index'])
+        ->middleware('role:student')
+        ->name('student.index');
+
+        
+
+       
 
         //Untuk menampilkan seluruh kehadiran teacher
         Route::get('/attendance/show/teachers', [TeacherController::class, 'index'])

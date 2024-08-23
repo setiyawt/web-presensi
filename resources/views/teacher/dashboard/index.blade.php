@@ -242,52 +242,58 @@
 							</div>
 							<div class="x_content">
 								<br />
-                                
-                                
-								
-            <form action="{{ route('dashboard.qrcode.store') }}" method="POST">
-              @csrf
-              <div class="item form-group">
-                  <label class="col-form-label col-md-3 col-sm-3 label-align" for="course_id">Nama Pelajaran <span class="required">*</span></label>
-                  <div class="col-md-6 col-sm-6 ">
-                      <select id="course_name" name="course_name" required="required" class="form-control">
-                          <option value="">Pilih Pelajaran</option>
-                          @foreach($courses as $course)
-                              <option value="{{ $course->name }}">{{ $course->name }}</option>
-                          @endforeach
-                      </select>
-                      
-                  </div>
-              </div>
               
-              <div class="item form-group">
-                <label class="col-form-label col-md-3 col-sm-3 label-align" for="kelas">Kelas <span class="required">*</span>
-                </label>
-                <div class="col-md-6 col-sm-6 ">
-                  <select id="kelas" name="id" required="required" class="form-control">
-                    <option value="">Kelas</option>
-                    @foreach($classrooms as $classroom)
-                        <option value="{{ $classroom->id }}">{{ $classroom->name }}</option>
-                    @endforeach
-                  </select>
-                </div>
-              </div>
-
-              <div class="item form-group">
-                  <label class="col-form-label col-md-3 col-sm-3 label-align" for="lesson_time">Waktu Pelajaran <span class="required">*</span></label>
-                  <div class="col-md-6 col-sm-6 ">
-                      <input type="datetime-local" name="lesson_time" id="lesson_time" class="form-control" required>
+              @if($errors -> any())
+               <ul>
+                 @foreach($errors->all() as $error)
+                      <li class="py-5 px-5 bg-red-700 text-red>{{ $error }}</li>
+                 @endforeach
+               </ul>
+              @endif              
+								
+              <form action="{{ route('dashboard.qrcode.store') }}" method="POST">
+                @csrf
+                  <div class="item form-group">
+                      <label class="col-form-label col-md-3 col-sm-3 label-align" for="course_id">Nama Pelajaran <span class="required">*</span></label>
+                      <div class="col-md-6 col-sm-6 ">
+                          <select id="course" name="course_id" required="required" class="form-control">
+                              <option value="">Pilih Pelajaran</option>
+                              @foreach($courses as $course)
+                                  <option value="{{ $course->id }}">{{ $course->name }}</option>
+                              @endforeach
+                          </select>
+                      </div>
                   </div>
-              </div>
-              <div class="ln_solid"></div>
-              <div class="item form-group">
-                  <div class="col-md-6 col-sm-6 offset-md-3">
-                      <button class="btn btn-primary" type="button">Cancel</button>
-                      <button class="btn btn-primary" type="reset">Reset</button>
-                      <button type="submit" class="btn btn-success">Submit</button>
+              
+                  <div class="item form-group">
+                      <label class="col-form-label col-md-3 col-sm-3 label-align" for="classroom_id">Kelas <span class="required">*</span></label>
+                      <div class="col-md-6 col-sm-6 ">
+                          <select id="classroom" name="classroom_id" required="required" class="form-control">
+                              <option value="">Kelas</option>
+                              @foreach($classrooms as $classroom)
+                                  <option value="{{ $classroom->id }}">{{ $classroom->name }}</option>
+                              @endforeach
+                          </select>
+                      </div>
                   </div>
-              </div>
-            </form>
+              
+                  <div class="item form-group">
+                      <label class="col-form-label col-md-3 col-sm-3 label-align" for="lesson_time">Waktu Pelajaran <span class="required">*</span></label>
+                      <div class="col-md-6 col-sm-6 ">
+                          <input type="datetime-local" name="lesson_time" id="lesson_time" class="form-control" required>
+                      </div>
+                  </div>
+                  <div class="ln_solid"></div>
+                  <div class="item form-group">
+                      <div class="col-md-6 col-sm-6 offset-md-3">
+                          <button class="btn btn-primary" type="button">Cancel</button>
+                          <button class="btn btn-primary" type="reset">Reset</button>
+                          <button type="submit" class="btn btn-success">Submit</button>
+                      </div>
+                  </div>
+              </form>
+              
+              
 
 							</div>
 						</div>

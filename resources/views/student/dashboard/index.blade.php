@@ -6,7 +6,7 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 	<title>Gentelella Alela! | </title>
 
 	<!-- Bootstrap -->
@@ -34,7 +34,7 @@
 	<link href="{{asset('lte/vendors/switchery/dist/switchery.min.css')}}" rel="stylesheet">
 	<!-- starrr -->
 	<link href="{{asset('lte/vendors/starrr/dist/starrr.css')}}" rel="stylesheet">
-	
+	<link rel="stylesheet" href="{{asset('css/scan.css')}}">
 
 </head>
 
@@ -241,37 +241,17 @@
 								<div class="clearfix"></div>
 							</div>
 							<div class="x_content">
-								<br />
-                                
-                @if(session('success'))
-                  <div class="alert alert-success text-center">
-                      {{ session('success') }}
-                  </div>
-              @endif
+							       
+								<div class="container-scan">
+                                    <div id="reader"></div>
+                                    <p id="result"></p>
+                                    <canvas id="qrcode"></canvas>
 
-              @if(session('error'))
-                  <div class="alert alert-danger text-center">
-                      {{ session('error') }}
-                  </div>
-              @endif
-
-              @if($latestQrcode)
-                  <div class="mt-5">
-                      <h2 class="text-center">Generated QR Code</h2>
-                      <div class="d-flex justify-content-center">
-                          <div class="card" style="width: 18rem;">
-                              <img src="{{ asset($latestQrcode->qr_code_path) }}" class="card-img-top" alt="QR Code">
-                              <div class="card-body">
-                                  <h5 class="card-title">Course: {{ $latestQrcode->course->name ?? 'N/A' }}</h5>
-                                  <p class="card-text">Classroom: {{ $latestQrcode->classroom->name ?? 'N/A' }}</p>
-                                  <p class="card-text">Lesson Time: {{ $latestQrcode->lesson_time ?? 'N/A' }}</p>
-                              </div>
-                          </div>
-                      </div>
-                  </div>
-              @endif
-								
+                                </div>
                                 
+                                
+              
+
 							</div>
 						</div>
 					</div>
@@ -344,9 +324,14 @@
     <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
     <!-- Include the QRCode.js library -->
     <script src="https://unpkg.com/qrcode@1.5.1/build/qrcode.min.js"></script>
-    <!-- Include the qrcodes.js -->
-    <script src="{{asset('js/qrcodes.js')}}"></script>
     
+    <!-- Include the QRCode.js library -->
+    <script src="{{asset('js/scan.js')}}"></script>"
+
   </body>
 
 </html>
+
+
+
+

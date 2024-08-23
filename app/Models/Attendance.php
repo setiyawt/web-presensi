@@ -10,8 +10,18 @@ class Attendance extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $guarded = [
-        'id',
+    protected $fillable = [
+        'course_schedules_id', 'user_id'
     ];
+
+    public function courseSchedule()
+    {
+        return $this->belongsTo(Course::class, 'course_schedules_id');
+    }
+
+public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 
 }
