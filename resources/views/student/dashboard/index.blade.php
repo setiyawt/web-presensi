@@ -6,7 +6,8 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="csrf-token" content="{{ csrf_token() }}">
+  <meta name="csrf-token" content="{{ csrf_token() }}">
+
 	<title>Gentelella Alela! | </title>
 
 	<!-- Bootstrap -->
@@ -162,16 +163,7 @@
                         
                       </a>
                     </li>
-                    <li class="nav-item">
-                      <a class="dropdown-item">
-                        <span class="image"><img src="{{asset('images/img.jpg')}}" alt="Profile Image" /></span>
-                        <span>
-                          <span>John Smith</span>
-                          <span class="time">3 mins ago</span>
-                        </span>
-                        
-                      </a>
-                    </li>
+                    
                     <li class="nav-item">
                       <a class="dropdown-item">
                         <span class="image"><img src="{{asset('production/images/img.jpg')}}" alt="Profile Image" /></span>
@@ -243,11 +235,11 @@
 							<div class="x_content">
 							       
 								<div class="container-scan">
-                                    <div id="reader"></div>
-                                    <p id="result"></p>
-                                    <canvas id="qrcode"></canvas>
+                    <div id="reader"></div>
+                    <p id="result"></p>
+                    <canvas id="qrcode"></canvas>
 
-                                </div>
+                </div>
                                 
                                 
               

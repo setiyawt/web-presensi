@@ -1,4 +1,3 @@
-
 let html5QrCode;
 
 function initializeScanner() {
@@ -17,6 +16,7 @@ function initializeScanner() {
         onScanError
     ).catch(err => {
         console.error('Error starting QR Code scanner:', err);
+        alert('Failed to start QR Code scanner. Please check your camera permissions.');
     });
 
     // Generate a QR code for demonstration
@@ -29,29 +29,64 @@ function initializeScanner() {
 // Function to handle successful QR code scan
 function onScanSuccess(decodedText) {
     console.log('Scanned QR code data:', decodedText);
- 
-    fetch('/scan-qr', {
+
+    const qr_code_id = extractQrCodeId(decodedText);
+    const course_schedules_id = getCourseScheduleId();
+
+    if (qr_code_id === null || course_schedules_id === null) {
+        alert('Error: Missing required data.');
+        return;
+    }
+
+    fetch('/dashboard/scan-qr', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
             'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
         },
-        body: JSON.stringify({ qr_code_path: decodedText })
+        body: JSON.stringify({
+            qr_code_id: qr_code_id,
+            course_schedules_id: course_schedules_id
+        })
     })
     .then(response => {
         if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
+            return response.json().then(err => { throw err; });
         }
         return response.json();
     })
     .then(data => {
         console.log('Server response:', data);
-        alert('Data successfully recorded!');
+        alert(data.success || 'Data successfully recorded!');
     })
     .catch(error => {
         console.error('Error:', error);
-        alert('Failed to record data. Please try again.');
+        alert(error.error || 'Failed to record data. Please try again.');
     });
+}
+
+
+// Function to extract qr_code_id from the QR code data
+function extractQrCodeId(decodedText) {
+    // Example: Assuming QR code data is space-separated
+    const parts = decodedText.split(' ');
+    const id = parseInt(parts[0], 10);
+    if (isNaN(id)) {
+        console.error('Invalid QR code ID:', decodedText);
+        return null;
+    }
+    return id;
+}
+
+
+
+// Dummy functions to obtain related IDs
+function getCourseScheduleId() {
+    return 1; // Replace with actual logic to get the course schedule ID
+}
+
+function getUserId() {
+    return 1; // Replace with actual logic to get the user ID
 }
 
 // Function to handle QR code scan errors
@@ -59,5 +94,5 @@ function onScanError(errorMessage) {
     console.error('QR Code scan error:', errorMessage);
 }
 
-// Initialize the HTML5 QR code scanner
+// Initialize the HTML5 QR code scanner when the DOM is fully loaded
 document.addEventListener('DOMContentLoaded', initializeScanner);

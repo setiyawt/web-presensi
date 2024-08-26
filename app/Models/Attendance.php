@@ -10,13 +10,14 @@ class Attendance extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $fillable = [
-        'course_schedules_id', 'user_id'
-    ];
+    protected $fillable = ['qr_code_id', 'course_schedules_id', 'user_id'];
+    
+    
 
     public function courseSchedule()
     {
         return $this->belongsTo(Course::class, 'course_schedules_id');
+
     }
 
 public function user()

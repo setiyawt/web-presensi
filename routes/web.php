@@ -56,8 +56,8 @@ Route::middleware('auth')->group(function () {
 
 
         // Form Student Role
-        Route::post('/scan-qr', [QRCodeController::class, 'store'])
-        ->middleware('student')
+        Route::post('/scan-qr', [AttendanceController::class, 'store'])
+        ->middleware('auth')
         ->name('student.store');
 
         Route::get('/student/index', [AttendanceController::class, 'student_index'])
