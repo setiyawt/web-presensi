@@ -18,8 +18,8 @@ class Course extends Model
         return $this->hasMany(Classroom::class, 'classroom', 'classroom_id');
     }
 
-    public function schedule(){
-        return $this->hasMany(Schedules::class, 'schedules', 'courses_id');
+    public function courseSchedules(){
+        return $this->hasMany(CourseSchedules::class);
     }
 
     public function qrcode(){

@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('attendances', function (Blueprint $table) {
             $table->id();
             $table->foreignId('qr_code_id')->constrained('qrcodes')->onDelete('cascade');
-            $table->foreignId('course_schedules_id')->constrained()->onDelete('cascade');
+            $table->dateTime('scan_at');
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->softDeletes();
             $table->timestamps();

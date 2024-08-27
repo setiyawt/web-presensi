@@ -50,9 +50,21 @@ class RolePermissionSeeder extends Seeder
             'password' => bcrypt('12345678'),
         ]);
 
+        $teacher = User::create([
+            'name' => 'Teacher',
+            'email' => 'teacher@example.com',
+            'password' => bcrypt('12345678'),
+        ]);
+
+        $student = User::create([
+            'name' => 'Student',
+            'email' => 'student@example.com',
+            'password' => bcrypt('12345678'),
+        ]);
+
         $user->assignRole($adminRole);
-        $user->assignRole($teacherRole);
-        $user->assignRole($studentRole);
+        $teacher->assignRole($teacherRole);
+        $student->assignRole($studentRole);
 
     }
 }

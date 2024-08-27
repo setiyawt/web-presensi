@@ -6,12 +6,14 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Schedules extends Model
+class CourseSchedules extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $guarded = [
+    protected $fillable = [
         'id',
+        'course_id',
+        'classroom_id',
     ];
 
     public function course(){
@@ -19,7 +21,12 @@ class Schedules extends Model
     }
 
     public function attendance(){
-        return $this->hasMany(Attendance::class, 'attendances', 'schedules_id');
+        return $this->belongsTo(Attendance::class, 'course_schedules_id');
+    }
+
+    public function classroom()
+    {
+        return $this->belongsTo(Classroom::class);
     }
 
     

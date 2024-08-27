@@ -31,9 +31,8 @@ function onScanSuccess(decodedText) {
     console.log('Scanned QR code data:', decodedText);
 
     const qr_code_id = extractQrCodeId(decodedText);
-    const course_schedules_id = getCourseScheduleId();
 
-    if (qr_code_id === null || course_schedules_id === null) {
+    if (qr_code_id === null) {
         alert('Error: Missing required data.');
         return;
     }
@@ -46,7 +45,6 @@ function onScanSuccess(decodedText) {
         },
         body: JSON.stringify({
             qr_code_id: qr_code_id,
-            course_schedules_id: course_schedules_id
         })
     })
     .then(response => {
@@ -78,16 +76,6 @@ function extractQrCodeId(decodedText) {
     return id;
 }
 
-
-
-// Dummy functions to obtain related IDs
-function getCourseScheduleId() {
-    return 1; // Replace with actual logic to get the course schedule ID
-}
-
-function getUserId() {
-    return 1; // Replace with actual logic to get the user ID
-}
 
 // Function to handle QR code scan errors
 function onScanError(errorMessage) {

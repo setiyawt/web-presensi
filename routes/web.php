@@ -133,11 +133,7 @@ Route::middleware('auth')->group(function () {
         ->name('qrcode.teachers.create');
 
         
-        //Untuk menampilkan seluruh jadwal pelajaran
-        Route::get('/schedule/show/{course}', [SchedulesController::class, 'index'])
-        ->middleware('role:admin', 'role:')
-        ->name('schedule.index');
-
+        
 
         //Untuk create course
         Route::get('/course/create/{course}', [CourseController::class, 'create'])
@@ -149,15 +145,7 @@ Route::middleware('auth')->group(function () {
         ->middleware('role:admin')
         ->name('course.store');
 
-        //Untuk create schedule
-        Route::get('/schedule/create/{schedule}', [SchedulesController::class, 'create'])
-        ->middleware('role:admin')
-        ->name('schedule.create');
-
-        //Untuk save schedule
-        Route::post('/schedule/save/{schedule}', [SchedulesController::class, 'store'])
-        ->middleware('role:admin')
-        ->name('schedule.store');
+        
 
         //Untuk create classroom
         Route::get('/classroom/create/{classroom}', [ClassroomController::class, 'create'])

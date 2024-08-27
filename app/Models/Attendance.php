@@ -14,15 +14,20 @@ class Attendance extends Model
     
     
 
+    public function qrCode()
+    {
+        return $this->belongsTo(QRCode::class, 'qr_code_id');
+    }
+
     public function courseSchedule()
     {
-        return $this->belongsTo(Course::class, 'course_schedules_id');
-
+        return $this->belongsTo(CourseSchedules::class, 'course_schedules_id');
     }
 
-public function user()
-    {
-        return $this->belongsTo(User::class);
-    }
+
+    public function user()
+        {
+            return $this->belongsTo(User::class);
+        }
 
 }

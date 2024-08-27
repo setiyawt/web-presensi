@@ -6,7 +6,7 @@ use App\Models\Attendance;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Carbon;
 
 
 class AttendanceController extends Controller
@@ -42,45 +42,48 @@ class AttendanceController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
-{
-    try {
-        $user = Auth::user();
-        if (!$user) {
-            return response()->json(['error' => 'User not authenticated'], 401);
+    {
+        try {
+            $user = Auth::user();
+            if (!$user) {
+                return response()->json(['error' => 'User not authenticated'], 401);
+            }
+
+            Log::info('Received request data: ' . json_encode($request->all()));
+
+            // Validate the incoming request
+            $validatedData = $request->validate([
+                'qr_code_id' => 'required|integer|exists:qrcodes,id',
+            ]);
+
+            // Check if an attendance record already exists for this user and QR code today
+            $existingAttendance = Attendance::where('user_id', $user->id)
+                ->where('qr_code_id', $validatedData['qr_code_id'])
+                ->whereDate('scan_at', Carbon::today())
+                ->first();
+
+            if ($existingAttendance) {
+                return response()->json(['error' => 'Attendance already recorded for today'], 422);
+            }
+
+            // Create the attendance record
+            $attendance = new Attendance();
+            $attendance->qr_code_id = $validatedData['qr_code_id'];
+            $attendance->user_id = $user->id;
+            $attendance->scan_at = Carbon::now();
+            $attendance->save();
+
+            Log::info('Attendance record created: ' . json_encode($attendance));
+
+            return response()->json(['success' => 'Attendance recorded successfully'], 200);
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            Log::error('Validation error in AttendanceController@store: ' . json_encode($e->errors()));
+            return response()->json(['error' => $e->errors()], 422);
+        } catch (\Exception $e) {
+            Log::error('Error in AttendanceController@store: ' . $e->getMessage());
+            return response()->json(['error' => 'Failed to record attendance: ' . $e->getMessage()], 500);
         }
-
-        Log::info('Received request data: ' . json_encode($request->all()));
-
-        // Validate the incoming request
-        $validatedData = $request->validate([
-            'qr_code_id' => 'required|integer|exists:qrcodes,id',
-            'course_schedules_id' => 'required|integer|exists:course_schedules,id',
-        ]);
-
-        // Add the authenticated user's ID to the validated data
-        $validatedData['user_id'] = $user->id;
-
-        Log::info('Validated data: ' . json_encode($validatedData));
-
-        // Store the attendance record
-        $attendance = Attendance::create($validatedData);
-
-        Log::info('Attendance record created: ' . json_encode($attendance));
-
-        return response()->json(['success' => 'Attendance recorded successfully'], 200);
-    } catch (\Illuminate\Validation\ValidationException $e) {
-        Log::error('Validation error in AttendanceController@store: ' . json_encode($e->errors()));
-        return response()->json(['error' => $e->errors()], 422);
-    } catch (\Exception $e) {
-        Log::error('Error in AttendanceController@store: ' . $e->getMessage());
-        return response()->json(['error' => 'Failed to record attendance: ' . $e->getMessage()], 500);
     }
-}
-    
-    
-    
-
-    
 
 
 
