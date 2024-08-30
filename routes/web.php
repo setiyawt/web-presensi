@@ -9,6 +9,7 @@ use App\Http\Controllers\QrcodeController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\TeacherController;
 use App\Http\Models\User;
+use App\Models\Attendance;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -35,6 +36,12 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     Route::prefix('dashboard')->name('dashboard.')->group(function(){
+
+        // Form Admin
+        Route::post('attendance/create', [AttendanceController::class, 'store_manual'])
+        ->middleware('role:admin')
+        ->name('attendance.store');
+
 
         Route::get('admin/index', [AttendanceController::class, 'index'])
         ->middleware('role:admin')

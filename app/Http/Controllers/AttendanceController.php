@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Carbon;
 use App\Models\User;
+use App\Models\Course;
+use App\Models\Classroom;
 
 
 class AttendanceController extends Controller
@@ -35,8 +37,10 @@ class AttendanceController extends Controller
      */
     public function create()
     {
+        $courses = Course::all();
+        $classrooms = Classroom::all();
 
-        return view('admin.attendance.create');
+        return view('admin.attendance.create', compact('courses', 'classrooms'));
     }
 
     /**
@@ -86,6 +90,36 @@ class AttendanceController extends Controller
         }
     }
 
+    public function store_manual(Request $request) {
+        // Validasi data input
+        $validatedData = $request->validate([
+            'nisn' => ['required', 'string', 'max:255'],
+            'classroom_id' => ['required', 'integer', 'exists:classrooms,id'],
+            'course_id' => ['required', 'integer', 'exists:courses,id'],
+            'scan_at' => ['required', 'date_format:Y-m-d H:i:s'], // Format tanggal sesuai yang diinginkan
+        ]);
+    
+        // Cari user berdasarkan NISN
+        $user = User::where('nisn', $request->nisn)->firstOrFail();
+        
+        // Pastikan user ditemukan, tambahkan relasi ke classroom dan course
+        $user->classrooms()->attach($request->classroom_id);
+        $user->courses()->attach($request->course_id);
+    
+        // Tambahkan data ke tabel attendances
+        $attendance = Attendance::create([
+            'user_id' => $user->id,
+            'classroom_id' => $request->classroom_id,
+            'course_id' => $request->course_id,
+            'scan_at' => $validatedData['scan_at'],
+            'qr_code_id' => null, 
+        ]);
+    
+        // Redirect ke halaman tampilan dengan data yang ditampilkan
+        return view('attendance.show', compact('user', 'attendance'));
+    }
+    
+    
 
 
     /**
