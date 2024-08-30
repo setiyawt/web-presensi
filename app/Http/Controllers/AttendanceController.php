@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Carbon;
+use App\Models\User;
 
 
 class AttendanceController extends Controller
@@ -90,10 +91,37 @@ class AttendanceController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Attendance $attendance)
+    public function show()
     {
-        //
+        // Ambil total siswa dan guru
+        $totalStudents = User::where('role', 'student')->count();
+        $totalTeachers = User::where('role', 'teacher')->count();
+    
+        // Ambil siswa dan guru yang hadir
+        $attendedStudents = User::where('role', 'student')
+            ->whereHas('attendances') // Mengambil siswa yang memiliki data absensi
+            ->count();
+    
+        $attendedTeachers = User::where('role', 'teacher')
+            ->whereHas('attendances') // Mengambil guru yang memiliki data absensi
+            ->count();
+    
+        // Hitung siswa dan guru yang absen
+        $absentStudents = $totalStudents - $attendedStudents;
+        $absentTeachers = $totalTeachers - $attendedTeachers;
+    
+        // Kembalikan view dengan data
+        return view('dashboard.admin.index', [
+            'totalStudents' => $totalStudents,
+            'attendedStudents' => $attendedStudents,
+            'absentStudents' => $absentStudents,
+            'totalTeachers' => $totalTeachers,
+            'attendedTeachers' => $attendedTeachers,
+            'absentTeachers' => $absentTeachers,
+        ]);
     }
+    
+    
 
     /**
      * Show the form for editing the specified resource.
@@ -114,10 +142,27 @@ class AttendanceController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Attendance $attendance)
-    {
-        //
+    public function destroy($id)
+{
+    // Temukan record attendance yang akan dihapus
+    $attendance = Attendance::findOrFail($id);
+    
+    // Ambil user yang terkait dengan attendance
+    $user = $attendance->user;
+
+    // Hapus record attendance
+    $attendance->delete();
+
+    // Tentukan URL pengalihan berdasarkan jenis pengguna
+    if ($user->hasRole('teacher')) {
+        // Jika pengguna adalah guru, arahkan ke halaman guru
+        return redirect()->route('dashboard.tables_attend.table_teacher')->with('success', 'Attendance record deleted successfully.');
+    } else {
+        // Jika pengguna adalah murid, arahkan ke halaman murid
+        return redirect()->route('dashboard.tables_attend.table_student')->with('success', 'Attendance record deleted successfully.');
     }
+}
+
 
     
 }

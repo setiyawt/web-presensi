@@ -14,13 +14,27 @@ class TeacherController extends Controller
      */
     public function index()
     {
-        $attendances = Attendance::OrderBy('id', 'DESC')->get();
+        // Mengambil attendance yang user-nya memiliki role teacher
+        $attendances = Attendance::whereHas('user', function($query) {
+            $query->role('teacher'); // Pastikan 'teacher' adalah role yang sesuai.
+        })
+        ->orderBy('id', 'DESC')
+        ->get();
+        
+
         return view('admin.tables_attend.table_teacher', [
             'attendances' => $attendances,
-            
         ]);
             
     }
+
+    public function scopeRole($query, $roleName)
+    {
+        return $query->whereHas('roles', function($q) use ($roleName) {
+            $q->where('name', $roleName);
+        });
+    }
+
 
     public function form_teacher() {
         return view('teacher.dashboard.index');

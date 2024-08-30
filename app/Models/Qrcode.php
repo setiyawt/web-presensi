@@ -18,13 +18,14 @@ class Qrcode extends Model
     ];
 
 
-    public function course(){
-        return $this->belongsTo(Course::class);
-    }
-
     public function classroom()
     {
-        return $this->belongsTo(Classroom::class);
+        return $this->belongsTo(Classroom::class, 'classroom_id');
+    }
+
+    public function course()
+    {
+        return $this->belongsTo(Course::class, 'course_id');
     }
 
     public function attendance(){

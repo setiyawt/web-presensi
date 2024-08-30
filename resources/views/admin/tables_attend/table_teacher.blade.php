@@ -70,8 +70,7 @@
                 
                 <ul class="nav side-menu">
                 
-                
-                  <li><a href="{{route('dashboard.index')}}"><i class="fa fa-home"></i> Home</a></li>
+                  <li><a href="{{route('dashboard.admin.index')}}"><i class="fa fa-home"></i> Home</a></li>
                   <li><a><i class="fa fa-table"></i> Kehadiran <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                       
@@ -79,8 +78,9 @@
                       <li><a href="{{route('dashboard.tables_attend.table_student')}}">Siswa</a></li>
                     </ul>
                   </li>
-                  <li><a><i class="fa fa-plus"></i>Kehadiran Manual </a></li>
-                  <li><a href="chartjs.html"><i class="fa fa-clipboard"></i> Jadwal Pelajaran </a></li>
+                  <li><a href="{{route('dashboard.attendance.create')}}"><i class="fa fa-plus"></i>Kehadiran Manual</a>
+                  </li>
+                  <li><a href=""><i class="fa fa-clipboard"></i> Jadwal Pelajaran </a></li>
                   <li><a href="contacts.html"><i class="fa fa-users"></i></i> Daftar Admin</a></li>
                   <li><a href="profile.html"><i class="fa fa-user"></i>Profile</a></li>
                 </ul>
@@ -204,12 +204,7 @@
 
               <div class="title_right">
                 <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
-                  <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Search for...">
-                    <span class="input-group-btn">
-                      <button class="btn btn-secondary" type="button">Go!</button>
-                    </span>
-                  </div>
+                  
                 </div>
               </div>
             </div>
@@ -225,41 +220,59 @@
                           <div class="col-sm-12">
                             <div class="card-box table-responsive">
                   
-                    <table id="datatable-buttons" class="table table-striped table-bordered" style="width:100%">
-                      
-                      <thead>
-                        <tr>
-                          <th>ID</th>
-                          <th>Nama</th>
-                          <th>Kelas</th>
-                          <th>Tanggal Hadir</th>
-                          <th>Waktu Scan</th>
-                          <th>ID QrCode</th>
-                          <th>Aksi</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        @foreach($attendances as $attendance)
-                          <tr>
-                            <td>{{ $attendance->id}}</td>
-                            <td>{{ $attendance->schedules && $attendance->schedules->users ? $attendance->schedules->users->name : 'N/A' }}</td>
-                            <td>{{ $attendance->schedules && $attendance->schedules->classroom ? $attendance->schedules->classroom->name : 'N/A' }}</td>
-                            <td>{{ $attendance->date }}</td>
-                            
-                            <td>{{ $attendance->qrcodes ? $attendance->qrcodes->id : 'N/A' }}</td>
-                            <td>{{ $attendance->status }}</td>
-                            <td>
-                              <a href="{{ route('dashboard.attendance.edit', $attendance->id) }}" class="btn btn-primary btn-sm">
-                                Edit   </a>
-                                {{-- <a href="{{ route('dashboard.attendance.delete', $attendance->id) }}" class="btn btn-danger btn-sm">
-                                  Delete   </a> --}}
-                            </td> 
-                            @endforeach 
-                          </tr>
-                      </tbody>
+                              <table id="datatable-buttons" class="table table-striped table-bordered" style="width:100%">
+                                <thead>
+                                  <tr>
+                                    <th>No</th>
+                                    <th>Nama</th>
+                                    <th>Kelas</th>
+                                    <th>Mata Pelajaran</th>
+                                    <th>Waktu Scan</th>
+                                    <th>Aksi</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  @foreach($attendances as $key => $attendance)
+                                    <tr>
+                                      <!-- No: Menggunakan $key + 1 untuk menghasilkan nomor urut -->
+                                      <td>{{ $key + 1 }}</td>
+                              
+                                      <!-- Nama: Mengambil dari relasi users melalui attendance -->
+                                      <td>{{ $attendance->user ? $attendance->user->name : 'N/A' }}</td>
+                              
+                                      <!-- Kelas: Mengambil dari classroom melalui relasi di qrcodes -->
+                                      <td>{{ $attendance->qrcode && $attendance->qrcode->classroom ? $attendance->qrcode->classroom->name : 'N/A' }}</td>
 
-                      
-                    </table>
+                                      <!-- Mata Pelajaran: Mengambil dari course melalui relasi di qrcodes -->
+                                      <td>{{ $attendance->qrcode && $attendance->qrcode->course ? $attendance->qrcode->course->name : 'N/A' }}</td>
+
+
+                              
+                                      <!-- Waktu Scan: Mengambil dari kolom scan_at -->
+                                      <td>{{ $attendance->scan_at }}</td>
+                              
+                                      <!-- Aksi: Edit button -->
+                                      <td style="display: flex; align-items: center;">
+                                        <form action="{{ route('dashboard.attendance.edit', $attendance->id) }}" method="GET" style="display: inline-block;">
+                                          <button type="submit" class="btn btn-primary btn-sm" style="margin-right: 5px;">
+                                              Edit
+                                          </button>
+                                        </form>                                      
+                                        
+                                        <form action="{{ route('dashboard.attendance.delete', $attendance->id) }}" method="POST" style="display: inline-block;" onsubmit="return confirm('Are you sure you want to delete this attendance?');">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-danger btn-sm">
+                                                Delete
+                                            </button>
+                                        </form>
+                                      </td>
+                                    
+                                    </tr>
+                                  @endforeach
+                                </tbody>
+                              </table>
+                              
                   </div>
                 </div>
               </div>

@@ -1,24 +1,32 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\ClassroomController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\QrcodeController;
-use App\Http\Controllers\SchedulesController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\TeacherController;
-use App\Models\Attendance;
-use App\Models\Course;
-use App\Models\Schedules;
+use App\Http\Models\User;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
+
 
 Route::get('/', function () {
-    return view('welcome');
-});
-
-Route::get('/dashboard', function () {
-    return view('dashboard');
+    if (Auth::check()) {
+        $user = Auth::user();
+        // Cek role user
+        if ($user->role === 'admin') {
+            return redirect()->route('dashboard.admin.index');
+        } elseif ($user->role === 'teacher') {
+            return redirect()->route('dashboard.teacher.index');
+        } else {
+            return redirect()->route('dashboard.student.index');
+        }
+    }
+    
+    return view('dashboard'); // Default view jika tidak ada role
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
@@ -27,9 +35,6 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     Route::prefix('dashboard')->name('dashboard.')->group(function(){
-
-        Route::resource('index', AttendanceController::class)
-        ->middleware('role:admin');
 
         Route::get('admin/index', [AttendanceController::class, 'index'])
         ->middleware('role:admin')
@@ -64,10 +69,6 @@ Route::middleware('auth')->group(function () {
         ->middleware('role:student')
         ->name('student.index');
 
-        
-
-       
-
         //Untuk menampilkan seluruh kehadiran teacher
         Route::get('/attendance/show/teachers', [TeacherController::class, 'index'])
         ->middleware('role:admin')
@@ -77,7 +78,12 @@ Route::middleware('auth')->group(function () {
         Route::get('/attendance/show/students', [StudentController::class, 'index'])
         ->middleware('role:admin')
         ->name('tables_attend.table_student');
-        
+
+        //Untuk menampilkan seluruh data admin
+        Route::get('/attendance/show/admins', [AdminController::class, 'index'])
+        ->middleware('role:admin')
+        ->name('tables_attend.table_admin');
+
 
         //Untuk menambahkan kehadiran secara manual (tanpa qr code) untuk student & teacher
         Route::get('/attendance/create', [AttendanceController::class, 'create'])
@@ -85,11 +91,15 @@ Route::middleware('auth')->group(function () {
         ->name('attendance.create');
 
         //Untuk mengedit kehadiran teacher
-        Route::get('/attendance/edit', [AttendanceController::class, 'edit'])
+        Route::get('/dashboard/attendance/edit/{id}', [AttendanceController::class, 'edit'])
         ->middleware('role:admin')
         ->name('attendance.edit');
         
-    
+        //Menghapus Attendances
+        Route::delete('/dashboard/attendance/{id}', [AttendanceController::class, 'destroy'])
+        ->middleware('role:admin')
+        ->name('attendance.delete');
+
         //Untuk menyimpan kehadiran secara manual (tanpa qr code) untuk student
         Route::post('/attendance/students/save/{student}', [AttendanceController::class, 'store_students_attendance'])
         ->middleware('role:admin')

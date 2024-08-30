@@ -66,7 +66,7 @@
                 <ul class="nav side-menu">
                 
                 
-                  <li><a href="{{route('dashboard.index')}}"><i class="fa fa-home"></i> Home</a></li>
+                  <li><a href="{{route('dashboard.admin.index')}}"><i class="fa fa-home"></i> Home</a></li>
                   <li><a><i class="fa fa-table"></i> Kehadiran <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                       
@@ -76,8 +76,8 @@
                   </li>
                   <li><a href="{{route('dashboard.attendance.create')}}"><i class="fa fa-plus"></i>Kehadiran Manual</a>
                   </li>
-                  <li><a href="chartjs.html"><i class="fa fa-clipboard"></i> Jadwal Pelajaran </a></li>
-                  <li><a href="contacts.html"><i class="fa fa-users"></i></i> Daftar Admin</a></li>
+                  <li><a href=""><i class="fa fa-clipboard"></i> Jadwal Pelajaran </a></li>
+                  <li><a href="{{route('dashboard.tables_attend.table_admin')}}"><i class="fa fa-users"></i></i> Daftar Admin</a></li>
                   <li><a href="profile.html"><i class="fa fa-user"></i>Profile</a></li>
                 </ul>
               </div>
@@ -101,7 +101,7 @@
               <a data-toggle="tooltip" data-placement="top" title="Lock">
                 <span class="glyphicon glyphicon-eye-close" aria-hidden="true"></span>
               </a>
-              <a data-toggle="tooltip" data-placement="top" title="Logout" href="login.html">
+              <a data-toggle="tooltip" data-placement="top" title="Logout" href="{{ route('login') }}">
                 <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
               </a>
             </div>
@@ -128,7 +128,7 @@
                         <span>Settings</span>
                       </a>
                   <a class="dropdown-item"  href="javascript:;">Help</a>
-                    <a class="dropdown-item"  href="login.html"><i class="fa fa-sign-out pull-right"></i> Log Out</a>
+                    <a class="dropdown-item"  href="{{ route('login') }}"><i class="fa fa-sign-out pull-right"></i> Log Out</a>
                   </div>
                 </li>
 
@@ -198,34 +198,34 @@
           <div class="tile_count">
             <div class="col-md-4 col-sm-6  tile_stats_count">
               <span class="count_top"><i class="fa fa-users"></i> Siswa Hadir</span>
-              <div class="count">250</div>
+              <div class="count">{{ $attendedStudents ?? 0 }}</div>
               
             </div>
             
             <div class="col-md-4 col-sm-6  tile_stats_count">
               <span class="count_top"><i class="fa fa-times"></i> Siswa Absent</span>
-              <div class="count green">2</div>
+              <div class="count">{{ $absentStudents ?? 0 }}</div>
               
             </div>
             <div class="col-md-4 col-sm-6  tile_stats_count">
               <span class="count_top"><i class="fa fa-users"></i> Total Siswa</span>
-              <div class="count">47</div>
+              <div class="count">{{ $totalStudents ?? 0 }}</div>
               
             </div>
 
             <div class="col-md-4 col-sm-6  tile_stats_count">
               <span class="count_top"><i class="fa fa-users"></i> Guru Hadir</span>
-              <div class="count">23</div>
+              <div class="count">{{ $attendedTeachers ?? 0 }}</div>
               
             </div>
             <div class="col-md-4 col-sm-6  tile_stats_count">
               <span class="count_top"><i class="fa fa-times"></i> Guru Absent</span>
-              <div class="count">248</div>
+              <div class="count">{{ $absentTeachers ?? 0 }}</div>
               
             </div>
             <div class="col-md-4 col-sm-6  tile_stats_count">
               <span class="count_top"><i class="fa fa-users"></i> Total Guru</span>
-              <div class="count">7</div>
+              <div class="count">{{ $totalTeacher ?? 0 }}</div>
               
             </div>
           </div>
