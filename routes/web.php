@@ -45,6 +45,21 @@ Route::middleware('auth')->group(function () {
         ->middleware('role:admin')
         ->name('admin.index');
 
+        //Untuk menambahkan jadwal pelajaran
+        Route::get('/schedule/create', [UserScheduleController::class, 'create'])
+        ->middleware('role:admin')
+        ->name('schedule.create');
+
+        //Untuk mengedit jadwal pelajaran
+        Route::get('/dashboard/schedule/edit/{id}', [UserScheduleController::class, 'edit'])
+        ->middleware('role:admin')
+        ->name('schedule.edit');
+        
+        //Menghapus Jadwal pelajaran
+        Route::delete('/dashboard/schedule/{id}', [UserScheduleController::class, 'destroy'])
+        ->middleware('role:admin')
+        ->name('schedule.delete');
+
         //Form Teacher
         //Untuk menampilkan seluruh courses oleh teacher
         Route::get('teacher/index', [CourseController::class, 'take_course'])
