@@ -88,36 +88,7 @@ class AttendanceController extends Controller
             Log::error('Error in AttendanceController@store: ' . $e->getMessage());
             return response()->json(['error' => 'Failed to record attendance: ' . $e->getMessage()], 500);
         }
-    }
-
-    public function store_manual(Request $request) {
-        // Validasi data input
-        $validatedData = $request->validate([
-            'nisn' => ['required', 'string', 'max:255'],
-            'classroom_id' => ['required', 'integer', 'exists:classrooms,id'],
-            'course_id' => ['required', 'integer', 'exists:courses,id'],
-            'scan_at' => ['required', 'date_format:Y-m-d H:i:s'], // Format tanggal sesuai yang diinginkan
-        ]);
-    
-        // Cari user berdasarkan NISN
-        $user = User::where('nisn', $request->nisn)->firstOrFail();
-        
-        // Pastikan user ditemukan, tambahkan relasi ke classroom dan course
-        $user->classrooms()->attach($request->classroom_id);
-        $user->courses()->attach($request->course_id);
-    
-        // Tambahkan data ke tabel attendances
-        $attendance = Attendance::create([
-            'user_id' => $user->id,
-            'classroom_id' => $request->classroom_id,
-            'course_id' => $request->course_id,
-            'scan_at' => $validatedData['scan_at'],
-            'qr_code_id' => null, 
-        ]);
-    
-        // Redirect ke halaman tampilan dengan data yang ditampilkan
-        return view('attendance.show', compact('user', 'attendance'));
-    }
+    }    
     
     
 

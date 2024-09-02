@@ -76,7 +76,7 @@
                   </li>
                   <li><a href="{{route('dashboard.attendance.create')}}"><i class="fa fa-plus"></i>Kehadiran Manual</a>
                   </li>
-                  <li><a href=""><i class="fa fa-clipboard"></i> Jadwal Pelajaran </a></li>
+                  <li><a href="{{route('dashboard.schedule.index')}}"><i class="fa fa-clipboard"></i> Jadwal Pelajaran </a></li>
                   <li><a href="{{route('dashboard.tables_attend.table_admin')}}"><i class="fa fa-users"></i></i> Daftar Admin</a></li>
                   <li><a href="profile.html"><i class="fa fa-user"></i>Profile</a></li>
                 </ul>
@@ -101,8 +101,12 @@
               <a data-toggle="tooltip" data-placement="top" title="Lock">
                 <span class="glyphicon glyphicon-eye-close" aria-hidden="true"></span>
               </a>
-              <a data-toggle="tooltip" data-placement="top" title="Logout" href="{{ route('login') }}">
-                <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
+              <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                @csrf
+              </form>
+              
+              <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" data-toggle="tooltip" data-placement="top" title="Logout">
+                  <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
               </a>
             </div>
             <!-- /menu footer buttons -->

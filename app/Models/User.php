@@ -51,9 +51,21 @@ class User extends Authenticatable
         ];
     }
 
-    public function schedule(){
-        return $this->hasMany(CourseSchedules::class, 'schedules', 'user_id');
-    }
+     // Relasi ke Classroom
+     public function classrooms()
+     {
+         return $this->belongsToMany(Classroom::class, 'user_id', 'classroom_id');
+     }
+ 
+     // Relasi ke Course
+     public function courses()
+     {
+         return $this->belongsToMany(Course::class, 'course_user', 'user_id', 'course_id');
+     }
+     public function schedules()
+     {
+         return $this->hasMany(UserSchedule::class);
+     }
 
     public function attendance(){
         return $this->hasMany(Attendance::class, 'user_id');

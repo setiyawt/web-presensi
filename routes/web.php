@@ -8,8 +8,11 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\QrcodeController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\TeacherController;
+use App\Http\Controllers\StudentScheduleController;
+use App\Http\Controllers\UserScheduleController;
 use App\Http\Models\User;
 use App\Models\Attendance;
+use App\Models\UserSchedule;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -38,11 +41,6 @@ Route::middleware('auth')->group(function () {
     Route::prefix('dashboard')->name('dashboard.')->group(function(){
 
         // Form Admin
-        Route::post('attendance/create', [AttendanceController::class, 'store_manual'])
-        ->middleware('role:admin')
-        ->name('attendance.store');
-
-
         Route::get('admin/index', [AttendanceController::class, 'index'])
         ->middleware('role:admin')
         ->name('admin.index');
@@ -58,13 +56,12 @@ Route::middleware('auth')->group(function () {
         ->name('index');
 
         Route::get('qrcode/create/', [QRCodeController::class, 'create'])
-        ->middleware('role:teacher')
-        ->name('qrcode.create');
-        
-        
+            ->middleware('role:teacher|admin')
+            ->name('qrcode.create');
+            
         Route::post('qrcode/create', [QRCodeController::class, 'store'])
-        ->middleware('role:teacher')
-        ->name('qrcode.store');
+            ->middleware('role:teacher|admin')
+            ->name('qrcode.store');
 
 
         // Form Student Role
@@ -75,6 +72,11 @@ Route::middleware('auth')->group(function () {
         Route::get('/student/index', [AttendanceController::class, 'student_index'])
         ->middleware('role:student')
         ->name('student.index');
+
+        //Untuk menampilkan seluruh jadwal 
+        Route::get('/schedule/show', [UserScheduleController::class, 'index'])
+        ->middleware('role:admin')
+        ->name('schedule.index');
 
         //Untuk menampilkan seluruh kehadiran teacher
         Route::get('/attendance/show/teachers', [TeacherController::class, 'index'])

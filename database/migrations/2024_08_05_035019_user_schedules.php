@@ -14,7 +14,10 @@ return new class extends Migration
         Schema::create('user_schedules', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->foreignId('course_schedules_id')->constrained()->onDelete('cascade');
+            $table->foreignId('course_id')->constrained()->onDelete('cascade');
+            $table->foreignId('classroom_id')->constrained()->onDelete('cascade');
+            $table->timestamp('start_time');
+            $table->timestamp('end_time');
             $table->softDeletes();
             $table->timestamps();
         });
