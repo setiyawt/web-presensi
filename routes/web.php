@@ -74,6 +74,16 @@ Route::middleware('auth')->group(function () {
          Route::put('/dashboard/course/{id}', [CourseController::class, 'update'])
          ->middleware('role:admin')
          ->name('course.update');
+
+         // Route untuk menampilkan form edit
+         Route::get('/dashboard/classroom/edit/{id}', [ClassroomController::class, 'edit'])
+         ->middleware('role:admin')
+         ->name('classroom.edit');
+ 
+         // Route untuk memperbarui data
+         Route::put('/dashboard/classroom/{id}', [ClassroomController::class, 'update'])
+         ->middleware('role:admin')
+         ->name('classroom.update');
         
         //Menghapus Jadwal pelajaran
         Route::delete('/dashboard/schedule/{id}', [UserScheduleController::class, 'destroy'])
@@ -81,9 +91,14 @@ Route::middleware('auth')->group(function () {
         ->name('schedule.delete');
 
         //Menghapus course
-        Route::delete('/dashboard/course/{id}', [UserScheduleController::class, 'destroy'])
+        Route::delete('/dashboard/course/{id}', [CourseController::class, 'destroy'])
         ->middleware('role:admin')
         ->name('course.delete');
+
+        //Menghapus classroom
+        Route::delete('/dashboard/classroom/{id}', [ClassroomController::class, 'destroy'])
+        ->middleware('role:admin')
+        ->name('classroom.delete');
         
         //Form Teacher
         //Untuk menampilkan seluruh courses oleh teacher
@@ -224,7 +239,7 @@ Route::middleware('auth')->group(function () {
         ->name('classroom.create');
 
         //Untuk save classroom
-        Route::post('/classroom/save/{classroom}', [ClassroomController::class, 'store'])
+        Route::post('/classroom/create', [ClassroomController::class, 'store'])
         ->middleware('role:admin')
         ->name('classroom.store');
 

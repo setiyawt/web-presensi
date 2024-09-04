@@ -6,6 +6,7 @@ use App\Models\Course;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
+use Illuminate\Validation\Rule;
 use App\Models\Classroom;
 
 class CourseController extends Controller
@@ -45,8 +46,21 @@ class CourseController extends Controller
     {
         try {
             $data = $request->validate([
-                'course_name' => 'required|string|max:255',
+                'course_name' => [
+                    'required',
+                    'string',
+                    'max:255',
+                    Rule::unique('courses', 'name')->whereNull('deleted_at') // Ignores soft-deleted records
+                ],
             ]);
+
+            $existingCourse = Course::whereRaw('LOWER(name) = ?', [strtolower($data['course_name'])])
+            ->whereNull('deleted_at')
+            ->first();
+
+            if ($existingCourse) {
+                return back()->with('error', 'Nama pelajaran sudah ada. Pilih nama yang berbeda.');
+            }
 
             Course::create([
                 'name' => $data['course_name'],
@@ -85,27 +99,42 @@ class CourseController extends Controller
      * Update the specified resource in storage.
      */
     public function update(Request $request, $id)
-{
-    try {
-        // Validate input
-        $data = $request->validate([
-            'course_name' => 'required|string|max:255',
-        ]);
+    {
+        try {
+            $course = Course::findOrFail($id);
+            // Validate input
+            $data = $request->validate([
+                'course_name' => [
+                'required',
+                'string',
+                'max:255',
+                Rule::unique('courses', 'name')
+                    ->ignore($course->id)
+                    ->whereNull('deleted_at') // Ignores soft-deleted records
+                    
+            ],
+            ]);
 
-        // Find the course
-        $course = Course::findOrFail($id);
+            $existingCourse = Course::whereRaw('LOWER(name) = ?', [strtolower($data['course_name'])])
+            ->whereNull('deleted_at')
+            ->first();
 
-        // Update the course with name and slug
-        $course->update([
-            'name' => $data['course_name'],
-            'slug' => Str::slug($data['course_name'])
-        ]);
+            if ($existingCourse) {
+                return back()->with('error', 'Nama pelajaran sudah ada. Pilih nama yang berbeda.');
+            }
+            
 
-        return redirect()->route('dashboard.course.index')->with('success', 'Pelajaran berhasil diperbarui');
-    } catch (\Exception $e) {
-        Log::error('Error occurred: ' . $e->getMessage());
-        return back()->with('error', 'Terjadi kesalahan saat memperbarui pelajaran.');
-    }
+            // Update the course with name and slug
+            $course->update([
+                'name' => $data['course_name'],
+                'slug' => Str::slug($data['course_name'])
+            ]);
+
+            return redirect()->route('dashboard.course.index')->with('success', 'Pelajaran berhasil diperbarui');
+        } catch (\Exception $e) {
+            Log::error('Error occurred: ' . $e->getMessage());
+            return back()->with('error', 'Terjadi kesalahan saat memperbarui pelajaran.');
+        }
 }
 
 
