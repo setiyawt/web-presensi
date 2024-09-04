@@ -65,13 +65,26 @@ Route::middleware('auth')->group(function () {
         ->middleware('role:admin')
         ->name('schedule.update');
 
-
+         // Route untuk menampilkan form edit
+         Route::get('/dashboard/course/edit/{id}', [CourseController::class, 'edit'])
+         ->middleware('role:admin')
+         ->name('course.edit');
+ 
+         // Route untuk memperbarui data
+         Route::put('/dashboard/course/{id}', [CourseController::class, 'update'])
+         ->middleware('role:admin')
+         ->name('course.update');
         
         //Menghapus Jadwal pelajaran
         Route::delete('/dashboard/schedule/{id}', [UserScheduleController::class, 'destroy'])
         ->middleware('role:admin')
         ->name('schedule.delete');
 
+        //Menghapus course
+        Route::delete('/dashboard/course/{id}', [UserScheduleController::class, 'destroy'])
+        ->middleware('role:admin')
+        ->name('course.delete');
+        
         //Form Teacher
         //Untuk menampilkan seluruh courses oleh teacher
         Route::get('teacher/index', [CourseController::class, 'take_course'])
@@ -104,6 +117,17 @@ Route::middleware('auth')->group(function () {
         Route::get('/schedule/show', [UserScheduleController::class, 'index'])
         ->middleware('role:admin')
         ->name('schedule.index');
+
+
+        //Untuk menampilkan seluruh pelajaran
+        Route::get('/course/show', [CourseController::class, 'index'])
+        ->middleware('role:admin')
+        ->name('course.index');
+
+        //Untuk menampilkan seluruh kelas
+        Route::get('/classroom/show', [ClassroomController::class, 'index'])
+        ->middleware('role:admin')
+        ->name('classroom.index');
 
         //Untuk menampilkan seluruh kehadiran teacher
         Route::get('/attendance/show/teachers', [TeacherController::class, 'index'])
@@ -182,19 +206,20 @@ Route::middleware('auth')->group(function () {
         
 
         //Untuk create course
-        Route::get('/course/create/{course}', [CourseController::class, 'create'])
+        Route::get('/course/create', [CourseController::class, 'create'])
         ->middleware('role:admin')
         ->name('course.create');
 
+
         //Untuk save course
-        Route::post('/course/save/{course}', [CourseController::class, 'store'])
+        Route::post('/course/create', [CourseController::class, 'store'])
         ->middleware('role:admin')
         ->name('course.store');
 
         
 
         //Untuk create classroom
-        Route::get('/classroom/create/{classroom}', [ClassroomController::class, 'create'])
+        Route::get('/classroom/create', [ClassroomController::class, 'create'])
         ->middleware('role:admin')
         ->name('classroom.create');
 

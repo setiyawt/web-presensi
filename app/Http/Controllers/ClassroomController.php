@@ -13,7 +13,7 @@ class ClassroomController extends Controller
      */
     public function index()
     {
-        //
+        return view('admin.classroom.index');
     }
 
     public function take_classroom()
