@@ -50,10 +50,22 @@ Route::middleware('auth')->group(function () {
         ->middleware('role:admin')
         ->name('schedule.create');
 
+        Route::post('schedule/create', [UserScheduleController::class, 'store'])
+            ->middleware('role:admin')
+            ->name('schedule.store');
+
         //Untuk mengedit jadwal pelajaran
-        Route::get('/dashboard/schedule/edit/{id}', [UserScheduleController::class, 'edit'])
+        // Route untuk menampilkan form edit
+        Route::get('/dashboard/schedule/{id}/edit', [UserScheduleController::class, 'edit'])
         ->middleware('role:admin')
         ->name('schedule.edit');
+
+        // Route untuk memperbarui data
+        Route::put('/dashboard/schedule/{id}', [UserScheduleController::class, 'update'])
+        ->middleware('role:admin')
+        ->name('schedule.update');
+
+
         
         //Menghapus Jadwal pelajaran
         Route::delete('/dashboard/schedule/{id}', [UserScheduleController::class, 'destroy'])

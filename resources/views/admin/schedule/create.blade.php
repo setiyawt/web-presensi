@@ -246,12 +246,12 @@
 							<div class="x_content">
 								<br />
 
-								<form action="{{ route('dashboard.qrcode.store') }}" method="POST">
+								<form action="{{ route('dashboard.schedule.store') }}" method="POST">
                                     @csrf
                                     <div class="item form-group">
                                         <label class="col-form-label col-md-3 col-sm-3 label-align" for="course_id">Nama Pelajaran <span class="required">*</span></label>
                                         <div class="col-md-6 col-sm-6">
-                                            <select id="course" name="course_id" required="required" class="form-control" onchange="toggleCourseInput()">
+                                            <select id="course" name="course_id" required="required" class="form-control">
                                                 <option value="">Pilih Pelajaran</option>
                                                 @foreach($courses as $course)
                                                     <option value="{{ $course->id }}">{{ $course->name }}</option>
@@ -261,45 +261,36 @@
                                         </div>
                                     </div>
                                     
-                                    <!-- Manual Course Input (Hidden by Default) -->
-                                    <div class="item form-group" id="manual-course-group" style="display:none;">
-                                        <label class="col-form-label col-md-3 col-sm-3 label-align" for="manual_course">Nama Pelajaran Lainnya</label>
-                                        <div class="col-md-6 col-sm-6">
-                                            <input type="text" id="manual_course" name="manual_course" class="form-control">
-                                        </div>
-                                    </div>
                                     
                                     <!-- Kelas (Classroom) Select Field -->
-                                    <div class="item form-group">
-                                        <label class="col-form-label col-md-3 col-sm-3 label-align" for="classroom_id">Kelas <span class="required">*</span></label>
-                                        <div class="col-md-6 col-sm-6">
-                                            <select id="classroom" name="classroom_id" required="required" class="form-control" onchange="toggleClassroomInput()">
-                                                <option value="">Pilih Kelas</option>
-                                                @foreach($classrooms as $classroom)
-                                                    <option value="{{ $classroom->id }}">{{ $classroom->name }}</option>
-                                                @endforeach
-                                                <option value="other">Other</option>
-                                            </select>
-                                        </div>
+                                  <div class="item form-group">
+                                    <label class="col-form-label col-md-3 col-sm-3 label-align" for="classroom_id">Kelas <span class="required">*</span></label>
+                                    <div class="col-md-6 col-sm-6">
+                                        <select id="classroom" name="classroom_id" required="required" class="form-control">
+                                            <option value="">Pilih Kelas</option>
+                                            @foreach($classrooms as $classroom)
+                                                <option value="{{ $classroom->id }}">{{ $classroom->name }}</option>
+                                            @endforeach
+                                            <option value="other">Other</option>
+                                        </select>
                                     </div>
-                                    
-                                    <!-- Manual Classroom Input (Hidden by Default) -->
-                                    <div class="item form-group" id="manual-classroom-group" style="display:none;">
-                                        <label class="col-form-label col-md-3 col-sm-3 label-align" for="manual_classroom">Nama Kelas Lainnya</label>
-                                        <div class="col-md-6 col-sm-6">
-                                            <input type="text" id="manual_classroom" name="manual_classroom" class="form-control">
-                                        </div>
-                                    </div>
-                    
-
-
+                                  </div>
                 
-                    <div class="item form-group">
-                        <label class="col-form-label col-md-3 col-sm-3 label-align" for="lesson_time">Waktu Pelajaran <span class="required">*</span></label>
-                        <div class="col-md-6 col-sm-6 ">
-                            <input type="datetime-local" name="lesson_time" id="lesson_time" class="form-control" required>
-                        </div>
-                    </div>
+                                    <div class="item form-group">
+                                      <label class="col-form-label col-md-3 col-sm-3 label-align" for="start_time">Waktu Pelajaran Mulai<span class="required">*</span></label>
+                                      <div class="col-md-6 col-sm-6 ">
+                                          <input type="datetime-local" name="start_time" id="start_time" class="form-control" required>
+                                      </div>
+                                  </div>
+                                  
+                                  <div class="item form-group">
+                                      <label class="col-form-label col-md-3 col-sm-3 label-align" for="end_time">Waktu Pelajaran Selesai<span class="required">*</span></label>
+                                      <div class="col-md-6 col-sm-6 ">
+                                          <input type="datetime-local" name="end_time" id="end_time" class="form-control" required>
+                                      </div>
+                                  </div>
+                                  
+
                     <div class="ln_solid"></div>
                     <div class="item form-group">
                         <div class="col-md-6 col-sm-6 offset-md-3">
