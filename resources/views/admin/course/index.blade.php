@@ -259,6 +259,19 @@
                                         <form action="{{ route('dashboard.course.delete', $course->id) }}" method="POST" style="display: inline-block;" onsubmit="return confirm('Are you sure you want to delete this attendance?');">
                                             @csrf
                                             @method('DELETE')
+
+                                            @if (session('success'))
+                                                <div class="alert alert-success">
+                                                    {{ session('success') }}
+                                                </div>
+                                            @endif
+
+                                            @if (session('error'))
+                                                <div class="alert alert-danger">
+                                                    {{ session('error') }}
+                                                </div>
+                                            @endif
+
                                             <button type="submit" class="btn btn-danger btn-sm">
                                                 Delete
                                             </button>

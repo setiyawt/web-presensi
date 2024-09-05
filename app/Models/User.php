@@ -8,6 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Spatie\Permission\Traits\HasRoles;
 
+
 class User extends Authenticatable
 {
     use HasFactory, Notifiable, HasRoles;
@@ -69,5 +70,9 @@ class User extends Authenticatable
 
     public function attendance(){
         return $this->hasMany(Attendance::class, 'user_id');
+    }
+
+    public function admin(){
+        return $this->hasOne(Admin::class, 'user_id');
     }
 }

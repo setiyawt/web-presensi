@@ -78,7 +78,7 @@
                       <li><a href="{{route('dashboard.tables_attend.table_student')}}">Siswa</a></li>
                     </ul>
                   </li>
-                  <li><a href="{{route('dashboard.attendance.create')}}"><i class="fa fa-plus"></i>Kehadiran Manual</a>
+                  <li><a href="{{route('dashboard.admin.create')}}"><i class="fa fa-plus"></i>Kehadiran Manual</a>
                   </li>
                   <li><a href=""><i class="fa fa-clipboard"></i> Jadwal Pelajaran </a></li>
                   <li><a href="contacts.html"><i class="fa fa-users"></i></i> Daftar Admin</a></li>
@@ -210,7 +210,7 @@
             </div>
 
             <div class="clearfix"></div>
-            
+
             <div class="row">
               <div class="col-md-12 col-sm-12 ">
                 <div class="x_panel">
@@ -219,54 +219,57 @@
                       <div class="row">
                           <div class="col-sm-12">
                             <div class="card-box table-responsive">
-                              <form action="{{ route('dashboard.schedule.create') }}" method="GET" style="display:inline;">
+                              <form action="{{ route('dashboard.admin_list.create') }}" method="GET" style="display:inline;">
                                 <button type="submit" class="btn btn-success btn-sm" style="margin-left: 10px; padding: 10px 20px;">
                                     Create
                                 </button>
-                            </form>                            
-                            
+                            </form>      
+                  
                               <table id="datatable-buttons" class="table table-striped table-bordered" style="width:100%">
-                                
                                 <thead>
-                                  
                                   <tr>
-                                    <th>ID</th>
-                                    
-                                    <th>Nama Pelajaran</th>
-                                    <th>Nama Kelas</th>
-                                    <th>Tanggal</th> 
-                                    <th>Jam Mulai</th>
-                                    <th>Jam Selesai</th>
+                                    <th>No</th>
+                                    <th>Nama</th>
+                                    <th>NUPTK</th>
+                                    <th>Password</th>
                                     <th>Aksi</th>
                                   </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach($schedules as $key => $schedule)
+                                  @foreach($admins as $key => $admin)
                                     <tr>
                                       <!-- No: Menggunakan $key + 1 untuk menghasilkan nomor urut -->
-                                        <td>{{ $key + 1 }}</td>
+                                      <td>{{ $key + 1 }}</td>
+                              
+                                      <!-- Nama: Mengambil dari relasi users melalui admin -->
+                                      <td>{{ $admin->name }}</td>
                                         
-                                        <td>{{ $schedule->course->name }}</td>
-
-                                        <td>{{ $schedule->classroom->name }}</td>
-                                        <!-- Tanggal: Extract the date from start_time -->
-                                        <td>{{ \Carbon\Carbon::parse($schedule->start_time)->locale('id')->translatedFormat('j F Y') }}</td>
-                                        
-                                        <!-- Jam Mulai: Extract the time from start_time -->
-                                        <td>{{ \Carbon\Carbon::parse($schedule->start_time)->format('H:i') }}</td>
-                                        
-                                        <!-- Jam Selesai: Extract the time from end_time -->
-                                        <td>{{ \Carbon\Carbon::parse($schedule->end_time)->format('H:i') }}</td>
-
+                                      <!-- NUPTK: Mengambil dari relasi users melalui admin -->
+                                      <td>{{ $admin->email }}</td>
+                                      
+                                      <!-- Password: Mengambil secara random -->
+                                      <td>
+                                        <!-- Tombol Reset Password -->
+                                        <form action="{{ route('dashboard.admin_list.reset_password', $admin->id) }}" method="GET">
+                                            @csrf
+                                            <button type="submit" class="btn btn-warning">Reset Password</button>
+                                        </form>
+                                    </td>
+                                    
+                                      
+                        
+                                    
+                                      
+                                      
                                       <!-- Aksi: Edit button -->
                                       <td style="display: flex; align-items: center;">
-                                        <form action="{{ route('dashboard.schedule.edit', $schedule->id) }}" method="GET" style="display: inline-block;">
+                                        <form action="{{ route('dashboard.admin_list.edit', $admin->id) }}" method="GET" style="display: inline-block;">
                                           <button type="submit" class="btn btn-primary btn-sm" style="margin-right: 5px;">
                                               Edit
                                           </button>
                                         </form>                                      
                                         
-                                        <form action="{{ route('dashboard.schedule.delete', $schedule->id) }}" method="POST" style="display: inline-block;" onsubmit="return confirm('Are you sure you want to delete this attendance?');">
+                                        <form action="{{ route('dashboard.admin_list.delete', $admin->id) }}" method="POST" style="display: inline-block;" onsubmit="return confirm('Are you sure you want to delete this admin?');">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="btn btn-danger btn-sm">

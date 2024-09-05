@@ -145,7 +145,16 @@ class CourseController extends Controller
     public function destroy($id)
     {
         $course = Course::findOrFail($id);
+
+        // Cek apakah ada jadwal yang menggunakan course ini
+        if ($course->schedules()->exists()) {
+            return redirect()->route('dashboard.course.index')->with('error', 'Pelajaran tidak bisa dihapus karena masih digunakan di jadwal.');
+        }
+
+        // Jika tidak digunakan, lanjutkan penghapusan
         $course->delete();
         return redirect()->route('dashboard.course.index')->with('success', 'Pelajaran berhasil dihapus');
     }
+
+
 }

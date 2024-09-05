@@ -124,8 +124,15 @@ class ClassroomController extends Controller
      */
     public function destroy($id)
     {
-        $classroom = classroom::findOrFail($id);
+        $classroom = Classroom::findOrFail($id);
+
+        // Cek apakah ada jadwal yang menggunakan course ini
+        if ($classroom->schedules()->exists()) {
+            return redirect()->route('dashboard.classroom.index')->with('error', 'Kelas tidak bisa dihapus karena masih digunakan di jadwal.');
+        }
+
+        // Jika tidak digunakan, lanjutkan penghapusan
         $classroom->delete();
-        return redirect()->route('dashboard.classroom.index')->with('success', 'Pelajaran berhasil dihapus');
+        return redirect()->route('dashboard.classroom.index')->with('success', 'Kelas berhasil dihapus');
     }
 }

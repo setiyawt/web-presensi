@@ -155,9 +155,54 @@ Route::middleware('auth')->group(function () {
         ->name('tables_attend.table_student');
 
         //Untuk menampilkan seluruh data admin
-        Route::get('/attendance/show/admins', [AdminController::class, 'index'])
+        Route::get('/admin_list/show/index', [AdminController::class, 'index'])
         ->middleware('role:admin')
-        ->name('tables_attend.table_admin');
+        ->name('admin_list.index');
+
+        //untuk menambahkan admin baru
+        
+        Route::get('/admin/create', [AdminController::class, 'create'])
+        ->middleware('role:admin')
+        ->name('admin.create');
+
+        //Untuk save admin baru
+        // Route::post('/admin/create', [AdminController::class, 'store'])
+        // ->middleware('role:admin')
+        // ->name('admin.store');
+
+        Route::get('/admin_list/create', [AdminController::class, 'create'])
+        ->middleware('role:admin')
+        ->name('admin_list.create');
+
+        //Untuk save admin baru
+        Route::post('/admin_list/create', [AdminController::class, 'store'])
+        ->middleware('role:admin')
+        ->name('admin_list.store');
+
+        Route::get('/admin_list/reset-password/{id}', [AdminController::class, 'resetPassword'])
+        ->middleware('role:admin')
+        ->name('admin_list.reset_password');
+
+        Route::post('/admin_list/store-password/{id}', [AdminController::class, 'storePassword'])
+        ->middleware('role:admin')
+        ->name('admin_list.storePassword');
+
+        Route::post('/admin_list/create', [AdminController::class, 'store'])
+        ->middleware('role:admin')
+        ->name('admin_list.store');
+
+        Route::get('/admin/edit/{id}', [AdminController::class, 'edit'])
+        ->middleware('role:admin')
+        ->name('admin_list.edit');
+
+         // Route untuk memperbarui data
+         Route::put('/admin/edit/{id}', [AdminController::class, 'update'])
+         ->middleware('role:admin')
+         ->name('admin_list.update');
+
+        Route::delete('/admin/delete/{id}', [AdminController::class, 'destroy'])
+        ->middleware('role:admin')
+        ->name('admin_list.delete');
 
 
         //Untuk menambahkan kehadiran secara manual (tanpa qr code) untuk student & teacher
@@ -175,35 +220,6 @@ Route::middleware('auth')->group(function () {
         ->middleware('role:admin')
         ->name('attendance.delete');
 
-        //Untuk menyimpan kehadiran secara manual (tanpa qr code) untuk student
-        Route::post('/attendance/students/save/{student}', [AttendanceController::class, 'store_students_attendance'])
-        ->middleware('role:admin')
-        ->name('attendance.students.store');
-    
-        //Untuk menyimpan kehadiran secara manual (tanpa qr code) untuk teacher
-        Route::post('/attendance/teachers/save/{teacher}', [AttendanceController::class, 'store_students_attendance'])
-        ->middleware('role:admin')
-        ->name('attendance.teachers.store');
-
-        // Untuk melihat kehadiran siswa oleh siswa itu sendiri
-        Route::get('/attendance/students/show/{student}', [AttendanceController::class, 'show_attendance_students_id'])
-        ->middleware('role:student')
-        ->name('attendance.students.self.show');
-
-        // Untuk melihat semua kehadiran siswa oleh guru
-        Route::get('/attendance/students/show/all/{student}', [AttendanceController::class, 'show_attendance_students'])
-        ->middleware('role:teacher')
-        ->name('attendance.students.show.all');
-
-        //Untuk status selesai melakukan kehadiran student 
-        Route::get('/attendance/students/finished/{student}', [AttendanceController::class, 'attendance_students_finished'])
-        ->middleware('role:student')
-        ->name('attendance.students.finished');
-        
-        //Untuk status selesai melakukan kehadiran teacher 
-        Route::get('/attendance/teachers/finished/{teacher}', [AttendanceController::class, 'attendance_students_finished'])
-        ->middleware('role:teacher')
-        ->name('attendance.teachers.finished');
 
         //Untuk create qr code kehadiran students 
         Route::post('/qrcode/students', [QrcodeController::class, 'qrcode_generate'])

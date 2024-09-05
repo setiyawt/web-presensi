@@ -81,7 +81,7 @@
                   <li><a href="{{route('dashboard.classroom.index')}}"><i class="fa fa-plus"></i>Daftar Kelas</a>
                   </li>
                   <li><a href="{{route('dashboard.schedule.index')}}"><i class="fa fa-clipboard"></i> Jadwal Pelajaran </a></li>
-                  <li><a href="{{route('dashboard.tables_attend.table_admin')}}"><i class="fa fa-users"></i></i> Daftar Admin</a></li>
+                  <li><a href="{{route('dashboard.admin_list.index')}}"><i class="fa fa-users"></i></i> Daftar Admin</a></li>
                   <li><a href="profile.html"><i class="fa fa-user"></i>Profile</a></li>
                 </ul>
               </div>
