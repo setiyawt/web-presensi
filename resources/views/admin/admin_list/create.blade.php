@@ -246,44 +246,53 @@
 							<div class="x_content">
 								<br />
 
-								<form action="{{ route('dashboard.admin_list.store') }}" method="POST">
-                                    @csrf
-                                    
-                                    <div class="item form-group">
-                                        <label class="col-form-label col-md-3 col-sm-3 label-align" for="name">Nama<span class="required">*</span></label>
-                                        <div class="col-md-6 col-sm-6">
-                                          <input type="text" name="name" id="name" class="form-control" required>
-                                        </div>
-                                    </div>
-                                    <div class="item form-group">
-                                        <label class="col-form-label col-md-3 col-sm-3 label-align" for="email">NUPTK<span class="required">*</span></label>
-                                        <div class="col-md-6 col-sm-6">
-                                          <input type="text" name="email" id="email" class="form-control" required>
-                                        </div>
-                                    </div>
-
-                                    <div class="item form-group">
-                                      <label class="col-form-label col-md-3 col-sm-3 label-align" for="password">Password<span class="required">*</span></label>
-                                      <div class="col-md-6 col-sm-6">
-                                        <input type="password" name="password" id="password" class="form-control" required>
-                                      </div>
-                                  </div>
-                                    <div class="item form-group">
-                                      <label class="col-form-label col-md-3 col-sm-3 label-align" for="password_confirmation">Confirm Password<span class="required">*</span></label>
-                                      <div class="col-md-6 col-sm-6">
-                                        <input type="password" name="password_confirmation" id="password_confirmation" class="form-control" required>
-                                      </div>
-                                  </div>
-                                  
-                                    <div class="ln_solid"></div>
-                                    <div class="item form-group">
-                                        <div class="col-md-6 col-sm-6 offset-md-3">
-                                            <button class="btn btn-primary" type="button" onclick="window.history.back()">Cancel</button>
-                                            <button class="btn btn-primary" type="reset">Reset</button>
-                                            <button type="submit" class="btn btn-success">Submit</button>
-                                        </div>
-                                    </div>
-                </form>
+								<form action="{{ route('dashboard.admin_list.store') }}" enctype="multipart/form-data" method="POST">
+                  @csrf
+                  
+                  <div class="item form-group">
+                      <label class="col-form-label col-md-3 col-sm-3 label-align" for="name">Nama<span class="required">*</span></label>
+                      <div class="col-md-6 col-sm-6">
+                          <input type="text" name="name" id="name" class="form-control" required>
+                      </div>
+                  </div>
+                  <div class="item form-group">
+                      <label class="col-form-label col-md-3 col-sm-3 label-align" for="email">NUPTK<span class="required">*</span></label>
+                      <div class="col-md-6 col-sm-6">
+                          <input type="text" name="email" id="email" class="form-control" required>
+                      </div>
+                  </div>
+              
+                  <div class="item form-group">
+                      <label class="col-form-label col-md-3 col-sm-3 label-align" for="password">Password<span class="required">*</span></label>
+                      <div class="col-md-6 col-sm-6">
+                          <input type="password" name="password" id="password" class="form-control" required>
+                      </div>
+                  </div>
+                  <div class="item form-group">
+                      <label class="col-form-label col-md-3 col-sm-3 label-align" for="password_confirmation">Confirm Password<span class="required">*</span></label>
+                      <div class="col-md-6 col-sm-6">
+                          <input type="password" name="password_confirmation" id="password_confirmation" class="form-control" required>
+                      </div>
+                  </div>
+              
+                  <!-- Input untuk upload foto -->
+                  <div class="item form-group">
+                      <label class="col-form-label col-md-3 col-sm-3 label-align" for="photo">Foto</label>
+                      <div class="col-md-6 col-sm-6">
+                          <input type="file" name="photo" id="photo" class="form-control" accept="image/*">
+                      </div>
+                  </div>
+              
+                  <div class="ln_solid"></div>
+                  <div class="item form-group">
+                      <div class="col-md-6 col-sm-6 offset-md-3">
+                          <button class="btn btn-primary" type="button" onclick="window.history.back()">Cancel</button>
+                          <button class="btn btn-primary" type="reset">Reset</button>
+                          <button type="submit" class="btn btn-success">Submit</button>
+                      </div>
+                  </div>
+              </form>
+              
                                 
                                 
                                 

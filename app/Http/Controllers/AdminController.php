@@ -6,6 +6,8 @@ use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 
 class AdminController extends Controller
 {
@@ -47,45 +49,65 @@ class AdminController extends Controller
     }
 
     public function store(Request $request)
+    {
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|max:255|unique:users',
+            'password' => 'required|string|min:8|confirmed',
+            'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Validasi foto
+        ]);
+
+        $path = $request->file('photo') ? $request->file('photo')->store('photos', 'public') : null;
+
+        User::create([
+            'name' => $validated['name'],
+            'email' => $validated['email'],
+            'password' => Hash::make($validated['password']),
+            'photo' => $path, // Simpan path foto
+            'role' => 'admin',
+        ]);
+
+        return redirect()->route('dashboard.admin_list.index')->with('success', 'Data berhasil disimpan.');
+    }
+
+    public function update(Request $request, $userId)
 {
-    // Validasi data
     $validated = $request->validate([
         'name' => 'required|string|max:255',
-        'email' => 'required|string|max:255|unique:users',
-        'password' => 'required|string|min:8|confirmed',
+        'email' => 'required|string|max:255|unique:users,email,' . $userId,
+        'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
     ]);
 
-    // Simpan data ke database dengan role 'admin' sebagai default
-    User::create([
-        'name' => $validated['name'],
-        'email' => $validated['email'],
-        'password' => Hash::make($validated['password']),
-        'role' => 'admin', // Default role as admin
-    ]);
+    $user = User::findOrFail($userId);
 
-    // Redirect atau return response
-    return redirect()->route('dashboard.admin_list.index')->with('success', 'Data berhasil disimpan.');
+    if ($request->hasFile('photo')) {
+        if ($user->photo) {
+            Storage::disk('public')->delete($user->photo);
+        }
+
+        $path = $request->file('photo')->store('photos', 'public');
+        if ($path) {
+            $user->photo = $path;
+            Log::info('Photo updated: ' . $path); // Add logging
+        } else {
+            Log::error('Failed to store photo'); // Log error if storage fails
+            return redirect()->back()->with('error', 'Failed to upload photo.');
+        }
+    }
+
+    $user->name = $validated['name'];
+    $user->email = $validated['email'];
+
+    if ($user->save()) {
+        Log::info('User updated successfully: ' . $user->id); // Log successful update
+        return redirect()->route('dashboard.admin_list.index')->with('success', 'Data berhasil diubah.');
+    } else {
+        Log::error('Failed to update user: ' . $user->id); // Log error if save fails
+        return redirect()->back()->with('error', 'Failed to update user.');
+    }
 }
 
 
-    public function update(Request $request, $userId)
-    {
-        $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'max:255', 'unique:users,email,' . $userId],
-            
-        ]);
-
-        $user = User::findOrFail($userId);
-        $user->name = $request->name;
-        $user->email = $request->email;
-
-        
-
-        $user->save();
-
-        return redirect()->route('dashboard.admin_list.index')->with('success', 'Data berhasil diubah.');
-    }
 
     public function destroy($userId)
     {

@@ -73,19 +73,11 @@
                 <ul class="nav side-menu">
                 
                 
-                  <li><a href="{{route('dashboard.index')}}"><i class="fa fa-plus"></i> Buat QrCode</a></li>
-                  <li><a><i class="fa fa-table"></i> Kehadiran <span class="fa fa-chevron-down"></span></a>
-                    <ul class="nav child_menu">
-                      
-                    <li><a href="{{route('dashboard.tables_attend.table_teacher')}}">Guru</a></li>
-                      <li><a href="{{route('dashboard.tables_attend.table_student')}}">Siswa</a></li>
-                    </ul>
-                  </li>
-                  <li><a href="{{route('dashboard.attendance.create')}}"><i class="fa fa-plus"></i>Kehadiran Manual</a>
-                  </li>
-                  <li><a href="chartjs.html"><i class="fa fa-clipboard"></i> Jadwal Pelajaran </a></li>
-                  <li><a href="contacts.html"><i class="fa fa-users"></i></i> Daftar Admin</a></li>
-                  <li><a href="profile.html"><i class="fa fa-user"></i>Profile</a></li>
+                  <li><a href="{{route('dashboard.teacher.index')}}"><i class="fa fa-plus"></i> Buat Qr Code Kehadiran</a></li>
+                  <li><a href="{{route('dashboard.student_attend.index')}}"><i class="fa fa-list"></i> Kehadiran Siswa</a></li>
+            
+                  <li><a href="{{route('dashboard.teacher_schedule.index')}}"><i class="fa fa-clipboard"></i> Jadwal Pelajaran </a></li>
+                  
                 </ul>
               </div>
 
@@ -106,9 +98,12 @@
               <a data-toggle="tooltip" data-placement="top" title="Lock">
                 <span class="glyphicon glyphicon-eye-close" aria-hidden="true"></span>
               </a>
-              <a data-toggle="tooltip" data-placement="top" title="Logout" href="login.html">
+              <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                @csrf
+              </form>
+              <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" data-toggle="tooltip" data-placement="top" title="Logout">
                 <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
-              </a>
+            </a>
             </div>
             <!-- /menu footer buttons -->
           </div>

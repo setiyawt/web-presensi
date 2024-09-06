@@ -73,7 +73,7 @@
                 <ul class="nav side-menu">
                 
                 
-                  <li><a href="{{route('dashboard.index')}}"><i class="fa fa-plus"></i> Buat QrCode</a></li>
+                  <li><a href="{{route('dashboard.teacher.index')}}"><i class="fa fa-plus"></i> Buat QrCode</a></li>
                   <li><a><i class="fa fa-table"></i> Kehadiran <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                       

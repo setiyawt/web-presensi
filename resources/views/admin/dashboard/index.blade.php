@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="icon" href="{{asset('lte/images/favicon.ico')}}" type="image/ico" />
 
-    <title>Gentelella Alela!</title>
+    <title>SMP 3 Muhammadiyah</title>
 
     <!-- Bootstrap -->
     <link href="{{asset('lte/vendors/bootstrap/dist/css/bootstrap.min.css')}}" rel="stylesheet">
@@ -28,7 +28,7 @@
     <link href="{{asset('lte/vendors/bootstrap-daterangepicker/daterangepicker.css')}}" rel="stylesheet">
 
     <!-- Custom Theme Style -->
-    <link href="{{asset('lte/build/css/custom.min.css')}}" rel="stylesheet">
+    <link href="{{asset('lte/build/css/custom.css')}}" rel="stylesheet">
   </head>
 
   <body class="nav-md">
@@ -38,7 +38,7 @@
         <div class="col-md-3 left_col">
           <div class="left_col scroll-view">
             <div class="navbar nav_title" style="border: 0;">
-              <a href="index.html" class="site_title"><i class="fa fa-paw"></i> <span>Gentelella Alela!</span></a>
+              <a href={{route('dashboard.admin.index')}} class="site_title"><i class="fa fa-server"></i><span> Administrator</span></a>
             </div>
 
             <div class="clearfix"></div>
@@ -46,11 +46,11 @@
             <!-- menu profile quick info -->
             <div class="profile clearfix">
               <div class="profile_pic">
-                <img src="{{asset('lte/production/images/img.jpg')}}" alt="..." class="img-circle profile_img">
+                <img src="{{ $user->photo ? asset('storage/' . $user->photo) : asset('images/default-image.jpg') }}" alt="Photo User" class="img-circle profile_img">
               </div>
               <div class="profile_info">
                 <span>Welcome,</span>
-                <h2>John Doe</h2>
+                <h2>{{ $user->name }}</h2>
               </div>
             </div>
             <!-- /menu profile quick info -->
@@ -74,15 +74,22 @@
                       <li><a href="{{route('dashboard.tables_attend.table_student')}}">Siswa</a></li>
                     </ul>
                   </li>
-                  <li><a href="{{route('dashboard.attendance.create')}}"><i class="fa fa-plus"></i>Buat QrCode</a>
+                  <li><a href="{{route('dashboard.attendance.create')}}"><i class="fa fa-plus"></i>Buat Qr Code Kehadiran</a>
                   </li>
-                  <li><a href="{{route('dashboard.course.index')}}"><i class="fa fa-plus"></i>Daftar Pelajaran</a>
+                  <li><a href="{{route('dashboard.course.index')}}"><i class="fa fa-list"></i>Daftar Pelajaran</a>
                   </li>
-                  <li><a href="{{route('dashboard.classroom.index')}}"><i class="fa fa-plus"></i>Daftar Kelas</a>
+                  <li><a href="{{route('dashboard.classroom.index')}}"><i class="fa fa-list-alt"></i>Daftar Kelas</a>
                   </li>
                   <li><a href="{{route('dashboard.schedule.index')}}"><i class="fa fa-clipboard"></i> Jadwal Pelajaran </a></li>
-                  <li><a href="{{route('dashboard.admin_list.index')}}"><i class="fa fa-users"></i></i> Daftar Admin</a></li>
-                  <li><a href="profile.html"><i class="fa fa-user"></i>Profile</a></li>
+                  <li><a href="{{route('dashboard.each_schedule.index')}}"><i class="fa fa-clipboard"></i> Jadwal Guru & Siswa </a></li>
+                  <li><a><i class="fa fa-credit-card"></i> Daftar Pengguna <span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                      <li><a href="{{route('dashboard.admin_list.index')}}">Daftar Admin</a></li>
+              
+                    </ul>
+                  </li>
+                  
+                  
                 </ul>
               </div>
 
@@ -127,7 +134,9 @@
               <ul class=" navbar-right">
                 <li class="nav-item dropdown open" style="padding-left: 15px;">
                   <a href="javascript:;" class="user-profile dropdown-toggle" aria-haspopup="true" id="navbarDropdown" data-toggle="dropdown" aria-expanded="false">
-                    <img src="{{asset('lte/production/images/img.jpg')}}" alt="">John Doe
+                    <img src="{{ $user->photo ? asset('storage/' . $user->photo) : asset('images/default-image.jpg') }}" alt="">{{$user->name}}
+                    
+                    
                   </a>
                   <div class="dropdown-menu dropdown-usermenu pull-right" aria-labelledby="navbarDropdown">
                     <a class="dropdown-item"  href="javascript:;"> Profile</a>
@@ -142,56 +151,7 @@
 
                 <li role="presentation" class="nav-item dropdown open">
                   
-                  <ul class="dropdown-menu list-unstyled msg_list" role="menu" aria-labelledby="navbarDropdown1">
-                    <li class="nav-item">
-                      <a class="dropdown-item">
-                        <span class="image"><img src="{{asset('production/images/img.jpg')}}" alt="Profile Image" /></span>
-                        <span>
-                          <span>John Smith</span>
-                          <span class="time">3 mins ago</span>
-                        </span>
-                        
-                      </a>
-                    </li>
-                    <li class="nav-item">
-                      <a class="dropdown-item">
-                        <span class="image"><img src="{{asset('production/images/img.jpg')}}" alt="Profile Image" /></span>
-                        <span>
-                          <span>John Smith</span>
-                          <span class="time">3 mins ago</span>
-                        </span>
-                        
-                      </a>
-                    </li>
-                    <li class="nav-item">
-                      <a class="dropdown-item">
-                        <span class="image"><img src="{{asset('images/img.jpg')}}" alt="Profile Image" /></span>
-                        <span>
-                          <span>John Smith</span>
-                          <span class="time">3 mins ago</span>
-                        </span>
-                        
-                      </a>
-                    </li>
-                    <li class="nav-item">
-                      <a class="dropdown-item">
-                        <span class="image"><img src="{{asset('production/images/img.jpg')}}" alt="Profile Image" /></span>
-                        <span>
-                          <span>John Smith</span>
-                          <span class="time">3 mins ago</span>
-                        </span>
-                        
-                      </a>
-                    </li>
-                    <li class="nav-item">
-                      <div class="text-center">
-                        <a class="dropdown-item">
-                          <strong>See All Alerts</strong>
-                          <i class="fa fa-angle-right"></i>
-                        </a>
-                      </div>
-                    </li>
-                  </ul>
+                 
                 </li>
               </ul>
             </nav>
@@ -283,7 +243,7 @@
         <!-- footer content -->
         <footer>
           <div class="pull-right">
-            SMPN 3 Muhammadiyah
+            SMP 3 Muhammadiyah
           </div>
           <div class="clearfix"></div>
         </footer>

@@ -13,16 +13,12 @@ return new class extends Migration
     {
         Schema::create('each_schedule', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->foreignId('user_schedule_id')->constrained()->onDelete('cascade');
+            
             $table->timestamps();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
-    public function down(): void
-    {
-        Schema::dropIfExists('each_schedule');
-    }
+    
 };

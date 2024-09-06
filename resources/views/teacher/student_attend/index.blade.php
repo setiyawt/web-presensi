@@ -70,19 +70,12 @@
                 
                 <ul class="nav side-menu">
                 
-                  <li><a href="{{route('dashboard.admin.index')}}"><i class="fa fa-home"></i> Home</a></li>
-                  <li><a><i class="fa fa-table"></i> Kehadiran <span class="fa fa-chevron-down"></span></a>
-                    <ul class="nav child_menu">
-                      
-                    <li><a href="{{route('dashboard.tables_attend.table_teacher')}}">Guru</a></li>
-                      <li><a href="{{route('dashboard.tables_attend.table_student')}}">Siswa</a></li>
-                    </ul>
-                  </li>
-                  <li><a href="{{route('dashboard.attendance.create')}}"><i class="fa fa-plus"></i>Kehadiran Manual</a>
-                  </li>
-                  <li><a href=""><i class="fa fa-clipboard"></i> Jadwal Pelajaran </a></li>
-                  <li><a href="contacts.html"><i class="fa fa-users"></i></i> Daftar Admin</a></li>
-                  <li><a href="profile.html"><i class="fa fa-user"></i>Profile</a></li>
+                
+                  <li><a href="{{route('dashboard.teacher.index')}}"><i class="fa fa-plus"></i> Buat Qr Code Kehadiran</a></li>
+                  <li><a href="{{route('dashboard.student_attend.index')}}"><i class="fa fa-list"></i> Kehadiran Siswa</a></li>
+            
+                  <li><a href="chartjs.html"><i class="fa fa-clipboard"></i> Jadwal Pelajaran </a></li>
+                  
                 </ul>
               </div>
 

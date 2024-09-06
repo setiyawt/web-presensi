@@ -28,6 +28,22 @@ class StudentController extends Controller
         
     }
 
+    public function indexTeacher()
+    {
+        // Mengambil attendance yang user-nya memiliki role student
+        $attendances = Attendance::whereHas('user', function($query) {
+            $query->role('student'); // Pastikan 'student' adalah role yang sesuai.
+        })
+        ->orderBy('id', 'DESC')
+        ->get();
+        
+
+        return view('teacher.student_attend.index', [
+            'attendances' => $attendances,
+        ]);
+        
+    }
+
     public function scopeRole($query, $roleName)
     {
         return $query->whereHas('roles', function($q) use ($roleName) {

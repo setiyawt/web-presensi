@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\UserSchedule;
 use App\Models\Course;
 use App\Models\Classroom;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Http\Request;
@@ -16,6 +17,8 @@ class UserScheduleController extends Controller
         $schedules = UserSchedule::with('course', 'classroom')->get();
         return view('admin.schedule.index', compact('schedules'));
     }
+
+    
 
     public function create()
     {

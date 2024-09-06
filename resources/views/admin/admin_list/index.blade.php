@@ -229,6 +229,7 @@
                                 <thead>
                                   <tr>
                                     <th>No</th>
+                                    <th>Foto</th>
                                     <th>Nama</th>
                                     <th>NUPTK</th>
                                     <th>Password</th>
@@ -240,7 +241,14 @@
                                     <tr>
                                       <!-- No: Menggunakan $key + 1 untuk menghasilkan nomor urut -->
                                       <td>{{ $key + 1 }}</td>
-                              
+                                      
+                                      <!-- Foto: Mengambil dari relasi users melalui admin -->
+                                      <td>
+                                        <img src="{{ $admin->photo ? asset('storage/' . $admin->photo) : asset('storage/app/public/photos/default-image.jpg') }}" alt="User Photo" style="width: 100px; height: auto;">
+                                    </td>
+                                    
+                                    
+                                      
                                       <!-- Nama: Mengambil dari relasi users melalui admin -->
                                       <td>{{ $admin->name }}</td>
                                         
@@ -254,6 +262,7 @@
                                             @csrf
                                             <button type="submit" class="btn btn-warning">Reset Password</button>
                                         </form>
+                                      
                                     </td>
                                     
                                       
