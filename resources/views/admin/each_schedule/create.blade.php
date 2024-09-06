@@ -247,49 +247,38 @@
 								<br />
 
 								<form action="{{ route('dashboard.each_schedule.store') }}" method="POST">
-                                    @csrf
-                                    <div class="item form-group">
-                                        <label class="col-form-label col-md-3 col-sm-3 label-align" for="course_id">Nama Pelajaran <span class="required">*</span></label>
-                                        <div class="col-md-6 col-sm-6">
-                                            <select id="course" name="course_id" required="required" class="form-control">
-                                                <option value="">Pilih Pelajaran</option>
-                                                @foreach($courses as $course)
-                                                    <option value="{{ $course->id }}">{{ $course->name }}</option>
-                                                @endforeach
-                                                
-                                            </select>
-                                        </div>
-                                    </div>
-                                    
-                                    
-                                    <!-- Kelas (Classroom) Select Field -->
-                                  <div class="item form-group">
-                                    <label class="col-form-label col-md-3 col-sm-3 label-align" for="classroom_id">Kelas <span class="required">*</span></label>
-                                    <div class="col-md-6 col-sm-6">
-                                        <select id="classroom" name="classroom_id" required="required" class="form-control">
-                                            <option value="">Pilih Kelas</option>
-                                            @foreach($classrooms as $classroom)
-                                                <option value="{{ $classroom->id }}">{{ $classroom->name }}</option>
-                                            @endforeach
-                                            
-                                        </select>
-                                    </div>
-                                  </div>
-                
-                                    <div class="item form-group">
-                                      <label class="col-form-label col-md-3 col-sm-3 label-align" for="start_time">Waktu Pelajaran Mulai<span class="required">*</span></label>
-                                      <div class="col-md-6 col-sm-6 ">
-                                          <input type="datetime-local" name="start_time" id="start_time" class="form-control" required>
-                                      </div>
-                                  </div>
-                                  
-                                  <div class="item form-group">
-                                      <label class="col-form-label col-md-3 col-sm-3 label-align" for="end_time">Waktu Pelajaran Selesai<span class="required">*</span></label>
-                                      <div class="col-md-6 col-sm-6 ">
-                                          <input type="datetime-local" name="end_time" id="end_time" class="form-control" required>
-                                      </div>
-                                  </div>
-                                  
+                    @csrf
+                    <div class="item form-group">
+                      <label class="col-form-label col-md-3 col-sm-3 label-align" for="email">Select User Email: <span class="required">*</span></label>
+                      <div class="col-md-6 col-sm-6">
+                          <select name="user_id" id="email" required="required" class="form-control">
+                              <option value="">Pilih Email</option>
+                              @foreach($users as $user)
+                                  <option value="{{ $user->id }}">{{ $user->email }}</option>
+                              @endforeach
+                              
+                          </select>
+                      </div>
+                    </div>
+                    
+                    <div class="item form-group">
+                      <label class="col-form-label col-md-3 col-sm-3 label-align" for="user_schedule_id">Jadwal: <span class="required">*</span></label>
+                      <div class="col-md-6 col-sm-6">
+                          <select name="user_schedule_id" id="user_schedule_id" required="required" class="form-control">
+                              <option value="">Pilih Jadwal</option>
+                              @foreach($schedules as $schedule)
+                                  <option value="{{ $schedule->id }}">
+                                      {{ $schedule->course->name ?? 'Nama kursus tidak tersedia' }},
+                                      {{ $schedule->classroom->name ?? 'Nama kelas tidak tersedia' }},
+                                      {{ $schedule->start_time_formatted ?? 'Tanggal tidak tersedia' }},
+                                      {{ $schedule->start_time_formatted ?? 'Jam mulai tidak tersedia' }} -
+                                      {{ $schedule->end_time_formatted ?? 'Jam selesai tidak tersedia' }}
+                                  </option>
+                              @endforeach
+                              
+                          </select>
+                      </div>
+                    </div>   
 
                     <div class="ln_solid"></div>
                     <div class="item form-group">

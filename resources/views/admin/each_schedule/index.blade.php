@@ -219,7 +219,7 @@
                       <div class="row">
                           <div class="col-sm-12">
                             <div class="card-box table-responsive">
-                              <form action="{{ route('dashboard.schedule.create') }}" method="GET" style="display:inline;">
+                              <form action="{{ route('dashboard.each_schedule.create') }}" method="GET" style="display:inline;">
                                 <button type="submit" class="btn btn-success btn-sm" style="margin-left: 10px; padding: 10px 20px;">
                                     Create
                                 </button>
@@ -252,13 +252,13 @@
 
                                         <td>{{ $schedule->userSchedule->classroom->name }}</td>
                                         <!-- Tanggal: Extract the date from start_time -->
-                                        <td>{{ \Carbon\Carbon::parse($schedule->start_time)->locale('id')->translatedFormat('j F Y') }}</td>
+                                        <td>{{ \Carbon\Carbon::parse($schedule->userSchedule->start_time)->locale('id')->translatedFormat('j F Y') }}</td>
                                         
                                         <!-- Jam Mulai: Extract the time from start_time -->
-                                        <td>{{ \Carbon\Carbon::parse($schedule->start_time)->format('H:i') }}</td>
+                                        <td>{{ \Carbon\Carbon::parse($schedule->userSchedule->start_time)->format('H:i') }}</td>
                                         
                                         <!-- Jam Selesai: Extract the time from end_time -->
-                                        <td>{{ \Carbon\Carbon::parse($schedule->end_time)->format('H:i') }}</td>
+                                        <td>{{ \Carbon\Carbon::parse($schedule->userSchedule->end_time)->format('H:i') }}</td>
 
                                       <!-- Aksi: Edit button -->
                                       <td style="display: flex; align-items: center;">

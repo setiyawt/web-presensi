@@ -24,4 +24,14 @@ class EachSchedule extends Model
     {
         return $this->belongsTo(UserSchedule::class, 'user_schedule_id');
     }
+
+    public function course()
+    {
+        return $this->userSchedule->course(); // jika course ada di UserSchedule
+    }
+
+    public function classroom()
+    {
+        return $this->userSchedule->classroom(); // jika classroom ada di UserSchedule
+    }
 }
