@@ -85,7 +85,7 @@
                   <li><a><i class="fa fa-credit-card"></i> Daftar Pengguna <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                       <li><a href="{{route('dashboard.admin_list.index')}}">Daftar Admin</a></li>
-              
+                      <li><a href="{{route('dashboard.teacher_list.index')}}">Daftar Guru</a></li>
                     </ul>
                   </li>
                   

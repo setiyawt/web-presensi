@@ -6,6 +6,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Teacher;
 use App\Models\Attendance;
+use Illuminate\Support\Facades\Auth;
+use App\Models\User;
 
 class TeacherController extends Controller
 {
@@ -49,7 +51,14 @@ class TeacherController extends Controller
     }
 
    
+    public function indexListTeacher() {
+        $teachers = User::where('role', 'teacher')->get();
+        return view('admin.teacher_list.index', compact('teachers'));
+    }
 
+    public function createTeacherList(){
+
+    }
    
 
     /**
@@ -87,8 +96,23 @@ class TeacherController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(teacher $teacher)
+    public function destroy($userId)
     {
-        //
+        // Mendapatkan pengguna yang sedang login
+        $currentUser = Auth::user();
+
+        // Memeriksa apakah ID pengguna yang ingin dihapus sama dengan ID pengguna yang sedang login
+        if ($currentUser->id == $userId) {
+            // Redirect atau tampilkan pesan error jika pengguna mencoba menghapus dirinya sendiri
+            return redirect()->route('dashboard.teacher_list.index')
+                ->with('error', 'Anda tidak dapat menghapus akun Anda sendiri.');
+        }
+
+        // Jika ID pengguna tidak sama, lanjutkan dengan penghapusan
+        $user = User::findOrFail($userId);
+        $user->delete();
+
+        return redirect()->route('dashboard.teacher_list.index')
+            ->with('success', 'Pengguna berhasil dihapus.');
     }
 }

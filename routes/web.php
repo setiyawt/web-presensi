@@ -13,6 +13,7 @@ use App\Http\Controllers\StudentScheduleController;
 use App\Http\Controllers\UserScheduleController;
 use App\Http\Models\User;
 use App\Models\Attendance;
+use App\Models\Teacher;
 use App\Models\UserSchedule;
 use GuzzleHttp\Promise\Each;
 use Illuminate\Support\Facades\Route;
@@ -232,6 +233,45 @@ Route::middleware('auth')->group(function () {
         Route::get('/admin/edit/{id}', [AdminController::class, 'edit'])
         ->middleware('role:admin')
         ->name('admin_list.edit');
+
+        //Untuk save teacher list
+
+        Route::get('/teacher_list/create', [TeacherController::class, 'createTeacherList'])
+        ->middleware('role:admin')
+        ->name('teacher_list.create');
+
+        Route::get('/teacher_list/show/index', [TeacherController::class, 'indexListTeacher'])
+        ->middleware('role:admin')
+        ->name('teacher_list.index');
+
+        Route::post('/teacher_list/create', [TeacherController::class, 'store'])
+        ->middleware('role:admin')
+        ->name('teacher_list.store');
+
+        Route::get('/teacher_list/reset-password/{id}', [TeacherController::class, 'resetPassword'])
+        ->middleware('role:admin')
+        ->name('teacher_list.reset_password');
+
+        Route::post('/teacher_list/store-password/{id}', [TeacherController::class, 'storePassword'])
+        ->middleware('role:admin')
+        ->name('teacher_list.storePassword');
+
+        Route::post('/teacher_list/create', [TeacherController::class, 'store'])
+        ->middleware('role:admin')
+        ->name('teacher_list.store');
+
+        Route::get('/teacher/edit/{id}', [TeacherController::class, 'edit'])
+        ->middleware('role:admin')
+        ->name('teacher_list.edit');
+
+        // Route untuk memperbarui data teacher
+        Route::put('/teacher/edit/{id}', [TeacherController::class, 'update'])
+        ->middleware('role:admin')
+        ->name('teacher_list.update');
+
+       Route::delete('/teacher/delete/{id}', [TeacherController::class, 'destroy'])
+       ->middleware('role:admin')
+       ->name('teacher_list.delete');
 
          // Route untuk memperbarui data
          Route::put('/admin/edit/{id}', [AdminController::class, 'update'])

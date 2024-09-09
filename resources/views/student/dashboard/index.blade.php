@@ -74,7 +74,7 @@
                 <ul class="nav side-menu">
                 
                 
-                  <li><a href="{{route('dashboard.index')}}"><i class="fa fa-plus"></i> Buat QrCode</a></li>
+                  <li><a href="{{route('dashboard.student.index')}}"><i class="fa fa-plus"></i> Buat QrCode</a></li>
                   <li><a><i class="fa fa-table"></i> Kehadiran <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                       
@@ -109,8 +109,12 @@
               <a data-toggle="tooltip" data-placement="top" title="Lock">
                 <span class="glyphicon glyphicon-eye-close" aria-hidden="true"></span>
               </a>
-              <a data-toggle="tooltip" data-placement="top" title="Logout" href="login.html">
-                <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
+              <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                @csrf
+              </form>
+              
+              <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" data-toggle="tooltip" data-placement="top" title="Logout">
+                  <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
               </a>
             </div>
             <!-- /menu footer buttons -->
