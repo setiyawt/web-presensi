@@ -39,8 +39,9 @@ class AttendanceController extends Controller
     {
         $courses = Course::all();
         $classrooms = Classroom::all();
-
-        return view('admin.attendance.create', compact('courses', 'classrooms'));
+        $user = Auth::user();
+        
+        return view('admin.attendance.create', compact('courses', 'classrooms', 'user'));
     }
 
     /**
@@ -50,18 +51,25 @@ class AttendanceController extends Controller
     {
         try {
             $user = Auth::user();
+
+            // Cek apakah pengguna terotentikasi
             if (!$user) {
                 return response()->json(['error' => 'User not authenticated'], 401);
             }
 
+            // Cek apakah pengguna memiliki role "student"
+            if ($user->role !== 'student') {
+                return response()->json(['error' => 'Unauthorized, only students can record attendance'], 403);
+            }
+
             Log::info('Received request data: ' . json_encode($request->all()));
 
-            // Validate the incoming request
+            // Validasi input
             $validatedData = $request->validate([
                 'qr_code_id' => 'required|integer|exists:qrcodes,id',
             ]);
 
-            // Check if an attendance record already exists for this user and QR code today
+            // Cek apakah sudah ada record kehadiran hari ini
             $existingAttendance = Attendance::where('user_id', $user->id)
                 ->where('qr_code_id', $validatedData['qr_code_id'])
                 ->whereDate('scan_at', Carbon::today())
@@ -71,7 +79,7 @@ class AttendanceController extends Controller
                 return response()->json(['error' => 'Attendance already recorded for today'], 422);
             }
 
-            // Create the attendance record
+            // Simpan record kehadiran baru
             $attendance = new Attendance();
             $attendance->qr_code_id = $validatedData['qr_code_id'];
             $attendance->user_id = $user->id;
@@ -88,7 +96,63 @@ class AttendanceController extends Controller
             Log::error('Error in AttendanceController@store: ' . $e->getMessage());
             return response()->json(['error' => 'Failed to record attendance: ' . $e->getMessage()], 500);
         }
-    }    
+    }
+    
+    public function teacher_create_scan() {
+        return view('teacher.teacher_scan.scan');
+    }
+
+    public function teacher_scan(Request $request) {
+    try {
+        $user = Auth::user();
+
+        // Cek apakah pengguna terotentikasi
+        if (!$user) {
+            return response()->json(['error' => 'User not authenticated'], 401);
+        }
+
+        // Cek apakah pengguna memiliki role "teacher"
+        if ($user->role !== 'teacher') {
+            return response()->json(['error' => 'Unauthorized, only teachers can record attendance'], 403);
+        }
+
+        Log::info('Received request data: ' . json_encode($request->all()));
+
+        // Validasi input
+        $validatedData = $request->validate([
+            'qr_code_id' => 'required|integer|exists:qrcodes,id',
+        ]);
+
+        // Cek apakah sudah ada record kehadiran hari ini
+        $existingAttendance = Attendance::where('user_id', $user->id)
+            ->where('qr_code_id', $validatedData['qr_code_id'])
+            ->whereDate('scan_at', Carbon::today())
+            ->first();
+
+        if ($existingAttendance) {
+            return response()->json(['error' => 'Attendance already recorded for today'], 422);
+        }
+
+        // Simpan record kehadiran baru
+        $attendance = new Attendance();
+        $attendance->qr_code_id = $validatedData['qr_code_id'];
+        $attendance->user_id = $user->id;
+        $attendance->scan_at = Carbon::now();
+        $attendance->save();
+
+        Log::info('Attendance record created: ' . json_encode($attendance));
+
+        return response()->json(['success' => 'Attendance recorded successfully'], 200);
+    } catch (\Illuminate\Validation\ValidationException $e) {
+        Log::error('Validation error in AttendanceController@teacher_scan: ' . json_encode($e->errors()));
+        return response()->json(['error' => $e->errors()], 422);
+    } catch (\Exception $e) {
+        Log::error('Error in AttendanceController@teacher_scan: ' . $e->getMessage());
+        return response()->json(['error' => 'Failed to record attendance: ' . $e->getMessage()], 500);
+    }
+}
+
+
     
     
 

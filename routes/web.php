@@ -27,7 +27,7 @@ Route::get('/', function () {
         if ($user->role === 'admin') {
             return redirect()->route('dashboard.admin.index');
         } elseif ($user->role === 'teacher') {
-            return redirect()->route('dashboard.qrcode.create');
+            return redirect()->route('dashboard.teacher.index');
         } else {
             return redirect()->route('dashboard.student.index');
         }
@@ -83,6 +83,11 @@ Route::middleware('auth')->group(function () {
         ->middleware('role:admin')
         ->name('each_schedule.edit');
 
+        //Menghapus Jadwal pelajaran
+        Route::delete('/user/schedule/{id}', [EachScheduleController::class, 'destroy'])
+        ->middleware('role:admin')
+        ->name('each_schedule.delete');
+
         // Route untuk memperbarui data
         Route::put('/dashboard/user/schedule/{id}', [EachScheduleController::class, 'update'])
         ->middleware('role:admin')
@@ -133,12 +138,20 @@ Route::middleware('auth')->group(function () {
         ->middleware('role:teacher')
         ->name('teacher.index');
 
+        Route::get('/teacher/scan', [AttendanceController::class, 'teacher_create_scan'])
+        ->middleware('role:teacher')
+        ->name('teacher_scan.scan');
+
+        Route::post('teacher/scan-qr', [AttendanceController::class, 'teacher_scan'])
+        ->middleware('auth')
+        ->name('teacher.store');
+
         Route::get('qrcode/create/', [QRCodeController::class, 'create'])
-            ->middleware('role:admin')
+            ->middleware('role:teacher')
             ->name('qrcode.create');
             
         Route::post('qrcode/create', [QRCodeController::class, 'store'])
-            ->middleware('role:admin')
+            ->middleware('role:teacher')
             ->name('qrcode.store');
 
 

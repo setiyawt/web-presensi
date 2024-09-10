@@ -6,6 +6,7 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="csrf-token" content="{{ csrf_token() }}">
 
 	<title>Gentelella Alela! | </title>
 
@@ -34,7 +35,7 @@
 	<link href="{{asset('lte/vendors/switchery/dist/switchery.min.css')}}" rel="stylesheet">
 	<!-- starrr -->
 	<link href="{{asset('lte/vendors/starrr/dist/starrr.css')}}" rel="stylesheet">
-	
+	<link rel="stylesheet" href="{{asset('css/scan.css')}}">
 
 </head>
 
@@ -73,7 +74,7 @@
                 <ul class="nav side-menu">
                 
                 
-                  <li><a href="{{route('dashboard.admin.index')}}"><i class="fa fa-home"></i> Home</a></li>
+                  <li><a href="{{route('dashboard.student.index')}}"><i class="fa fa-plus"></i> Buat QrCode</a></li>
                   <li><a><i class="fa fa-table"></i> Kehadiran <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                       
@@ -81,23 +82,11 @@
                       <li><a href="{{route('dashboard.tables_attend.table_student')}}">Siswa</a></li>
                     </ul>
                   </li>
-                  <li><a href="{{route('dashboard.attendance.create')}}"><i class="fa fa-plus"></i>Buat Qr Code Kehadiran</a>
+                  <li><a href="{{route('dashboard.attendance.create')}}"><i class="fa fa-plus"></i>Kehadiran Manual</a>
                   </li>
-                  <li><a href="{{route('dashboard.course.index')}}"><i class="fa fa-list"></i>Daftar Pelajaran</a>
-                  </li>
-                  <li><a href="{{route('dashboard.classroom.index')}}"><i class="fa fa-list-alt"></i>Daftar Kelas</a>
-                  </li>
-                  <li><a href="{{route('dashboard.schedule.index')}}"><i class="fa fa-clipboard"></i> Jadwal Pelajaran </a></li>
-                  <li><a href="{{route('dashboard.each_schedule.index')}}"><i class="fa fa-clipboard"></i> Jadwal Guru & Siswa </a></li>
-                  <li><a><i class="fa fa-credit-card"></i> Daftar Pengguna <span class="fa fa-chevron-down"></span></a>
-                    <ul class="nav child_menu">
-                      <li><a href="{{route('dashboard.admin_list.index')}}">Daftar Admin</a></li>
-                      <li><a href="{{route('dashboard.teacher_list.index')}}">Daftar Guru</a></li>
-                      {{-- <li><a href="{{route('dashboard.student_list.index')}}">Daftar Siswa</a></li> --}}
-                    </ul>
-                  </li>
-                  
-                  
+                  <li><a href="chartjs.html"><i class="fa fa-clipboard"></i> Jadwal Pelajaran </a></li>
+                  <li><a href="contacts.html"><i class="fa fa-users"></i></i> Daftar Admin</a></li>
+                  <li><a href="profile.html"><i class="fa fa-user"></i>Profile</a></li>
                 </ul>
               </div>
 
@@ -142,22 +131,62 @@
               <ul class=" navbar-right">
                 <li class="nav-item dropdown open" style="padding-left: 15px;">
                   <a href="javascript:;" class="user-profile dropdown-toggle" aria-haspopup="true" id="navbarDropdown" data-toggle="dropdown" aria-expanded="false">
-                    <img src="{{ $user->photo ? asset('storage/' . $user->photo) : asset('images/default-image.jpg') }}" alt="">{{$user->name}}
-                    
-                    
+                    <img src="{{asset('lte/production/images/img.jpg')}}" alt="">John Doe
                   </a>
                   <div class="dropdown-menu dropdown-usermenu pull-right" aria-labelledby="navbarDropdown">
-                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                      @csrf
-                    </form>
-                    
-                    <a class="dropdown-item"  href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><i class="fa fa-sign-out pull-right"></i> Log Out</a>
+                    <a class="dropdown-item"  href="javascript:;"> Profile</a>
+                      <a class="dropdown-item"  href="javascript:;">
+                        <span class="badge bg-red pull-right">50%</span>
+                        <span>Settings</span>
+                      </a>
+                  <a class="dropdown-item"  href="javascript:;">Help</a>
+                    <a class="dropdown-item"  href="login.html"><i class="fa fa-sign-out pull-right"></i> Log Out</a>
                   </div>
                 </li>
 
                 <li role="presentation" class="nav-item dropdown open">
                   
-                 
+                  <ul class="dropdown-menu list-unstyled msg_list" role="menu" aria-labelledby="navbarDropdown1">
+                    <li class="nav-item">
+                      <a class="dropdown-item">
+                        <span class="image"><img src="{{asset('production/images/img.jpg')}}" alt="Profile Image" /></span>
+                        <span>
+                          <span>John Smith</span>
+                          <span class="time">3 mins ago</span>
+                        </span>
+                        
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="dropdown-item">
+                        <span class="image"><img src="{{asset('production/images/img.jpg')}}" alt="Profile Image" /></span>
+                        <span>
+                          <span>John Smith</span>
+                          <span class="time">3 mins ago</span>
+                        </span>
+                        
+                      </a>
+                    </li>
+                    
+                    <li class="nav-item">
+                      <a class="dropdown-item">
+                        <span class="image"><img src="{{asset('production/images/img.jpg')}}" alt="Profile Image" /></span>
+                        <span>
+                          <span>John Smith</span>
+                          <span class="time">3 mins ago</span>
+                        </span>
+                        
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <div class="text-center">
+                        <a class="dropdown-item">
+                          <strong>See All Alerts</strong>
+                          <i class="fa fa-angle-right"></i>
+                        </a>
+                      </div>
+                    </li>
+                  </ul>
                 </li>
               </ul>
             </nav>
@@ -170,72 +199,55 @@
 			<div class="">
 				<div class="page-title">
 					<div class="title_left">
-						<h3>Tambah Jadwal Untuk Guru/Siswa</h3>
+						<h3>Form Elements</h3>
 					</div>
 
+					<div class="title_right">
+						<div class="col-md-5 col-sm-5  form-group pull-right top_search">
+							<div class="input-group">
+								<input type="text" class="form-control" placeholder="Search for...">
+								<span class="input-group-btn">
+									<button class="btn btn-default" type="button">Go!</button>
+								</span>
+							</div>
+						</div>
+					</div>
 				</div>
 				<div class="clearfix"></div>
 				<div class="row">
 					<div class="col-md-12 col-sm-12 ">
 						<div class="x_panel">
 							<div class="x_title">
-								<h2>Tambah Jadwal Untuk Guru/Siswa<small>pada form di bawah ini</small></h2>
+								<h2>Form Design <small>different form elements</small></h2>
 								<ul class="nav navbar-right panel_toolbox">
 									<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
 									</li>
-									
+									<li class="dropdown">
+										<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+										<ul class="dropdown-menu" role="menu">
+											<li><a class="dropdown-item" href="#">Settings 1</a>
+											</li>
+											<li><a class="dropdown-item" href="#">Settings 2</a>
+											</li>
+										</ul>
+									</li>
 									<li><a class="close-link"><i class="fa fa-close"></i></a>
 									</li>
 								</ul>
 								<div class="clearfix"></div>
 							</div>
 							<div class="x_content">
-								<br />
+							       
+								<div class="container-scan">
+                    <div id="reader"></div>
+                    <p id="result"></p>
+                    <canvas id="qrcode"></canvas>
 
-								<form action="{{ route('dashboard.each_schedule.store') }}" method="POST">
-                    @csrf
-                    <div class="item form-group">
-                      <label class="col-form-label col-md-3 col-sm-3 label-align" for="email">Select User Email: <span class="required">*</span></label>
-                      <div class="col-md-6 col-sm-6">
-                          <select name="user_id" id="email" required="required" class="form-control">
-                              <option value="">Pilih Email</option>
-                              @foreach($users as $user)
-                                  <option value="{{ $user->id }}">{{ $user->email }}</option>
-                              @endforeach
-                              
-                          </select>
-                      </div>
-                    </div>
-                    
-                    <div class="item form-group">
-                      <label class="col-form-label col-md-3 col-sm-3 label-align" for="user_schedule_id">Jadwal: <span class="required">*</span></label>
-                      <div class="col-md-6 col-sm-6">
-                          <select name="user_schedule_id" id="user_schedule_id" required="required" class="form-control">
-                              <option value="">Pilih Jadwal</option>
-                              @foreach($schedules as $schedule)
-                                  <option value="{{ $schedule->id }}">
-                                      {{ $schedule->course->name ?? 'Nama kursus tidak tersedia' }},
-                                      {{ $schedule->classroom->name ?? 'Nama kelas tidak tersedia' }},
-                                      {{ $schedule->start_time_formatted ?? 'Tanggal tidak tersedia' }},
-                                      {{ $schedule->start_time_formatted ?? 'Jam mulai tidak tersedia' }} -
-                                      {{ $schedule->end_time_formatted ?? 'Jam selesai tidak tersedia' }}
-                                  </option>
-                              @endforeach
-                              
-                          </select>
-                      </div>
-                    </div>   
-
-                    <div class="ln_solid"></div>
-                    <div class="item form-group">
-                        <div class="col-md-6 col-sm-6 offset-md-3">
-                            <button class="btn btn-primary" type="button">Cancel</button>
-                            <button class="btn btn-primary" type="reset">Reset</button>
-                            <button type="submit" class="btn btn-success">Submit</button>
-                        </div>
-                    </div>
-                </form>
+                </div>
+                                
+                                
               
+
 							</div>
 						</div>
 					</div>
@@ -257,7 +269,7 @@
         <!-- footer content -->
         <footer>
           <div class="pull-right">
-            SMP 3 Muhammadiyah
+            SMPN 3 Muhammadiyah
           </div>
           <div class="clearfix"></div>
         </footer>
@@ -304,7 +316,18 @@
 	<script src="{{asset('lte/vendors/starrr/dist/starrr.js')}}"></script>
 	<!-- Custom Theme Scripts -->
 	<script src="{{asset('lte/build/js/custom.min.js')}}"></script>
-    <script src="{{asset('js/other-field.js')}}"></script>
+    <!-- Include the html5-qrcode library -->
+    <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
+    <!-- Include the QRCode.js library -->
+    <script src="https://unpkg.com/qrcode@1.5.1/build/qrcode.min.js"></script>
+    
+    <!-- Include the QRCode.js library -->
+    <script src="{{asset('js/scan.js')}}"></script>"
+
   </body>
 
 </html>
+
+
+
+

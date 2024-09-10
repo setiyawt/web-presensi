@@ -15,7 +15,8 @@ class UserScheduleController extends Controller
     public function index()
     {
         $schedules = UserSchedule::with('course', 'classroom')->get();
-        return view('admin.schedule.index', compact('schedules'));
+        $user = Auth::user();
+        return view('admin.schedule.index', compact('schedules', 'user'));
     }
 
     
@@ -24,8 +25,9 @@ class UserScheduleController extends Controller
     {
         $courses = Course::all();
         $classrooms = Classroom::all();
+        $user = Auth::user();
 
-        return view('admin.schedule.create', compact('courses', 'classrooms'));
+        return view('admin.schedule.create', compact('courses', 'classrooms', 'user'));
     }
 
     public function store(Request $request)
@@ -60,8 +62,9 @@ class UserScheduleController extends Controller
         $schedule = UserSchedule::with('course', 'classroom')->findOrFail($id);
         $courses = Course::all();
         $classrooms = Classroom::all();
+        $user = Auth::user(); // Ambil data user yang sedang login
 
-        return view('admin.schedule.edit', compact('schedule', 'courses', 'classrooms'));
+        return view('admin.schedule.edit', compact('schedule', 'courses', 'classrooms', 'user'));
     }
 
 

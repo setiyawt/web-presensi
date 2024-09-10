@@ -27,11 +27,12 @@ class EachSchedule extends Model
 
     public function course()
     {
-        return $this->userSchedule->course(); // jika course ada di UserSchedule
+        return $this->userSchedule->course(); // Tidak perlu didefinisikan di sini
     }
 
     public function classroom()
     {
-        return $this->userSchedule->classroom(); // jika classroom ada di UserSchedule
+        return $this->userSchedule->classroom(); // Tidak perlu didefinisikan di sini
     }
+
 }

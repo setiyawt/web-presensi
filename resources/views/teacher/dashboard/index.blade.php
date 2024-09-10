@@ -74,6 +74,7 @@
                 
                 
                   <li><a href="{{route('dashboard.teacher.index')}}"><i class="fa fa-plus"></i> Buat Qr Code Kehadiran</a></li>
+                  <li><a href="{{route('dashboard.teacher_scan.scan')}}"><i class="fa fa-plus"></i> Scan Qr</a></li>
                   <li><a href="{{route('dashboard.student_attend.index')}}"><i class="fa fa-list"></i> Kehadiran Siswa</a></li>
             
                   <li><a href="{{route('dashboard.teacher_schedule.index')}}"><i class="fa fa-clipboard"></i> Jadwal Pelajaran </a></li>

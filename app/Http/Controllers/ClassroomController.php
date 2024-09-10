@@ -7,6 +7,7 @@ use App\Models\Course;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
 
 
@@ -17,8 +18,9 @@ class ClassroomController extends Controller
      */
     public function index()
     {
+        $user = Auth::user();
         $classrooms = Classroom::get();
-        return view('admin.classroom.index', compact('classrooms'));
+        return view('admin.classroom.index', compact('classrooms', 'user'));
     }
 
     public function take_classroom()
@@ -37,7 +39,8 @@ class ClassroomController extends Controller
      */
     public function create()
     {
-        return view('admin.classroom.create');
+        $user = Auth::user();
+        return view('admin.classroom.create', compact('user'));
     }
 
     /**
@@ -81,7 +84,8 @@ class ClassroomController extends Controller
     public function edit($id)
     {
         $classroom = Classroom::findOrFail($id);
-        return view('admin.classroom.edit', compact('classroom'));
+        $user = Auth::user();
+        return view('admin.classroom.edit', compact('classroom', 'user'));
     }
 
     /**

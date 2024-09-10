@@ -12,9 +12,10 @@ use Illuminate\Support\Facades\Storage;
 class AdminController extends Controller
 {
     public function index(){
+        $user = Auth::user();
         
         $admins = User::where('role', 'admin')->get();
-        return view('admin.admin_list.index', compact('admins'));
+        return view('admin.admin_list.index', compact('admins', 'user'));
 
         
     }
@@ -40,7 +41,9 @@ class AdminController extends Controller
     }
 
     public function create(){
-        return view('admin.admin_list.create');
+        $user = Auth::user();
+        return view('admin.admin_list.create', compact('user'));
+        
     }
 
     public function edit($userId){
@@ -71,41 +74,41 @@ class AdminController extends Controller
     }
 
     public function update(Request $request, $userId)
-{
-    $validated = $request->validate([
-        'name' => 'required|string|max:255',
-        'email' => 'required|string|max:255|unique:users,email,' . $userId,
-        'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-    ]);
+    {
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|max:255|unique:users,email,' . $userId,
+            'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
 
-    $user = User::findOrFail($userId);
+        $user = User::findOrFail($userId);
 
-    if ($request->hasFile('photo')) {
-        if ($user->photo) {
-            Storage::disk('public')->delete($user->photo);
+        if ($request->hasFile('photo')) {
+            if ($user->photo) {
+                Storage::disk('public')->delete($user->photo);
+            }
+
+            $path = $request->file('photo')->store('photos', 'public');
+            if ($path) {
+                $user->photo = $path;
+                Log::info('Photo updated: ' . $path); // Add logging
+            } else {
+                Log::error('Failed to store photo'); // Log error if storage fails
+                return redirect()->back()->with('error', 'Failed to upload photo.');
+            }
         }
 
-        $path = $request->file('photo')->store('photos', 'public');
-        if ($path) {
-            $user->photo = $path;
-            Log::info('Photo updated: ' . $path); // Add logging
+        $user->name = $validated['name'];
+        $user->email = $validated['email'];
+
+        if ($user->save()) {
+            Log::info('User updated successfully: ' . $user->id); // Log successful update
+            return redirect()->route('dashboard.admin_list.index')->with('success', 'Data berhasil diubah.');
         } else {
-            Log::error('Failed to store photo'); // Log error if storage fails
-            return redirect()->back()->with('error', 'Failed to upload photo.');
+            Log::error('Failed to update user: ' . $user->id); // Log error if save fails
+            return redirect()->back()->with('error', 'Failed to update user.');
         }
     }
-
-    $user->name = $validated['name'];
-    $user->email = $validated['email'];
-
-    if ($user->save()) {
-        Log::info('User updated successfully: ' . $user->id); // Log successful update
-        return redirect()->route('dashboard.admin_list.index')->with('success', 'Data berhasil diubah.');
-    } else {
-        Log::error('Failed to update user: ' . $user->id); // Log error if save fails
-        return redirect()->back()->with('error', 'Failed to update user.');
-    }
-}
 
 
 

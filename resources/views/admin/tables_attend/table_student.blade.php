@@ -70,6 +70,7 @@
                 
                 <ul class="nav side-menu">
                 
+                
                   <li><a href="{{route('dashboard.admin.index')}}"><i class="fa fa-home"></i> Home</a></li>
                   <li><a><i class="fa fa-table"></i> Kehadiran <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
@@ -78,11 +79,23 @@
                       <li><a href="{{route('dashboard.tables_attend.table_student')}}">Siswa</a></li>
                     </ul>
                   </li>
-                  <li><a href="{{route('dashboard.attendance.create')}}"><i class="fa fa-plus"></i>Kehadiran Manual</a>
+                  <li><a href="{{route('dashboard.attendance.create')}}"><i class="fa fa-plus"></i>Buat Qr Code Kehadiran</a>
                   </li>
-                  <li><a href=""><i class="fa fa-clipboard"></i> Jadwal Pelajaran </a></li>
-                  <li><a href="contacts.html"><i class="fa fa-users"></i></i> Daftar Admin</a></li>
-                  <li><a href="profile.html"><i class="fa fa-user"></i>Profile</a></li>
+                  <li><a href="{{route('dashboard.course.index')}}"><i class="fa fa-list"></i>Daftar Pelajaran</a>
+                  </li>
+                  <li><a href="{{route('dashboard.classroom.index')}}"><i class="fa fa-list-alt"></i>Daftar Kelas</a>
+                  </li>
+                  <li><a href="{{route('dashboard.schedule.index')}}"><i class="fa fa-clipboard"></i> Jadwal Pelajaran </a></li>
+                  <li><a href="{{route('dashboard.each_schedule.index')}}"><i class="fa fa-clipboard"></i> Jadwal Guru & Siswa </a></li>
+                  <li><a><i class="fa fa-credit-card"></i> Daftar Pengguna <span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                      <li><a href="{{route('dashboard.admin_list.index')}}">Daftar Admin</a></li>
+                      <li><a href="{{route('dashboard.teacher_list.index')}}">Daftar Guru</a></li>
+                      {{-- <li><a href="{{route('dashboard.student_list.index')}}">Daftar Siswa</a></li> --}}
+                    </ul>
+                  </li>
+                  
+                  
                 </ul>
               </div>
 

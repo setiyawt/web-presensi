@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Course;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 use App\Models\Classroom;
@@ -17,7 +18,8 @@ class CourseController extends Controller
     public function index()
     {
         $courses = Course::get();
-        return view('admin.course.index', compact('courses'));
+        $user = Auth::user();
+        return view('admin.course.index', compact('courses', 'user'));
         
     }
 
@@ -36,7 +38,8 @@ class CourseController extends Controller
      */
     public function create()
     {
-        return view('admin.course.create');
+        $user = Auth::user();
+        return view('admin.course.create', compact('user'));
     }
 
     /**
@@ -91,7 +94,8 @@ class CourseController extends Controller
     
      public function edit($id) {
         $course = Course::findOrFail($id);
-        return view('admin.course.edit', compact('course'));
+        $user = Auth::user();
+        return view('admin.course.edit', compact('course', 'user'));
     }
 
 
