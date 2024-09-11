@@ -21,6 +21,7 @@ class TeacherController extends Controller
     public function index()
     {
         // Mengambil attendance yang user-nya memiliki role teacher
+        $user = Auth::user();
         $attendances = Attendance::whereHas('user', function($query) {
             $query->role('teacher'); // Pastikan 'teacher' adalah role yang sesuai.
         })
@@ -30,7 +31,7 @@ class TeacherController extends Controller
 
         return view('admin.tables_attend.table_teacher', [
             'attendances' => $attendances,
-        ]);
+        ], compact('user'));
             
     }
 
@@ -105,10 +106,12 @@ class TeacherController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit($userId){
-        // $users = User::findOrFail($userId);
+    public function edit($userId)
+    {
+        $teacher = User::findOrFail($userId);
         $user = Auth::user();
-        return view('admin.teacher_list.edit', compact('user'));
+
+        return view('admin.teacher_list.edit', compact('teacher', 'user'));
     }
 
     /**
@@ -122,16 +125,16 @@ class TeacherController extends Controller
             'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
-        $user = User::findOrFail($userId);
+        $teacher = User::findOrFail($userId);
 
         if ($request->hasFile('photo')) {
-            if ($user->photo) {
-                Storage::disk('public')->delete($user->photo);
+            if ($teacher->photo) {
+                Storage::disk('public')->delete($teacher->photo);
             }
 
             $path = $request->file('photo')->store('photos', 'public');
             if ($path) {
-                $user->photo = $path;
+                $teacher->photo = $path;
                 Log::info('Photo updated: ' . $path); // Add logging
             } else {
                 Log::error('Failed to store photo'); // Log error if storage fails
@@ -139,14 +142,14 @@ class TeacherController extends Controller
             }
         }
 
-        $user->name = $validated['name'];
-        $user->email = $validated['email'];
+        $teacher->name = $validated['name'];
+        $teacher->email = $validated['email'];
 
-        if ($user->save()) {
-            Log::info('User updated successfully: ' . $user->id); // Log successful update
+        if ($teacher->save()) {
+            Log::info('User updated successfully: ' . $teacher->id); // Log successful update
             return redirect()->route('dashboard.teacher_list.index')->with('success', 'Data berhasil diubah.');
         } else {
-            Log::error('Failed to update user: ' . $user->id); // Log error if save fails
+            Log::error('Failed to update user: ' . $teacher->id); // Log error if save fails
             return redirect()->back()->with('error', 'Failed to update user.');
         }
     }

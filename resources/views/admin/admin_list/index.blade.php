@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     
-    <title>Gentelella Alela! | </title>
+    <title>SMP 3 Muhammadiyah | Daftar Admin</title>
 
     <!-- Bootstrap -->
     <link href="{{asset('lte/vendors/bootstrap/dist/css/bootstrap.min.css')}}" rel="stylesheet">
@@ -168,7 +168,7 @@
           <div class="">
             <div class="page-title">
               <div class="title_left">
-                <h3>Tabel Kehadiran Guru</h3>
+                <h3>Tabel Daftar Admin</h3>
               </div>
 
               <div class="title_right">
@@ -200,7 +200,7 @@
                                     <th>No</th>
                                     <th>Foto</th>
                                     <th>Nama</th>
-                                    <th>NUPTK</th>
+                                    <th>Email</th>
                                     <th>Password</th>
                                     <th>Aksi</th>
                                   </tr>
@@ -278,7 +278,7 @@
         <!-- footer content -->
         <footer>
           <div class="pull-right">
-            Gentelella - Bootstrap Admin Template by <a href="https://colorlib.com">Colorlib</a>
+            SMP 3 Muhammadiyah
           </div>
           <div class="clearfix"></div>
         </footer>

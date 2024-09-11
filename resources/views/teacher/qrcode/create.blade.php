@@ -81,7 +81,7 @@
                       <li><a href="{{route('dashboard.tables_attend.table_student')}}">Siswa</a></li>
                     </ul>
                   </li>
-                  <li><a href="{{route('dashboard.attendance.create')}}"><i class="fa fa-plus"></i>Kehadiran Manual</a>
+                  {{-- <li><a href="{{route('dashboard.attendance.create')}}"><i class="fa fa-plus"></i>Kehadiran Manual</a> --}}
                   </li>
                   <li><a href="chartjs.html"><i class="fa fa-clipboard"></i> Jadwal Pelajaran </a></li>
                   <li><a href="contacts.html"><i class="fa fa-users"></i></i> Daftar Admin</a></li>

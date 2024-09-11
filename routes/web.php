@@ -146,13 +146,18 @@ Route::middleware('auth')->group(function () {
         ->middleware('auth')
         ->name('teacher.store');
 
-        Route::get('qrcode/create/', [QRCodeController::class, 'create'])
+        // Guru create qr code
+        Route::get('student/qrcode/create/', [QRCodeController::class, 'create'])
             ->middleware('role:teacher')
             ->name('qrcode.create');
             
-        Route::post('qrcode/create', [QRCodeController::class, 'store'])
+        Route::post('student/qrcode/create', [QRCodeController::class, 'store'])
             ->middleware('role:teacher')
             ->name('qrcode.store');
+
+        
+            
+        
 
 
         // Form Student Role
@@ -296,15 +301,20 @@ Route::middleware('auth')->group(function () {
         ->name('admin_list.delete');
 
 
-        //Untuk menambahkan kehadiran secara manual (tanpa qr code) untuk student & teacher
-        Route::get('/attendance/create', [AttendanceController::class, 'create'])
+        //Buat Qr code kahadiran guru
+        Route::get('teacher/attendance/create', [QrcodeController::class, 'indexTeacherQr'])
         ->middleware('role:admin')
         ->name('attendance.create');
 
-        //Untuk mengedit kehadiran teacher
-        Route::get('/dashboard/attendance/edit/{id}', [AttendanceController::class, 'edit'])
-        ->middleware('role:admin')
-        ->name('attendance.edit');
+        Route::get('teacher/qrcode/create/', [QRCodeController::class, 'createTeacherQr'])
+            ->middleware('role:admin')
+            ->name('attendance.qrcode');
+
+        Route::post('teacher/qrcode/create', [QRCodeController::class, 'storeTeacherQr'])
+            ->middleware('role:admin')
+            ->name('attendance.store');
+
+        
         
         //Menghapus Attendances
         Route::delete('/dashboard/attendance/{id}', [AttendanceController::class, 'destroy'])

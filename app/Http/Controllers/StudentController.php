@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Model\Model\Student;
 use App\Models\Attendance;
-
+use Illuminate\Support\Facades\Auth;
 
 class StudentController extends Controller
 {
@@ -15,6 +15,8 @@ class StudentController extends Controller
     public function index()
     {
         // Mengambil attendance yang user-nya memiliki role student
+        $user = Auth::user();
+        
         $attendances = Attendance::whereHas('user', function($query) {
             $query->role('student'); // Pastikan 'student' adalah role yang sesuai.
         })
@@ -24,7 +26,7 @@ class StudentController extends Controller
 
         return view('admin.tables_attend.table_student', [
             'attendances' => $attendances,
-        ]);
+        ], compact('user'));
         
     }
 

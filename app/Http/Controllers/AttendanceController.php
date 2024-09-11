@@ -37,11 +37,7 @@ class AttendanceController extends Controller
      */
     public function create()
     {
-        $courses = Course::all();
-        $classrooms = Classroom::all();
-        $user = Auth::user();
         
-        return view('admin.attendance.create', compact('courses', 'classrooms', 'user'));
     }
 
     /**
@@ -197,7 +193,7 @@ class AttendanceController extends Controller
      */
     public function edit(Attendance $attendance)
     {
-        return view('admin.attendance.edit');
+        
     }
 
     /**

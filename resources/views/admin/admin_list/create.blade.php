@@ -173,16 +173,7 @@
 						<h3>Form Tambah Admin</h3>
 					</div>
 
-					<div class="title_right">
-						<div class="col-md-5 col-sm-5  form-group pull-right top_search">
-							<div class="input-group">
-								<input type="text" class="form-control" placeholder="Search for...">
-								<span class="input-group-btn">
-									<button class="btn btn-default" type="button">Go!</button>
-								</span>
-							</div>
-						</div>
-					</div>
+					
 				</div>
 				<div class="clearfix"></div>
 				<div class="row">
@@ -274,7 +265,7 @@
         <!-- footer content -->
         <footer>
           <div class="pull-right">
-            SMPN 3 Muhammadiyah
+            SMP 3 Muhammadiyah
           </div>
           <div class="clearfix"></div>
         </footer>

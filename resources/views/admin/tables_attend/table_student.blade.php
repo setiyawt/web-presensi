@@ -34,7 +34,7 @@
     <link href="{{asset('lte/vendors/datatables.net-scroller-bs/css/scroller.bootstrap.min.css')}}" rel="stylesheet">
 
     <!-- Custom Theme Style -->
-    <link href="{{asset('lte/build/css/custom.min.css')}}" rel="stylesheet">
+    <link href="{{asset('lte/build/css/custom.css')}}" rel="stylesheet">
   </head>
 
   <body class="nav-md">
@@ -43,7 +43,7 @@
         <div class="col-md-3 left_col">
           <div class="left_col scroll-view">
             <div class="navbar nav_title" style="border: 0;">
-              <a href="index.html" class="site_title"><i class="fa fa-paw"></i> <span>Gentelella Alela!</span></a>
+              <a href={{route('dashboard.admin.index')}} class="site_title"><i class="fa fa-server"></i><span> Administrator</span></a>
             </div>
 
             <div class="clearfix"></div>
@@ -51,11 +51,11 @@
             <!-- menu profile quick info -->
             <div class="profile clearfix">
               <div class="profile_pic">
-                <img src="{{asset('lte/production/images/img.jpg')}}" alt="..." class="img-circle profile_img">
+                <img src="{{ $user->photo ? asset('storage/' . $user->photo) : asset('images/default-image.jpg') }}" alt="Photo User" class="img-circle profile_img">
               </div>
               <div class="profile_info">
                 <span>Welcome,</span>
-                <h2>John Doe</h2>
+                <h2>{{ $user->name }}</h2>
               </div>
             </div>
             <!-- /menu profile quick info -->
@@ -118,8 +118,12 @@
               <a data-toggle="tooltip" data-placement="top" title="Lock">
                 <span class="glyphicon glyphicon-eye-close" aria-hidden="true"></span>
               </a>
-              <a data-toggle="tooltip" data-placement="top" title="Logout" href="login.html">
-                <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
+              <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                @csrf
+              </form>
+              
+              <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" data-toggle="tooltip" data-placement="top" title="Logout">
+                  <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
               </a>
             </div>
             <!-- /menu footer buttons -->
@@ -136,76 +140,28 @@
               <ul class=" navbar-right">
                 <li class="nav-item dropdown open" style="padding-left: 15px;">
                   <a href="javascript:;" class="user-profile dropdown-toggle" aria-haspopup="true" id="navbarDropdown" data-toggle="dropdown" aria-expanded="false">
-                    <img src="{{asset('lte/production/images/img.jpg')}}" alt="">John Doe
+                    <img src="{{ $user->photo ? asset('storage/' . $user->photo) : asset('images/default-image.jpg') }}" alt="">{{$user->name}}
+                    
+                    
                   </a>
                   <div class="dropdown-menu dropdown-usermenu pull-right" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item"  href="javascript:;"> Profile</a>
-                      <a class="dropdown-item"  href="javascript:;">
-                        <span class="badge bg-red pull-right">50%</span>
-                        <span>Settings</span>
-                      </a>
-                  <a class="dropdown-item"  href="javascript:;">Help</a>
-                    <a class="dropdown-item"  href="login.html"><i class="fa fa-sign-out pull-right"></i> Log Out</a>
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                      @csrf
+                    </form>
+                    
+                    <a class="dropdown-item"  href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><i class="fa fa-sign-out pull-right"></i> Log Out</a>
                   </div>
                 </li>
 
                 <li role="presentation" class="nav-item dropdown open">
                   
-                  <ul class="dropdown-menu list-unstyled msg_list" role="menu" aria-labelledby="navbarDropdown1">
-                    <li class="nav-item">
-                      <a class="dropdown-item">
-                        <span class="image"><img src="{{asset('production/images/img.jpg')}}" alt="Profile Image" /></span>
-                        <span>
-                          <span>John Smith</span>
-                          <span class="time">3 mins ago</span>
-                        </span>
-                        
-                      </a>
-                    </li>
-                    <li class="nav-item">
-                      <a class="dropdown-item">
-                        <span class="image"><img src="{{asset('production/images/img.jpg')}}" alt="Profile Image" /></span>
-                        <span>
-                          <span>John Smith</span>
-                          <span class="time">3 mins ago</span>
-                        </span>
-                        
-                      </a>
-                    </li>
-                    <li class="nav-item">
-                      <a class="dropdown-item">
-                        <span class="image"><img src="{{asset('images/img.jpg')}}" alt="Profile Image" /></span>
-                        <span>
-                          <span>John Smith</span>
-                          <span class="time">3 mins ago</span>
-                        </span>
-                        
-                      </a>
-                    </li>
-                    <li class="nav-item">
-                      <a class="dropdown-item">
-                        <span class="image"><img src="{{asset('production/images/img.jpg')}}" alt="Profile Image" /></span>
-                        <span>
-                          <span>John Smith</span>
-                          <span class="time">3 mins ago</span>
-                        </span>
-                        
-                      </a>
-                    </li>
-                    <li class="nav-item">
-                      <div class="text-center">
-                        <a class="dropdown-item">
-                          <strong>See All Alerts</strong>
-                          <i class="fa fa-angle-right"></i>
-                        </a>
-                      </div>
-                    </li>
-                  </ul>
+                 
                 </li>
               </ul>
             </nav>
           </div>
         </div>
+        <!-- /top navigation -->
 
         <!-- page content -->
         <div class="right_col" role="main">
@@ -242,6 +198,7 @@
                                     <th>Mata Pelajaran</th>
                                     <th>Waktu Scan</th>
                                     <th>Aksi</th>
+                                    
                                   </tr>
                                 </thead>
                                 <tbody>
@@ -265,12 +222,7 @@
                                       <td>{{ $attendance->scan_at }}</td>
                               
                                       <!-- Aksi: Edit button -->
-                                      <td style="display: flex; align-items: center;">
-                                        <form action="{{ route('dashboard.attendance.edit', $attendance->id) }}" method="GET" style="display: inline-block;">
-                                          <button type="submit" class="btn btn-primary btn-sm" style="margin-right: 5px;">
-                                              Edit
-                                          </button>
-                                        </form>                                      
+                                      <td style="display: flex; align-items: center;">                                      
                                         
                                         <form action="{{ route('dashboard.attendance.delete', $attendance->id) }}" method="POST" style="display: inline-block;" onsubmit="return confirm('Are you sure you want to delete this attendance?');">
                                             @csrf
@@ -302,7 +254,7 @@
         <!-- footer content -->
         <footer>
           <div class="pull-right">
-            Gentelella - Bootstrap Admin Template by <a href="https://colorlib.com">Colorlib</a>
+            SMP 3 Muhammadiyah
           </div>
           <div class="clearfix"></div>
         </footer>

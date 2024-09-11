@@ -170,7 +170,7 @@
 			<div class="">
 				<div class="page-title">
 					<div class="title_left">
-						<h3>Buat Qr Code Kehadiran</h3>
+						<h3>Buat Qr Code Kehadiran Guru</h3>
 					</div>
 
 					
@@ -180,7 +180,7 @@
 					<div class="col-md-12 col-sm-12 ">
 						<div class="x_panel">
 							<div class="x_title">
-								<h2>Buat Qr Code Kehadiran <small>pada form di bawah</small></h2>
+								<h2>Buat Qr Code Kehadiran Guru<small>pada form di bawah</small></h2>
 								<ul class="nav navbar-right panel_toolbox">
 									<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
 									</li>
@@ -193,7 +193,7 @@
 							<div class="x_content">
 								<br />
 
-								<form action="{{ route('dashboard.qrcode.store') }}" method="POST">
+								<form action="{{ route('dashboard.attendance.store') }}" method="POST">
                   @csrf
                     <div class="item form-group">
                         <label class="col-form-label col-md-3 col-sm-3 label-align" for="course_id">Nama Pelajaran <span class="required">*</span></label>
@@ -303,6 +303,7 @@
 	<script src="{{asset('lte/vendors/starrr/dist/starrr.js')}}"></script>
 	<!-- Custom Theme Scripts -->
 	<script src="{{asset('lte/build/js/custom.min.js')}}"></script>
+  
     
   </body>
 
