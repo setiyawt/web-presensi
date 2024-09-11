@@ -7,7 +7,7 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 
-	<title>Gentelella Alela! | </title>
+	<title>SMP 3 Muhammadiyah | Buat Qr Code Kehadiran</title>
 
 	<!-- Bootstrap -->
     <link href="{{asset('lte/vendors/bootstrap/dist/css/bootstrap.min.css')}}" rel="stylesheet">
@@ -34,6 +34,8 @@
 	<link href="{{asset('lte/vendors/switchery/dist/switchery.min.css')}}" rel="stylesheet">
 	<!-- starrr -->
 	<link href="{{asset('lte/vendors/starrr/dist/starrr.css')}}" rel="stylesheet">
+  <!-- Custom Theme Style -->
+  <link href="{{asset('lte/build/css/custom.css')}}" rel="stylesheet">
 	
 
 </head>
@@ -45,7 +47,7 @@
         <div class="col-md-3 left_col">
           <div class="left_col scroll-view">
             <div class="navbar nav_title" style="border: 0;">
-              <a href="index.html" class="site_title"><i class="fa fa-paw"></i> <span>Gentelella Alela!</span></a>
+              <a href={{route('dashboard.admin.index')}} class="site_title"><i class="fa fa-server"></i><span> Administrator</span></a>
             </div>
 
             <div class="clearfix"></div>
@@ -53,11 +55,11 @@
             <!-- menu profile quick info -->
             <div class="profile clearfix">
               <div class="profile_pic">
-                <img src="{{asset('lte/production/images/img.jpg')}}" alt="..." class="img-circle profile_img">
+                <img src="{{ $user->photo ? asset('storage/' . $user->photo) : asset('images/default-image.jpg') }}" alt="Photo User" class="img-circle profile_img">
               </div>
               <div class="profile_info">
                 <span>Welcome,</span>
-                <h2>John Doe</h2>
+                <h2>{{ $user->name }}</h2>
               </div>
             </div>
             <!-- /menu profile quick info -->
@@ -170,7 +172,7 @@
 			<div class="">
 				<div class="page-title">
 					<div class="title_left">
-						<h3>Buat Qr Code Kehadiran Guru</h3>
+						<h3>Buat Qr Code Kehadiran Guru dan Siswa</h3>
 					</div>
 
 					
@@ -180,7 +182,7 @@
 					<div class="col-md-12 col-sm-12 ">
 						<div class="x_panel">
 							<div class="x_title">
-								<h2>Buat Qr Code Kehadiran Guru<small>pada form di bawah</small></h2>
+								<h2>Buat Qr Code Kehadiran Guru dan Siswa<small>pada form di bawah</small></h2>
 								<ul class="nav navbar-right panel_toolbox">
 									<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
 									</li>

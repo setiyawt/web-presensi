@@ -292,6 +292,46 @@ Route::middleware('auth')->group(function () {
        ->middleware('role:admin')
        ->name('teacher_list.delete');
 
+       //Untuk save student list
+
+       Route::get('/student_list/create', [StudentController::class, 'createStudentList'])
+       ->middleware('role:admin')
+       ->name('student_list.create');
+
+       Route::get('/student_list/show/index', [StudentController::class, 'indexListStudent'])
+       ->middleware('role:admin')
+       ->name('student_list.index');
+
+       Route::post('/student_list/create', [StudentController::class, 'store'])
+       ->middleware('role:admin')
+       ->name('student_list.store');
+
+       Route::get('/student_list/reset-password/{id}', [StudentController::class, 'resetPassword'])
+       ->middleware('role:admin')
+       ->name('student_list.reset_password');
+
+       Route::post('/student_list/store-password/{id}', [StudentController::class, 'storePassword'])
+       ->middleware('role:admin')
+       ->name('student_list.storePassword');
+
+       Route::post('/student_list/create', [StudentController::class, 'store'])
+       ->middleware('role:admin')
+       ->name('student_list.store');
+
+       Route::get('/student/edit/{id}', [StudentController::class, 'edit'])
+       ->middleware('role:admin')
+       ->name('student_list.edit');
+
+       // Route untuk memperbarui data teacher
+       Route::put('/student/edit/{id}', [StudentController::class, 'update'])
+       ->middleware('role:admin')
+       ->name('student_list.update');
+
+      Route::delete('/student/delete/{id}', [StudentController::class, 'destroy'])
+      ->middleware('role:admin')
+      ->name('student_list.delete');
+
+
          // Route untuk memperbarui data
          Route::put('/admin/edit/{id}', [AdminController::class, 'update'])
          ->middleware('role:admin')

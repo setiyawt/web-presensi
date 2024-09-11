@@ -156,6 +156,27 @@ class TeacherController extends Controller
         }
     }
 
+    public function resetPassword($userId)
+    {
+        $user = Auth::user();
+        $teacher = User::findOrFail($userId);
+        return view('admin.teacher_list.reset_password', compact('teacher', 'user'));
+    }
+
+    public function storePassword(Request $request, $userId)
+    {
+        $request->validate([
+            'new_password' => 'required|string|min:8', // Validasi password jika diperlukan
+        ]);
+
+        $user = User::findOrFail($userId);
+        $user->password = Hash::make($request->input('new_password'));
+        $user->save();
+
+        return redirect()->route('dashboard.teacher_list.index')->with('success', 'Password berhasil direset');
+    }
+
+
     /**
      * Remove the specified resource from storage.
      */

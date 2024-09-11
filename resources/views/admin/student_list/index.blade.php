@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     
-    <title>Gentelella Alela! | </title>
+    <title>SMP 3 Muhammadiyah | Daftar Guru</title>
 
     <!-- Bootstrap -->
     <link href="{{asset('lte/vendors/bootstrap/dist/css/bootstrap.min.css')}}" rel="stylesheet">
@@ -168,7 +168,7 @@
           <div class="">
             <div class="page-title">
               <div class="title_left">
-                <h3>Tabel Daftar Kelas</h3>
+                <h3>Tabel Daftar Guru</h3>
               </div>
 
               <div class="title_right">
@@ -179,7 +179,7 @@
             </div>
 
             <div class="clearfix"></div>
-            
+
             <div class="row">
               <div class="col-md-12 col-sm-12 ">
                 <div class="x_panel">
@@ -188,44 +188,66 @@
                       <div class="row">
                           <div class="col-sm-12">
                             <div class="card-box table-responsive">
-                              <form action="{{ route('dashboard.classroom.create') }}" method="GET" style="display:inline;">
+                              <form action="{{ route('dashboard.student_list.create') }}" method="GET" style="display:inline;">
                                 <button type="submit" class="btn btn-success btn-sm" style="margin-left: 10px; padding: 10px 20px;">
                                     Create
                                 </button>
-                            </form>                            
-                            
+                            </form>      
+                  
                               <table id="datatable-buttons" class="table table-striped table-bordered" style="width:100%">
-                                
                                 <thead>
-                                  
                                   <tr>
-                                    <th>ID</th>
-                                    
-                                    <th>Nama Pelajaran</th>
-                                    
-                                    
+                                    <th>No</th>
+                                    <th>Foto</th>
+                                    <th>Nama</th>
+                                    <th>NUPTK</th>
+                                    <th>Password</th>
                                     <th>Aksi</th>
                                   </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach($classrooms as $key => $classroom)
+                                  @foreach($teachers as $key => $teacher)
                                     <tr>
                                       <!-- No: Menggunakan $key + 1 untuk menghasilkan nomor urut -->
-                                        <td>{{ $key + 1 }}</td>
+                                      <td>{{ $key + 1 }}</td>
+                                      
+                                      <!-- Foto: Mengambil dari relasi users melalui admin -->
+                                      <td>
+                                        <img src="{{ $teacher->photo ? asset('storage/' . $teacher->photo) : asset('storage/app/public/photos/default-image.jpg') }}" alt="User Photo" style="width: 100px; height: auto;">
+                                    </td>
+                                    
+                                    
+                                      
+                                      <!-- Nama: Mengambil dari relasi users melalui admin -->
+                                      <td>{{ $teacher->name }}</td>
                                         
-                                        <td>{{ $classroom->name }}</td>
-                                        
-                
-                                       
+                                      <!-- NUPTK: Mengambil dari relasi users melalui admin -->
+                                      <td>{{ $teacher->email }}</td>
+                                      
+                                      <!-- Password: Mengambil secara random -->
+                                      <td>
+                                        <!-- Tombol Reset Password -->
+                                        <form action="{{ route('dashboard.student_list.reset_password', $teacher->id) }}" method="GET">
+                                            @csrf
+                                            <button type="submit" class="btn btn-warning">Reset Password</button>
+                                        </form>
+                                      
+                                    </td>
+                                    
+                                      
+                        
+                                    
+                                      
+                                      
                                       <!-- Aksi: Edit button -->
                                       <td style="display: flex; align-items: center;">
-                                        <form action="{{ route('dashboard.classroom.edit', $classroom->id) }}" method="GET" style="display: inline-block;">
+                                        <form action="{{ route('dashboard.student_list.edit', $teacher->id) }}" method="GET" style="display: inline-block;">
                                           <button type="submit" class="btn btn-primary btn-sm" style="margin-right: 5px;">
                                               Edit
                                           </button>
                                         </form>                                      
                                         
-                                        <form action="{{ route('dashboard.classroom.delete', $classroom->id) }}" method="POST" style="display: inline-block;" onsubmit="return confirm('Are you sure you want to delete this attendance?');">
+                                        <form action="{{ route('dashboard.teacher_list.delete', $teacher->id) }}" method="POST" style="display: inline-block;" onsubmit="return confirm('Are you sure you want to delete this teacher?');">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="btn btn-danger btn-sm">
@@ -256,7 +278,7 @@
         <!-- footer content -->
         <footer>
           <div class="pull-right">
-            Gentelella - Bootstrap Admin Template by <a href="https://colorlib.com">Colorlib</a>
+            SMP 3 Muhammadiyah
           </div>
           <div class="clearfix"></div>
         </footer>

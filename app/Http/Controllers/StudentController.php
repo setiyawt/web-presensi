@@ -4,6 +4,10 @@
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Model\Model\Student;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
+use App\Models\User;
 use App\Models\Attendance;
 use Illuminate\Support\Facades\Auth;
 
@@ -57,6 +61,134 @@ class StudentController extends Controller
         return view('student.dashboard.index');
     }
 
+
+    public function indexListStudent() {
+        $user = Auth::user();
+        $teachers = User::where('role', 'student')->get();
+        return view('admin.student_list.index', compact('teachers', 'user'));
+    }
+
+    public function createStudentList(){
+        $user = Auth::user();
+        return view('admin.student_list.create', compact('user'));
+    }
+
+    public function store(Request $request)
+    {
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|max:255|unique:users',
+            'password' => 'required|string|min:8|confirmed',
+            'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Validasi foto
+        ]);
+
+        $path = $request->file('photo') ? $request->file('photo')->store('photos', 'public') : null;
+
+        User::create([
+            'name' => $validated['name'],
+            'email' => $validated['email'],
+            'password' => Hash::make($validated['password']),
+            'photo' => $path, // Simpan path foto
+            'role' => 'teacher',
+        ]);
+
+        return redirect()->route('dashboard.student_list.index')->with('success', 'Data berhasil disimpan.');
+    }
+
+    public function edit($userId)
+    {
+        $teacher = User::findOrFail($userId);
+        $user = Auth::user();
+
+        return view('admin.student_list.edit', compact('teacher', 'user'));
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request, $userId)
+    {
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|max:255|unique:users,email,' . $userId,
+            'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
+
+        $teacher = User::findOrFail($userId);
+
+        if ($request->hasFile('photo')) {
+            if ($teacher->photo) {
+                Storage::disk('public')->delete($teacher->photo);
+            }
+
+            $path = $request->file('photo')->store('photos', 'public');
+            if ($path) {
+                $teacher->photo = $path;
+                Log::info('Photo updated: ' . $path); // Add logging
+            } else {
+                Log::error('Failed to store photo'); // Log error if storage fails
+                return redirect()->back()->with('error', 'Failed to upload photo.');
+            }
+        }
+
+        $teacher->name = $validated['name'];
+        $teacher->email = $validated['email'];
+
+        if ($teacher->save()) {
+            Log::info('User updated successfully: ' . $teacher->id); // Log successful update
+            return redirect()->route('dashboard.student_list.index')->with('success', 'Data berhasil diubah.');
+        } else {
+            Log::error('Failed to update user: ' . $teacher->id); // Log error if save fails
+            return redirect()->back()->with('error', 'Failed to update user.');
+        }
+    }
+
+    public function resetPassword($userId)
+    {
+        $user = Auth::user();
+        $teacher = User::findOrFail($userId);
+        return view('admin.student_list.reset_password', compact('teacher', 'user'));
+    }
+
+    public function storePassword(Request $request, $userId)
+    {
+        $request->validate([
+            'new_password' => 'required|string|min:8', // Validasi password jika diperlukan
+        ]);
+
+        $user = User::findOrFail($userId);
+        $user->password = Hash::make($request->input('new_password'));
+        $user->save();
+
+        return redirect()->route('dashboard.student_list.index')->with('success', 'Password berhasil direset');
+    }
+
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy($userId)
+    {
+        // Mendapatkan pengguna yang sedang login
+        $currentUser = Auth::user();
+
+        // Memeriksa apakah ID pengguna yang ingin dihapus sama dengan ID pengguna yang sedang login
+        if ($currentUser->id == $userId) {
+            // Redirect atau tampilkan pesan error jika pengguna mencoba menghapus dirinya sendiri
+            return redirect()->route('dashboard.student_list.index')
+                ->with('error', 'Anda tidak dapat menghapus akun Anda sendiri.');
+        }
+
+        // Jika ID pengguna tidak sama, lanjutkan dengan penghapusan
+        $user = User::findOrFail($userId);
+        $user->delete();
+
+        return redirect()->route('dashboard.student_list.index')
+            ->with('success', 'Pengguna berhasil dihapus.');
+    }
+
+   
+
     /**
      * Show the form for creating a new resource.
      */
@@ -66,46 +198,4 @@ class StudentController extends Controller
     }
 
    
-
-   
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    // public function show(student $student)
-    // {
-    //     //
-    // }
-
-    // /**
-    //  * Show the form for editing the specified resource.
-    //  */
-    // public function edit(student $student)
-    // {
-        
-    // }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    // public function update(Request $request, student $student)
-    // {
-    //     //
-    // }
-
-    // /**
-    //  * Remove the specified resource from storage.
-    //  */
-    // public function destroy(student $student)
-    // {
-    //     //
-    // }
 }
