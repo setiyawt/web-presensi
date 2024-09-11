@@ -221,12 +221,7 @@
                                       <td>{{ $attendance->scan_at }}</td>
                               
                                       <!-- Aksi: Edit button -->
-                                      <td style="display: flex; align-items: center;">
-                                        <form action="{{ route('dashboard.attendance.edit', $attendance->id) }}" method="GET" style="display: inline-block;">
-                                          <button type="submit" class="btn btn-primary btn-sm" style="margin-right: 5px;">
-                                              Edit
-                                          </button>
-                                        </form>                                      
+                                      <td style="display: flex; align-items: center;">                                      
                                         
                                         <form action="{{ route('dashboard.attendance.delete', $attendance->id) }}" method="POST" style="display: inline-block;" onsubmit="return confirm('Are you sure you want to delete this attendance?');">
                                             @csrf

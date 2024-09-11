@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Models\Teacher;
 use App\Models\Attendance;
 use Illuminate\Support\Facades\Auth;
+
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
@@ -176,4 +178,8 @@ class TeacherController extends Controller
         return redirect()->route('dashboard.teacher_list.index')
             ->with('success', 'Pengguna berhasil dihapus.');
     }
+
+    
+
+    
 }

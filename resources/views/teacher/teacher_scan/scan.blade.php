@@ -237,6 +237,7 @@
 								<div class="clearfix"></div>
 							</div>
 							<div class="x_content">
+                
 							       
 								<div class="container-scan">
                     <div id="reader"></div>
@@ -321,8 +322,8 @@
     <!-- Include the QRCode.js library -->
     <script src="https://unpkg.com/qrcode@1.5.1/build/qrcode.min.js"></script>
     
-    <!-- Include the QRCode.js library -->
-    <script src="{{asset('js/scan.js')}}"></script>"
+     <!-- Include the QRCode.js library -->
+     <script src="{{asset('js/scan-teacher.js')}}"></script>"
 
   </body>
 

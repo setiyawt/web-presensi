@@ -53,10 +53,6 @@ class AttendanceController extends Controller
                 return response()->json(['error' => 'User not authenticated'], 401);
             }
 
-            // Cek apakah pengguna memiliki role "student"
-            if ($user->role !== 'student') {
-                return response()->json(['error' => 'Unauthorized, only students can record attendance'], 403);
-            }
 
             Log::info('Received request data: ' . json_encode($request->all()));
 
@@ -65,15 +61,7 @@ class AttendanceController extends Controller
                 'qr_code_id' => 'required|integer|exists:qrcodes,id',
             ]);
 
-            // Cek apakah sudah ada record kehadiran hari ini
-            $existingAttendance = Attendance::where('user_id', $user->id)
-                ->where('qr_code_id', $validatedData['qr_code_id'])
-                ->whereDate('scan_at', Carbon::today())
-                ->first();
-
-            if ($existingAttendance) {
-                return response()->json(['error' => 'Attendance already recorded for today'], 422);
-            }
+            
 
             // Simpan record kehadiran baru
             $attendance = new Attendance();
@@ -107,10 +95,7 @@ class AttendanceController extends Controller
             return response()->json(['error' => 'User not authenticated'], 401);
         }
 
-        // Cek apakah pengguna memiliki role "teacher"
-        if ($user->role !== 'teacher') {
-            return response()->json(['error' => 'Unauthorized, only teachers can record attendance'], 403);
-        }
+        
 
         Log::info('Received request data: ' . json_encode($request->all()));
 
@@ -119,15 +104,7 @@ class AttendanceController extends Controller
             'qr_code_id' => 'required|integer|exists:qrcodes,id',
         ]);
 
-        // Cek apakah sudah ada record kehadiran hari ini
-        $existingAttendance = Attendance::where('user_id', $user->id)
-            ->where('qr_code_id', $validatedData['qr_code_id'])
-            ->whereDate('scan_at', Carbon::today())
-            ->first();
-
-        if ($existingAttendance) {
-            return response()->json(['error' => 'Attendance already recorded for today'], 422);
-        }
+        
 
         // Simpan record kehadiran baru
         $attendance = new Attendance();

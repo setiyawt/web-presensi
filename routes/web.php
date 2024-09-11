@@ -142,9 +142,10 @@ Route::middleware('auth')->group(function () {
         ->middleware('role:teacher')
         ->name('teacher_scan.scan');
 
-        Route::post('teacher/scan-qr', [AttendanceController::class, 'teacher_scan'])
-        ->middleware('auth')
+        Route::post('/teacher/scan-qr', [AttendanceController::class, 'teacher_scan'])
+        ->middleware('auth','role:teacher')
         ->name('teacher.store');
+
 
         // Guru create qr code
         Route::get('student/qrcode/create/', [QRCodeController::class, 'create'])
@@ -162,7 +163,7 @@ Route::middleware('auth')->group(function () {
 
         // Form Student Role
         Route::post('/scan-qr', [AttendanceController::class, 'store'])
-        ->middleware('auth')
+        ->middleware('auth', 'role:student')
         ->name('student.store');
 
         Route::get('/student/index', [AttendanceController::class, 'student_index'])
