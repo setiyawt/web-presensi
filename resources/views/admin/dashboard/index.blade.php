@@ -29,6 +29,7 @@
 
     <!-- Custom Theme Style -->
     <link href="{{asset('lte/build/css/custom.css')}}" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   </head>
 
   <body class="nav-md">
@@ -192,7 +193,7 @@
             </div>
             <div class="col-md-4 col-sm-6  tile_stats_count">
               <span class="count_top"><i class="fa fa-users"></i> Total Guru</span>
-              <div class="count">{{ $totalTeacher ?? 0 }}</div>
+              <div class="count">{{ $totalTeachers ?? 0 }}</div>
               
             </div>
           </div>
@@ -225,7 +226,11 @@
                     <div class="clearfix"></div>
                   </div>
                   <div class="x_content">
-                    <canvas id="lineChart"></canvas>
+                    <script>
+                      var attendedStudentsPerDay = @json($attendedStudentsPerDay);
+                      var attendedTeachersPerDay = @json($attendedTeachersPerDay);
+                    </script>
+                    <canvas id="attendanceChart" width="400" height="200"></canvas>
                   </div>
                 </div>
               </div>
@@ -290,6 +295,9 @@
 
     <!-- Custom Theme Scripts -->
     <script src="{{asset('lte/build/js/custom.min.js')}}"></script>
+    <script src="{{asset('js/graph.js')}}"></script>
+    
+
     
   </body>
 

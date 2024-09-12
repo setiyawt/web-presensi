@@ -18,14 +18,69 @@ class AttendanceController extends Controller
      * Display a listing of the resource.
      */
 
-
+     public function index()
+     {
+         // Ambil total siswa dan guru
+         $totalStudents = User::where('role', 'student')->count();
+         $totalTeachers = User::where('role', 'teacher')->count();
+     
+         // Define start and end dates for the current week (Monday to Saturday)
+         $startDate = now()->startOfWeek()->format('Y-m-d');
+         $endDate = now()->startOfWeek()->addDays(5)->format('Y-m-d'); // Adding 5 days to Monday to get Saturday
+     
+         // Initialize arrays to hold attendance data
+         $attendedStudentsPerDay = [];
+         $attendedTeachersPerDay = [];
+     
+         // Populate data for each day of the week
+         foreach (range(0, 5) as $dayOffset) {
+             $date = now()->startOfWeek()->addDays($dayOffset)->format('Y-m-d');
+             $dayName = now()->startOfWeek()->addDays($dayOffset)->format('l'); // Get day name
+     
+             // Fetch attended students and teachers for the specific date
+             $attendedStudentsPerDay[$dayName] = User::where('role', 'student')
+                 ->whereHas('attendances', function ($query) use ($date) {
+                     $query->whereDate('scan_at', $date);
+                 })->count();
+     
+             $attendedTeachersPerDay[$dayName] = User::where('role', 'teacher')
+                 ->whereHas('attendances', function ($query) use ($date) {
+                     $query->whereDate('scan_at', $date);
+                 })->count();
+         }
+     
+         // Ambil siswa dan guru yang hadir
+         $attendedStudents = User::where('role', 'student')
+             ->whereHas('attendances') // Mengambil siswa yang memiliki data absensi
+             ->count();
+     
+         $attendedTeachers = User::where('role', 'teacher')
+             ->whereHas('attendances') // Mengambil guru yang memiliki data absensi
+             ->count();
+     
+         // Hitung siswa dan guru yang absen
+         $absentStudents = $totalStudents - $attendedStudents;
+         $absentTeachers = $totalTeachers - $attendedTeachers;
+     
+         // Ambil data pengguna yang sedang login
+         $user = Auth::user();
+     
+         // Kembalikan view dengan data
+         return view('admin.dashboard.index', [
+             'user' => $user,
+             'totalStudents' => $totalStudents,
+             'attendedStudents' => $attendedStudents,
+             'absentStudents' => $absentStudents,
+             'totalTeachers' => $totalTeachers,
+             'attendedTeachers' => $attendedTeachers,
+             'absentTeachers' => $absentTeachers,
+             'attendedStudentsPerDay' => $attendedStudentsPerDay,
+             'attendedTeachersPerDay' => $attendedTeachersPerDay,
+         ]);
+     }
+     
     
-    public function index()
-    {
-        $user = Auth::user();
-        return view('admin.dashboard.index', compact('user'));
-        
-    }
+     
 
     public function student_index()
     {
@@ -133,35 +188,8 @@ class AttendanceController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show()
-    {
-        // Ambil total siswa dan guru
-        $totalStudents = User::where('role', 'student')->count();
-        $totalTeachers = User::where('role', 'teacher')->count();
-    
-        // Ambil siswa dan guru yang hadir
-        $attendedStudents = User::where('role', 'student')
-            ->whereHas('attendances') // Mengambil siswa yang memiliki data absensi
-            ->count();
-    
-        $attendedTeachers = User::where('role', 'teacher')
-            ->whereHas('attendances') // Mengambil guru yang memiliki data absensi
-            ->count();
-    
-        // Hitung siswa dan guru yang absen
-        $absentStudents = $totalStudents - $attendedStudents;
-        $absentTeachers = $totalTeachers - $attendedTeachers;
-    
-        // Kembalikan view dengan data
-        return view('dashboard.admin.index', [
-            'totalStudents' => $totalStudents,
-            'attendedStudents' => $attendedStudents,
-            'absentStudents' => $absentStudents,
-            'totalTeachers' => $totalTeachers,
-            'attendedTeachers' => $attendedTeachers,
-            'absentTeachers' => $absentTeachers,
-        ]);
-    }
+    public function show(){}
+
     
     
 
