@@ -89,7 +89,7 @@ class StudentController extends Controller
             'email' => $validated['email'],
             'password' => Hash::make($validated['password']),
             'photo' => $path, // Simpan path foto
-            'role' => 'teacher',
+            'role' => 'student',
         ]);
 
         return redirect()->route('dashboard.student_list.index')->with('success', 'Data berhasil disimpan.');

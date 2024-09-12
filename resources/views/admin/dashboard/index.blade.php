@@ -203,7 +203,7 @@
 
         <div class="page-title">
               <div class="title_left">
-                <h3>Grafik Kehadiran Siswa &</h3>
+                <h3>Grafik Kehadiran Guru & Siswa</h3>
                 
               </div>
               <div class="title_right">
@@ -216,7 +216,7 @@
           <div class="col-md-12 col-sm-8  ">
                 <div class="x_panel">
                   <div class="x_title">
-                    <h2>Line graph<small>Sessions</small></h2>
+                    <h2>Grafik Kehadiran<small>Guru & Siswa</small></h2>
                     <ul class="nav navbar-left panel_toolbox">
                       <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
                       

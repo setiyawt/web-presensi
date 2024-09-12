@@ -22,7 +22,7 @@
                     <header>Login</header>
                     <form action="#">
                         <div class="field input-field">
-                            <input type="text" placeholder="NISN" class="input">
+                            <input type="text" placeholder="Email" class="input">
                         </div>
 
                         <div class="field input-field">

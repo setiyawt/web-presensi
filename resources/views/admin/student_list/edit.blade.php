@@ -93,7 +93,7 @@
                     <ul class="nav child_menu">
                       <li><a href="{{route('dashboard.admin_list.index')}}">Daftar Admin</a></li>
                       <li><a href="{{route('dashboard.teacher_list.index')}}">Daftar Guru</a></li>
-                      {{-- <li><a href="{{route('dashboard.student_list.index')}}">Daftar Siswa</a></li> --}}
+                      <li><a href="{{route('dashboard.student_list.index')}}">Daftar Siswa</a></li>
                     </ul>
                   </li>
                   
@@ -170,7 +170,7 @@
 			<div class="">
 				<div class="page-title">
 					<div class="title_left">
-						<h3>Edit Guru</h3>
+						<h3>Edit Siswa</h3>
 					</div>
 
 					
@@ -180,7 +180,7 @@
 					<div class="col-md-12 col-sm-12 ">
 						<div class="x_panel">
 							<div class="x_title">
-								<h2>Edit Guru <small>pada form di bawah</small></h2>
+								<h2>Edit Siswa <small>pada form di bawah</small></h2>
 								<ul class="nav navbar-right panel_toolbox">
 									<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
 									</li>
@@ -193,7 +193,7 @@
 							<div class="x_content">
 								<br />
 
-								<form action="{{ route('dashboard.teacher_list.update', $teacher->id) }}" method="POST" enctype="multipart/form-data">
+								<form action="{{ route('dashboard.student_list.update', $teacher->id) }}" method="POST" enctype="multipart/form-data">
                   @csrf
                   @method('PUT')
                   <div class="item form-group">
