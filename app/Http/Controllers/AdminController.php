@@ -8,13 +8,14 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
+use Spatie\Permission\Models\Role;
 
 class AdminController extends Controller
 {
     public function index(){
         $user = Auth::user();
-        
-        $admins = User::where('role', 'admin')->get();
+        $adminRole = Role::where('name', 'admin')->first();
+        $admins = $adminRole->users;
         return view('admin.admin_list.index', compact('admins', 'user'));
 
         
@@ -52,7 +53,9 @@ class AdminController extends Controller
     }
 
     public function store(Request $request)
-    {
+{
+    try {
+        // Validate the input
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|string|max:255|unique:users',
@@ -60,18 +63,31 @@ class AdminController extends Controller
             'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Validasi foto
         ]);
 
+        // Handle photo upload
         $path = $request->file('photo') ? $request->file('photo')->store('photos', 'public') : null;
 
-        User::create([
+        // Create the user
+        $user = User::create([
             'name' => $validated['name'],
             'email' => $validated['email'],
             'password' => Hash::make($validated['password']),
             'photo' => $path, // Simpan path foto
-            'role' => 'admin',
         ]);
 
+        // Assign admin role to user
+        $adminRole = Role::where('name', 'admin')->first();
+        if ($adminRole) {
+            $user->assignRole($adminRole);
+        }
+
+        // Redirect with success message
         return redirect()->route('dashboard.admin_list.index')->with('success', 'Data berhasil disimpan.');
+
+    } catch (\Exception $e) {
+        Log::error('Error occurred: ' . $e->getMessage());
+        return back()->with('error', 'Email sudah digunakan');
     }
+}
 
     public function update(Request $request, $userId)
     {

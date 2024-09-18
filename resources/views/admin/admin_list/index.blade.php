@@ -34,7 +34,7 @@
     <link href="{{asset('lte/vendors/datatables.net-scroller-bs/css/scroller.bootstrap.min.css')}}" rel="stylesheet">
 
     <!-- Custom Theme Style -->
-    <link href="{{asset('lte/build/css/custom.min.css')}}" rel="stylesheet">
+    <link href="{{asset('lte/build/css/custom.css')}}" rel="stylesheet">
   </head>
 
   <body class="nav-md">
@@ -91,7 +91,7 @@
                     <ul class="nav child_menu">
                       <li><a href="{{route('dashboard.admin_list.index')}}">Daftar Admin</a></li>
                       <li><a href="{{route('dashboard.teacher_list.index')}}">Daftar Guru</a></li>
-                      {{-- <li><a href="{{route('dashboard.student_list.index')}}">Daftar Siswa</a></li> --}}
+                      <li><a href="{{route('dashboard.student_list.index')}}">Daftar Siswa</a></li>
                     </ul>
                   </li>
                   

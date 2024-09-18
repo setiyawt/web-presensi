@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     
-    <title>Gentelella Alela! | </title>
+    <title>SMP 3 Muhammadiyah | Daftar Kelas</title>
 
     <!-- Bootstrap -->
     <link href="{{asset('lte/vendors/bootstrap/dist/css/bootstrap.min.css')}}" rel="stylesheet">
@@ -34,7 +34,7 @@
     <link href="{{asset('lte/vendors/datatables.net-scroller-bs/css/scroller.bootstrap.min.css')}}" rel="stylesheet">
 
     <!-- Custom Theme Style -->
-    <link href="{{asset('lte/build/css/custom.min.css')}}" rel="stylesheet">
+    <link href="{{asset('lte/build/css/custom.css')}}" rel="stylesheet">
   </head>
 
   <body class="nav-md">
@@ -91,7 +91,7 @@
                     <ul class="nav child_menu">
                       <li><a href="{{route('dashboard.admin_list.index')}}">Daftar Admin</a></li>
                       <li><a href="{{route('dashboard.teacher_list.index')}}">Daftar Guru</a></li>
-                      {{-- <li><a href="{{route('dashboard.student_list.index')}}">Daftar Siswa</a></li> --}}
+                      <li><a href="{{route('dashboard.student_list.index')}}">Daftar Siswa</a></li>
                     </ul>
                   </li>
                   
@@ -225,7 +225,7 @@
                                           </button>
                                         </form>                                      
                                         
-                                        <form action="{{ route('dashboard.classroom.delete', $classroom->id) }}" method="POST" style="display: inline-block;" onsubmit="return confirm('Are you sure you want to delete this attendance?');">
+                                        <form action="{{ route('dashboard.classroom.delete', $classroom->id) }}" method="POST" style="display: inline-block;" onsubmit="return confirm('Apakah anda yakin ingin menhapus kelas ini?');">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="btn btn-danger btn-sm">

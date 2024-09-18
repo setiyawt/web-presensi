@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
 
 
+
 class ClassroomController extends Controller
 {
     /**
@@ -66,7 +67,7 @@ class ClassroomController extends Controller
             return redirect()->route('dashboard.classroom.index')->with('success', 'Kelas berhasil ditambahkan');
         } catch (\Exception $e) {
             Log::error('Error occurred: ' . $e->getMessage());
-            return back()->with('error', 'Terjadi kesalahan saat menambahkan kelas.');
+            return back()->with('error', 'Nama kelas sudah ada. Pilih nama yang berbeda.');
         }
     }
 

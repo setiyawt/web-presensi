@@ -40,7 +40,16 @@ class UserScheduleController extends Controller
                 'end_time' => 'required|date',
             ]);
 
-            
+            $existingSchedule = UserSchedule::where('course_id', $data['course_id'])
+            ->where('classroom_id', $data['classroom_id'])
+            ->whereDate('start_time', '=', $data['start_time'])
+            ->whereDate('end_time', '=', $data['end_time'])
+            ->first();
+
+            if ($existingSchedule) {
+                // If a duplicate is found, return an error message
+                return back()->with('error', 'Jadwal pelajaran sudah ada.');
+            }
 
             // Simpan ke UserSchedule
             UserSchedule::create([

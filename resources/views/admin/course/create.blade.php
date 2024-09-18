@@ -7,7 +7,7 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 
-	<title>SMP 3 Muhammadiyah | Buat Mata Pelajaran</title>
+	<title>SMP 3 Muhammadiyah | Tambah Mata Pelajaran</title>
 
 	<!-- Bootstrap -->
     <link href="{{asset('lte/vendors/bootstrap/dist/css/bootstrap.min.css')}}" rel="stylesheet">
@@ -25,7 +25,7 @@
     <!-- bootstrap-daterangepicker -->
     <link href="{{asset('lte/vendors/bootstrap-daterangepicker/daterangepicker.css')}}" rel="stylesheet">
     <!-- Custom Theme Style -->
-    <link href="{{asset('lte/build/css/custom.min.css')}}" rel="stylesheet">
+    <link href="{{asset('lte/build/css/custom.css')}}" rel="stylesheet">
 	<!-- bootstrap-wysiwyg -->
 	<link href="{{asset('ltevendors/google-code-prettify/bin/prettify.min.css')}}" rel="stylesheet">
 	<!-- Select2 -->
@@ -93,7 +93,7 @@
                     <ul class="nav child_menu">
                       <li><a href="{{route('dashboard.admin_list.index')}}">Daftar Admin</a></li>
                       <li><a href="{{route('dashboard.teacher_list.index')}}">Daftar Guru</a></li>
-                      {{-- <li><a href="{{route('dashboard.student_list.index')}}">Daftar Siswa</a></li> --}}
+                      <li><a href="{{route('dashboard.student_list.index')}}">Daftar Siswa</a></li>
                     </ul>
                   </li>
                   
@@ -194,23 +194,28 @@
 								<br />
 
 								<form action="{{ route('dashboard.course.store') }}" method="POST">
-                                    @csrf
-                                    <div class="item form-group">
-                                        <label class="col-form-label col-md-3 col-sm-3 label-align" for="course_name">Nama Mata Pelajaran Baru<span class="required">*</span></label>
-                                        <div class="col-md-6 col-sm-6">
-                                            <input type="text" name="course_name" id="course_name" class="form-control" required>
-                                        </div>
-                                    </div>
-                                    <div class="ln_solid"></div>
-                                    <div class="item form-group">
-                                        <div class="col-md-6 col-sm-6 offset-md-3">
-                                            <button class="btn btn-primary" type="button">Cancel</button>
-                                            <button class="btn btn-primary" type="reset">Reset</button>
-                                            <button type="submit" class="btn btn-success">Submit</button>
-                                        </div>
-                                    </div>
-                                </form>
-                                
+                  @csrf
+                  <div class="item form-group">
+                      <label class="col-form-label col-md-3 col-sm-3 label-align" for="course_name">Nama Mata Pelajaran Baru<span class="required">*</span></label>
+                      <div class="col-md-6 col-sm-6">
+                          <input type="text" name="course_name" id="course_name" class="form-control" required>
+                      </div>
+                  </div>
+                  <div class="ln_solid"></div>
+                  <div class="item form-group">
+                      <div class="col-md-6 col-sm-6 offset-md-3">
+                          <button class="btn btn-primary" type="button">Cancel</button>
+                          <button class="btn btn-primary" type="reset">Reset</button>
+                          <button type="submit" class="btn btn-success">Submit</button>
+                      </div>
+                  </div>
+                </form>
+                @if (session('error'))
+                  <script>
+                      alert('{{ session('error') }}');
+                  </script>
+                @endif     
+        
               
 							</div>
 						</div>

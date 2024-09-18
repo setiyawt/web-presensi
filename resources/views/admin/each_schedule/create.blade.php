@@ -7,7 +7,7 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 
-	<title>Gentelella Alela! | </title>
+	<title>SMP 3 Muhammadiyah | Tambah Jadwal Untuk Guru/Siswa</title>
 
 	<!-- Bootstrap -->
     <link href="{{asset('lte/vendors/bootstrap/dist/css/bootstrap.min.css')}}" rel="stylesheet">
@@ -235,7 +235,11 @@
                         </div>
                     </div>
                 </form>
-              
+                @if (session('error'))
+                  <script>
+                      alert('{{ session('error') }}');
+                  </script>
+                @endif 
 							</div>
 						</div>
 					</div>

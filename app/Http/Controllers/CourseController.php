@@ -73,7 +73,7 @@ class CourseController extends Controller
             return redirect()->route('dashboard.course.index')->with('success', 'Pelajaran berhasil ditambahkan');
         } catch (\Exception $e) {
             Log::error('Error occurred: ' . $e->getMessage());
-            return back()->with('error', 'Terjadi kesalahan saat menambahkan pelajaran.');
+            return back()->with('error', 'Nama pelajaran sudah ada. Pilih nama yang berbeda.');
         }
     }
 
@@ -137,7 +137,7 @@ class CourseController extends Controller
             return redirect()->route('dashboard.course.index')->with('success', 'Pelajaran berhasil diperbarui');
         } catch (\Exception $e) {
             Log::error('Error occurred: ' . $e->getMessage());
-            return back()->with('error', 'Terjadi kesalahan saat memperbarui pelajaran.');
+            return back()->with('error', 'Nama pelajaran sudah ada. Pilih nama yang berbeda.');
         }
 }
 

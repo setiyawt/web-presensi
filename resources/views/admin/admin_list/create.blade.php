@@ -7,7 +7,7 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 
-	<title>Gentelella Alela! | </title>
+	<title>SMP 3 Muhammadiyah | Tambah Admin</title>
 
 	<!-- Bootstrap -->
     <link href="{{asset('lte/vendors/bootstrap/dist/css/bootstrap.min.css')}}" rel="stylesheet">
@@ -25,7 +25,7 @@
     <!-- bootstrap-daterangepicker -->
     <link href="{{asset('lte/vendors/bootstrap-daterangepicker/daterangepicker.css')}}" rel="stylesheet">
     <!-- Custom Theme Style -->
-    <link href="{{asset('lte/build/css/custom.min.css')}}" rel="stylesheet">
+    <link href="{{asset('lte/build/css/custom.css')}}" rel="stylesheet">
 	<!-- bootstrap-wysiwyg -->
 	<link href="{{asset('ltevendors/google-code-prettify/bin/prettify.min.css')}}" rel="stylesheet">
 	<!-- Select2 -->
@@ -193,7 +193,7 @@
 							<div class="x_content">
 								<br />
 
-								<form action="{{ route('dashboard.admin_list.store') }}" enctype="multipart/form-data" method="POST">
+								<form action="{{ route('dashboard.admin_list.store') }}" enctype="multipart/form-data" onsubmit="return validatePassword()" method="POST">
                   @csrf
                   
                   <div class="item form-group">
@@ -210,17 +210,35 @@
                   </div>
               
                   <div class="item form-group">
-                      <label class="col-form-label col-md-3 col-sm-3 label-align" for="password">Password<span class="required">*</span></label>
-                      <div class="col-md-6 col-sm-6">
-                          <input type="password" name="password" id="password" class="form-control" required>
-                      </div>
+                    <label class="col-form-label col-md-3 col-sm-3 label-align" for="password">Password<span class="required">*</span></label>
+                    <div class="col-md-6 col-sm-6">
+                        <input type="password" name="password" id="password" class="form-control" required>
+                    </div>
+                </div>
+
+                
+              
+                <div class="item form-group">
+                    <label class="col-form-label col-md-3 col-sm-3 label-align" for="password_confirmation">Confirm Password<span class="required">*</span></label>
+                    <div class="col-md-6 col-sm-6">
+                        <input type="password" name="password_confirmation" id="password_confirmation" class="form-control" required>
+                    </div>
+                </div>
+
+                {{-- password dont match --}}
+                <div class="item form-group">
+                  <div class="col-md-6 col-sm-6 offset-md-3">
+                      <span id="passwordError" style="color: red; display: none;">Password tidak sama</span>
                   </div>
-                  <div class="item form-group">
-                      <label class="col-form-label col-md-3 col-sm-3 label-align" for="password_confirmation">Confirm Password<span class="required">*</span></label>
-                      <div class="col-md-6 col-sm-6">
-                          <input type="password" name="password_confirmation" id="password_confirmation" class="form-control" required>
-                      </div>
-                  </div>
+              </div>
+
+            <!-- password harus lebih 8 karakter -->
+
+              <div class="item form-group">
+                <div class="col-md-6 col-sm-6 offset-md-3">
+                    <span id="passwordError" style="color: red; display: none;">Password harus lebih dari 8 karakter</span>
+                </div>
+              </div>
               
                   <!-- Input untuk upload foto -->
                   <div class="item form-group">
@@ -240,7 +258,11 @@
                   </div>
               </form>
               
-                                
+              @if (session('error'))
+                  <script>
+                      alert('{{ session('error') }}');
+                  </script>
+              @endif                    
                                 
                                 
               
@@ -312,7 +334,8 @@
 	<script src="{{asset('lte/vendors/starrr/dist/starrr.js')}}"></script>
 	<!-- Custom Theme Scripts -->
 	<script src="{{asset('lte/build/js/custom.min.js')}}"></script>
-    <script src="{{asset('js/other-field.js')}}"></script>
+  <script src="{{asset('js/other-field.js')}}"></script>
+  <script src="{{asset('js/validate-pass.js')}}"></script>
   </body>
 
 </html>

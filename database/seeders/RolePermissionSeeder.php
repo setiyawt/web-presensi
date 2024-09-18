@@ -8,7 +8,6 @@ use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 use App\Models\User;
 
-
 class RolePermissionSeeder extends Seeder
 {
     /**
@@ -16,58 +15,70 @@ class RolePermissionSeeder extends Seeder
      */
     public function run(): void
     {
+        // Define permissions
         $permissions = [
-            'view teacher presence',
-            'view student presence',
             'create class',
             'edit presence',
             'delete presence',
-            'view schedules',        
-            'view students',          
-            'create qrcode',          
-            'scan qrcode',            
-            'view status presence' 
+            'view schedules',
+            'view students',
+            'create qrcode',
+            'scan qrcode',
+            'view status presence'
         ];
 
+        // Create permissions if they don't exist
         foreach ($permissions as $permission) {
-            Permission::create(['name' => $permission]);
+            Permission::firstOrCreate(['name' => $permission]);
         }
 
-        // Create roles and assign permissions
-        $adminRole = Role::create(['name' => 'admin']);
+        // Create roles
+        $adminRole = Role::firstOrCreate(['name' => 'admin']);
+        $teacherRole = Role::firstOrCreate(['name' => 'teacher']);
+        $studentRole = Role::firstOrCreate(['name' => 'student']);
+
+        // Assign permissions to roles
         $adminRole->givePermissionTo(Permission::all());
 
-        $teacherRole = Role::create(['name' => 'teacher']);
-        $teacherRole->givePermissionTo(['view schedules', 'view students', 'create qrcode', 'edit presence', 'delete presence']);
+        $teacherRole->givePermissionTo([
+            'view schedules',
+            'view students',
+            'create qrcode',
+            'edit presence',
+            'delete presence'
+        ]);
 
-        $studentRole = Role::create(['name' => 'student']);
-        $studentRole->givePermissionTo(['view schedules', 'view status presence', 'scan qrcode']);
+        $studentRole->givePermissionTo([
+            'view schedules',
+            'view status presence',
+            'scan qrcode'
+        ]);
 
-        // membuat data user super admin
-        $user = User::create([
+        // Create users and assign roles
+        $user = User::firstOrCreate([
+            'email' => 'admin@example.com'
+        ], [
             'name' => 'Administrator',
-            'email' => 'admin@example.com',
-            'password' => bcrypt('12345678'),
-            'role' => 'admin',
+            'password' => bcrypt('12345678')
         ]);
 
-        $teacher = User::create([
+        $teacher = User::firstOrCreate([
+            'email' => 'teacher@example.com'
+        ], [
             'name' => 'Teacher',
-            'email' => 'teacher@example.com',
-            'password' => bcrypt('12345678'),
-            'role' => 'teacher',
+            'password' => bcrypt('12345678')
         ]);
 
-        $student = User::create([
+        $student = User::firstOrCreate([
+            'email' => 'student@example.com'
+        ], [
             'name' => 'Student',
-            'email' => 'student@example.com',
-            'password' => bcrypt('12345678'),
-            'role' =>'student',
+            'password' => bcrypt('12345678')
         ]);
 
+        // Assign roles to users
         $user->assignRole($adminRole);
         $teacher->assignRole($teacherRole);
         $student->assignRole($studentRole);
-
     }
 }

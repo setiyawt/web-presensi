@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use App\Models\User;
+use Spatie\Permission\Models\Role;
 
 
 class TeacherController extends Controller
@@ -24,8 +25,9 @@ class TeacherController extends Controller
     {
         // Mengambil attendance yang user-nya memiliki role teacher
         $user = Auth::user();
+        
         $attendances = Attendance::whereHas('user', function($query) {
-            $query->role('teacher'); // Pastikan 'teacher' adalah role yang sesuai.
+            $query->role('teacher'); 
         })
         ->orderBy('id', 'DESC')
         ->get();
@@ -62,7 +64,9 @@ class TeacherController extends Controller
    
     public function indexListTeacher() {
         $user = Auth::user();
-        $teachers = User::where('role', 'teacher')->get();
+        $teacherRole = Role::where('name', 'teacher')->first();
+        $teachers = $teacherRole->users;
+        
         return view('admin.teacher_list.index', compact('teachers', 'user'));
     }
 
@@ -86,13 +90,18 @@ class TeacherController extends Controller
 
         $path = $request->file('photo') ? $request->file('photo')->store('photos', 'public') : null;
 
-        User::create([
+        $user = User::create([
             'name' => $validated['name'],
             'email' => $validated['email'],
             'password' => Hash::make($validated['password']),
             'photo' => $path, // Simpan path foto
-            'role' => 'teacher',
         ]);
+        $teacherRole = Role::where('name', 'teacher')->first();
+
+        // Tetapkan role ke pengguna
+        if ($teacherRole) {
+            $user->assignRole($teacherRole);
+        }
 
         return redirect()->route('dashboard.teacher_list.index')->with('success', 'Data berhasil disimpan.');
     }

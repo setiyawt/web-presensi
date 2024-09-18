@@ -206,28 +206,28 @@
                                   </tr>
                                 </thead>
                                 <tbody>
-                                  @foreach($teachers as $key => $teacher)
+                                  @foreach($students as $key => $student)
                                     <tr>
                                       <!-- No: Menggunakan $key + 1 untuk menghasilkan nomor urut -->
                                       <td>{{ $key + 1 }}</td>
                                       
                                       <!-- Foto: Mengambil dari relasi users melalui admin -->
                                       <td>
-                                        <img src="{{ $teacher->photo ? asset('storage/' . $teacher->photo) : asset('storage/app/public/photos/default-image.jpg') }}" alt="User Photo" style="width: 100px; height: auto;">
+                                        <img src="{{ $student->photo ? asset('storage/' . $student->photo) : asset('storage/app/public/photos/default-image.jpg') }}" alt="User Photo" style="width: 100px; height: auto;">
                                     </td>
                                     
                                     
                                       
                                       <!-- Nama: Mengambil dari relasi users melalui admin -->
-                                      <td>{{ $teacher->name }}</td>
+                                      <td>{{ $student->name }}</td>
                                         
                                       <!-- NUPTK: Mengambil dari relasi users melalui admin -->
-                                      <td>{{ $teacher->email }}</td>
+                                      <td>{{ $student->email }}</td>
                                       
                                       <!-- Password: Mengambil secara random -->
                                       <td>
                                         <!-- Tombol Reset Password -->
-                                        <form action="{{ route('dashboard.student_list.reset_password', $teacher->id) }}" method="GET">
+                                        <form action="{{ route('dashboard.student_list.reset_password', $student->id) }}" method="GET">
                                             @csrf
                                             <button type="submit" class="btn btn-warning">Reset Password</button>
                                         </form>
@@ -241,13 +241,13 @@
                                       
                                       <!-- Aksi: Edit button -->
                                       <td style="display: flex; align-items: center;">
-                                        <form action="{{ route('dashboard.student_list.edit', $teacher->id) }}" method="GET" style="display: inline-block;">
+                                        <form action="{{ route('dashboard.student_list.edit', $student->id) }}" method="GET" style="display: inline-block;">
                                           <button type="submit" class="btn btn-primary btn-sm" style="margin-right: 5px;">
                                               Edit
                                           </button>
                                         </form>                                      
                                         
-                                        <form action="{{ route('dashboard.student_list.delete', $teacher->id) }}" method="POST" style="display: inline-block;" onsubmit="return confirm('Are you sure you want to delete this teacher?');">
+                                        <form action="{{ route('dashboard.student_list.delete', $student->id) }}" method="POST" style="display: inline-block;" onsubmit="return confirm('Are you sure you want to delete this student?');">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="btn btn-danger btn-sm">

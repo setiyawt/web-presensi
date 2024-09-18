@@ -95,7 +95,7 @@
                     <ul class="nav child_menu">
                       <li><a href="{{route('dashboard.admin_list.index')}}">Daftar Admin</a></li>
                       <li><a href="{{route('dashboard.teacher_list.index')}}">Daftar Guru</a></li>
-                      {{-- <li><a href="{{route('dashboard.student_list.index')}}">Daftar Siswa</a></li> --}}
+                      <li><a href="{{route('dashboard.student_list.index')}}">Daftar Siswa</a></li>
                     </ul>
                   </li>
                   
@@ -258,7 +258,7 @@
         <!-- footer content -->
         <footer>
           <div class="pull-right">
-            SMPN 3 Muhammadiyah
+            SMP 3 Muhammadiyah
           </div>
           <div class="clearfix"></div>
         </footer>

@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Storage;
 use App\Models\User;
 use App\Models\Attendance;
 use Illuminate\Support\Facades\Auth;
+use Spatie\Permission\Models\Role;
 
 class StudentController extends Controller
 {
@@ -34,7 +35,7 @@ class StudentController extends Controller
         
     }
 
-    public function indexTeacher()
+    public function indexStudentTeacher()
     {
         // Mengambil attendance yang user-nya memiliki role student
         $attendances = Attendance::whereHas('user', function($query) {
@@ -64,8 +65,10 @@ class StudentController extends Controller
 
     public function indexListStudent() {
         $user = Auth::user();
-        $teachers = User::where('role', 'student')->get();
-        return view('admin.student_list.index', compact('teachers', 'user'));
+        
+        $studentRole = Role::where('name', 'student')->first();
+        $students = $studentRole->users;
+        return view('admin.student_list.index', compact('students', 'user'));
     }
 
     public function createStudentList(){

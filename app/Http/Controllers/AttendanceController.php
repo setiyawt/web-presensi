@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Carbon;
 use App\Models\User;
+use Spatie\Permission\Models\Role;
 use App\Models\Course;
 use App\Models\Classroom;
 
@@ -21,8 +22,10 @@ class AttendanceController extends Controller
      public function index()
      {
          // Ambil total siswa dan guru
-         $totalStudents = User::where('role', 'student')->count();
-         $totalTeachers = User::where('role', 'teacher')->count();
+         $studentRole = Role::where('name', 'student')->first();
+         $teacherRole = Role::where('name', 'teacher')->first();
+         $totalStudents = $studentRole->users->count();
+         $totalTeachers = $teacherRole->users->count();
      
          // Define start and end dates for the current week (Monday to Saturday)
          $startDate = now()->startOfWeek()->format('Y-m-d');
@@ -38,23 +41,23 @@ class AttendanceController extends Controller
              $dayName = now()->startOfWeek()->addDays($dayOffset)->format('l'); // Get day name
      
              // Fetch attended students and teachers for the specific date
-             $attendedStudentsPerDay[$dayName] = User::where('role', 'student')
+             $attendedStudentsPerDay[$dayName] = $studentRole->users()
                  ->whereHas('attendances', function ($query) use ($date) {
                      $query->whereDate('scan_at', $date);
                  })->count();
      
-             $attendedTeachersPerDay[$dayName] = User::where('role', 'teacher')
+             $attendedTeachersPerDay[$dayName] = $teacherRole->users()
                  ->whereHas('attendances', function ($query) use ($date) {
                      $query->whereDate('scan_at', $date);
                  })->count();
          }
      
          // Ambil siswa dan guru yang hadir
-         $attendedStudents = User::where('role', 'student')
+         $attendedStudents = $studentRole->users()
              ->whereHas('attendances') // Mengambil siswa yang memiliki data absensi
              ->count();
      
-         $attendedTeachers = User::where('role', 'teacher')
+         $attendedTeachers = $teacherRole->users()
              ->whereHas('attendances') // Mengambil guru yang memiliki data absensi
              ->count();
      

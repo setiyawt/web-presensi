@@ -9,29 +9,27 @@ use App\Http\Controllers\QrcodeController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\EachScheduleController;
-use App\Http\Controllers\StudentScheduleController;
 use App\Http\Controllers\UserScheduleController;
-use App\Http\Models\User;
-use App\Models\Attendance;
-use App\Models\Teacher;
-use App\Models\UserSchedule;
-use GuzzleHttp\Promise\Each;
+
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
+
+
 
 
 Route::get('/', function () {
     if (Auth::check()) {
         $user = Auth::user();
-        // Cek role user
-        if ($user->role === 'admin') {
+    
+        if ($user->hasRole('admin')) {
             return redirect()->route('dashboard.admin.index');
-        } elseif ($user->role === 'teacher') {
+        } elseif ($user->hasRole('teacher')) {
             return redirect()->route('dashboard.teacher.index');
         } else {
             return redirect()->route('dashboard.student.index');
         }
     }
+    
     
     return view('dashboard'); // Default view jika tidak ada role
 })->middleware(['auth', 'verified'])->name('dashboard');
@@ -208,7 +206,7 @@ Route::middleware('auth')->group(function () {
         ->name('tables_attend.table_student');
 
         //Untuk menampilkan seluruh kehadiran student disisi teacher
-        Route::get('/student_attend/show/students', [StudentController::class, 'indexTeacher'])
+        Route::get('/student_attend/show/students', [StudentController::class, 'indexStudentTeacher'])
         ->middleware('role:teacher')
         ->name('student_attend.index');
 

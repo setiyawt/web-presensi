@@ -52,7 +52,14 @@ class EachScheduleController extends Controller
             'user_id' => 'required|exists:users,id',
             'user_schedule_id' => 'required|exists:user_schedules,id',
         ]);
+        $existingSchedule = EachSchedule::where('user_id', $validatedData['user_id'])
+        ->where('user_schedule_id', $validatedData['user_schedule_id'])
+        ->first();
 
+        if ($existingSchedule) {
+            // If a duplicate entry is found, return an error message
+            return back()->with('error', 'Jadwal sudah ada untuk pengguna');
+        }
         // Simpan ke tabel each_schedule
         EachSchedule::create([
             'user_id' => $request->user_id,
