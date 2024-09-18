@@ -175,11 +175,11 @@ class TeacherController extends Controller
     public function storePassword(Request $request, $userId)
     {
         $request->validate([
-            'new_password' => 'required|string|min:8', // Validasi password jika diperlukan
+            'password' => 'required|string|min:8', // Validasi password jika diperlukan
         ]);
 
         $user = User::findOrFail($userId);
-        $user->password = Hash::make($request->input('new_password'));
+        $user->password = Hash::make($request->input('password'));
         $user->save();
 
         return redirect()->route('dashboard.teacher_list.index')->with('success', 'Password berhasil direset');

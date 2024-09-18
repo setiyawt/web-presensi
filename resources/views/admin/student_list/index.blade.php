@@ -6,7 +6,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    
+    <link rel="icon" href="https://fonts.gstatic.com/s/i/materialicons/school/v6/24px.svg" type="image/svg+xml">
     <title>SMP 3 Muhammadiyah | Daftar Siswa</title>
 
     <!-- Bootstrap -->
@@ -34,7 +34,7 @@
     <link href="{{asset('lte/vendors/datatables.net-scroller-bs/css/scroller.bootstrap.min.css')}}" rel="stylesheet">
 
     <!-- Custom Theme Style -->
-    <link href="{{asset('lte/build/css/custom.min.css')}}" rel="stylesheet">
+    <link href="{{asset('lte/build/css/custom.css')}}" rel="stylesheet">
   </head>
 
   <body class="nav-md">
@@ -247,7 +247,7 @@
                                           </button>
                                         </form>                                      
                                         
-                                        <form action="{{ route('dashboard.student_list.delete', $student->id) }}" method="POST" style="display: inline-block;" onsubmit="return confirm('Are you sure you want to delete this student?');">
+                                        <form action="{{ route('dashboard.student_list.delete', $student->id) }}" method="POST" style="display: inline-block;" onsubmit="return confirm('Apakah anda ingin menghapus siswa ini?');">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="btn btn-danger btn-sm">

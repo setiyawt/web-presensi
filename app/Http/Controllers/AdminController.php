@@ -30,17 +30,18 @@ class AdminController extends Controller
 
     public function storePassword(Request $request, $userId)
     {
+        // Validasi password baru
         $request->validate([
-            'new_password' => 'required|string|min:8', // Validasi password jika diperlukan
+            'password' => 'required|string|min:8|confirmed', // gunakan 'confirmed' untuk mengecek password_confirmation otomatis
         ]);
-
+    
         $user = User::findOrFail($userId);
-        $user->password = Hash::make($request->input('new_password'));
+        $user->password = Hash::make($request->input('password')); // Sesuaikan input 'password'
         $user->save();
-
+    
         return redirect()->route('dashboard.admin_list.index')->with('success', 'Password berhasil direset');
     }
-
+    
     public function create(){
         $user = Auth::user();
         return view('admin.admin_list.create', compact('user'));
@@ -48,46 +49,47 @@ class AdminController extends Controller
     }
 
     public function edit($userId){
-        $user = User::findOrFail($userId);
-        return view('admin.admin_list.edit', compact('user'));
+        $admin = User::findOrFail($userId);
+        $user = Auth::user();
+        return view('admin.admin_list.edit', compact('user', 'admin'));
     }
 
     public function store(Request $request)
-{
-    try {
-        // Validate the input
-        $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|max:255|unique:users',
-            'password' => 'required|string|min:8|confirmed',
-            'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Validasi foto
-        ]);
+    {
+        try {
+            // Validate the input
+            $validated = $request->validate([
+                'name' => 'required|string|max:255',
+                'email' => 'required|string|max:255|unique:users',
+                'password' => 'required|string|min:8|confirmed',
+                'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Validasi foto
+            ]);
 
-        // Handle photo upload
-        $path = $request->file('photo') ? $request->file('photo')->store('photos', 'public') : null;
+            // Handle photo upload
+            $path = $request->file('photo') ? $request->file('photo')->store('photos', 'public') : null;
 
-        // Create the user
-        $user = User::create([
-            'name' => $validated['name'],
-            'email' => $validated['email'],
-            'password' => Hash::make($validated['password']),
-            'photo' => $path, // Simpan path foto
-        ]);
+            // Create the user
+            $user = User::create([
+                'name' => $validated['name'],
+                'email' => $validated['email'],
+                'password' => Hash::make($validated['password']),
+                'photo' => $path, // Simpan path foto
+            ]);
 
-        // Assign admin role to user
-        $adminRole = Role::where('name', 'admin')->first();
-        if ($adminRole) {
-            $user->assignRole($adminRole);
+            // Assign admin role to user
+            $adminRole = Role::where('name', 'admin')->first();
+            if ($adminRole) {
+                $user->assignRole($adminRole);
+            }
+
+            // Redirect with success message
+            return redirect()->route('dashboard.admin_list.index')->with('success', 'Data berhasil disimpan.');
+
+        } catch (\Exception $e) {
+            Log::error('Error occurred: ' . $e->getMessage());
+            return back()->with('error', 'Email sudah digunakan');
         }
-
-        // Redirect with success message
-        return redirect()->route('dashboard.admin_list.index')->with('success', 'Data berhasil disimpan.');
-
-    } catch (\Exception $e) {
-        Log::error('Error occurred: ' . $e->getMessage());
-        return back()->with('error', 'Email sudah digunakan');
     }
-}
 
     public function update(Request $request, $userId)
     {

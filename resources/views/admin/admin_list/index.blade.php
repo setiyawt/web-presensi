@@ -6,6 +6,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="https://fonts.gstatic.com/s/i/materialicons/school/v6/24px.svg" type="image/svg+xml">
     
     <title>SMP 3 Muhammadiyah | Daftar Admin</title>
 
@@ -247,7 +248,7 @@
                                           </button>
                                         </form>                                      
                                         
-                                        <form action="{{ route('dashboard.admin_list.delete', $admin->id) }}" method="POST" style="display: inline-block;" onsubmit="return confirm('Are you sure you want to delete this admin?');">
+                                        <form action="{{ route('dashboard.admin_list.delete', $admin->id) }}" method="POST" style="display: inline-block;" onsubmit="return confirm('Apakah anda yakin ingin menghapus admin ini?');">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="btn btn-danger btn-sm">

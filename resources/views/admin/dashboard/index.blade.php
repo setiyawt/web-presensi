@@ -8,7 +8,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 	  <link rel="icon" href="{{asset('lte/images/favicon.ico')}}" type="image/ico" />
-
+    <link rel="icon" href="https://fonts.gstatic.com/s/i/materialicons/school/v6/24px.svg" type="image/svg+xml">
     <title>SMP 3 Muhammadiyah</title>
 
     <!-- Bootstrap -->

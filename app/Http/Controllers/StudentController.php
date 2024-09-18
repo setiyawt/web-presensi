@@ -78,24 +78,39 @@ class StudentController extends Controller
 
     public function store(Request $request)
     {
-        $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|max:255|unique:users',
-            'password' => 'required|string|min:8|confirmed',
-            'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Validasi foto
-        ]);
+        try {
+            // Validate the input
+            $validated = $request->validate([
+                'name' => 'required|string|max:255',
+                'email' => 'required|string|max:255|unique:users',
+                'password' => 'required|string|min:8|confirmed',
+                'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Validasi foto
+            ]);
 
-        $path = $request->file('photo') ? $request->file('photo')->store('photos', 'public') : null;
+            // Handle photo upload
+            $path = $request->file('photo') ? $request->file('photo')->store('photos', 'public') : null;
 
-        User::create([
-            'name' => $validated['name'],
-            'email' => $validated['email'],
-            'password' => Hash::make($validated['password']),
-            'photo' => $path, // Simpan path foto
-            'role' => 'student',
-        ]);
+            // Create the user
+            $user = User::create([
+                'name' => $validated['name'],
+                'email' => $validated['email'],
+                'password' => Hash::make($validated['password']),
+                'photo' => $path, // Simpan path foto
+            ]);
 
-        return redirect()->route('dashboard.student_list.index')->with('success', 'Data berhasil disimpan.');
+            // Assign admin role to user
+            $studentRole = Role::where('name', 'student')->first();
+            if ($studentRole) {
+                $user->assignRole($studentRole);
+            }
+
+            // Redirect with success message
+            return redirect()->route('dashboard.student_list.index')->with('success', 'Data berhasil disimpan.');
+
+        } catch (\Exception $e) {
+            Log::error('Error occurred: ' . $e->getMessage());
+            return back()->with('error', 'Email sudah digunakan');
+        }
     }
 
     public function edit($userId)

@@ -6,7 +6,7 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-
+  <link rel="icon" href="https://fonts.gstatic.com/s/i/materialicons/school/v6/24px.svg" type="image/svg+xml">
 	<title>SMP 3 Muhammadiyah | Tambah Admin</title>
 
 	<!-- Bootstrap -->
@@ -202,6 +202,7 @@
                           <input type="text" name="name" id="name" class="form-control" required>
                       </div>
                   </div>
+
                   <div class="item form-group">
                       <label class="col-form-label col-md-3 col-sm-3 label-align" for="email">Email<span class="required">*</span></label>
                       <div class="col-md-6 col-sm-6">
@@ -214,32 +215,30 @@
                     <div class="col-md-6 col-sm-6">
                         <input type="password" name="password" id="password" class="form-control" required>
                     </div>
-                </div>
-
-                
-              
-                <div class="item form-group">
-                    <label class="col-form-label col-md-3 col-sm-3 label-align" for="password_confirmation">Confirm Password<span class="required">*</span></label>
-                    <div class="col-md-6 col-sm-6">
-                        <input type="password" name="password_confirmation" id="password_confirmation" class="form-control" required>
-                    </div>
-                </div>
-
-                {{-- password dont match --}}
-                <div class="item form-group">
-                  <div class="col-md-6 col-sm-6 offset-md-3">
-                      <span id="passwordError" style="color: red; display: none;">Password tidak sama</span>
                   </div>
-              </div>
 
-            <!-- password harus lebih 8 karakter -->
+                  <div class="item form-group">
+                      <label class="col-form-label col-md-3 col-sm-3 label-align" for="password_confirmation">Confirm Password<span class="required">*</span></label>
+                      <div class="col-md-6 col-sm-6">
+                          <input type="password" name="password_confirmation" id="password_confirmation" class="form-control" required>
+                      </div>
+                  </div>
 
-              <div class="item form-group">
-                <div class="col-md-6 col-sm-6 offset-md-3">
-                    <span id="passwordError" style="color: red; display: none;">Password harus lebih dari 8 karakter</span>
-                </div>
-              </div>
-              
+                  {{-- password dont match --}}
+                  <div class="item form-group">
+                    <div class="col-md-6 col-sm-6 offset-md-3">
+                        <span id="passwordError" style="color: red; display: none;">Password tidak sama</span>
+                    </div>
+                  </div>
+
+                  <!-- password harus lebih 8 karakter -->
+
+                  <div class="item form-group">
+                    <div class="col-md-6 col-sm-6 offset-md-3">
+                        <span id="passwordError" style="color: red; display: none;">Password harus lebih dari 8 karakter</span>
+                    </div>
+                  </div>
+                  
                   <!-- Input untuk upload foto -->
                   <div class="item form-group">
                       <label class="col-form-label col-md-3 col-sm-3 label-align" for="photo">Foto</label>
@@ -256,13 +255,13 @@
                           <button type="submit" class="btn btn-success">Submit</button>
                       </div>
                   </div>
-              </form>
+                </form>
               
-              @if (session('error'))
-                  <script>
-                      alert('{{ session('error') }}');
-                  </script>
-              @endif                    
+                @if (session('error'))
+                    <script>
+                        alert('{{ session('error') }}');
+                    </script>
+                @endif                    
                                 
                                 
               
