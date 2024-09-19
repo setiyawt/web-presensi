@@ -35,7 +35,16 @@ class EachScheduleController extends Controller
         return view('teacher.teacher_schedule.index', compact('schedules', 'user'));
     }
     
+    public function indexStudentSchedule() {
+        $user = Auth::user();
     
+        // Ambil jadwal yang hanya terkait dengan user yang sedang login
+        $schedules = EachSchedule::with(['userSchedule.course', 'userSchedule.classroom'])
+            ->where('user_id', $user->id)
+            ->get();
+    
+        return view('student.student_schedule.index', compact('schedules', 'user'));
+    }
 
     public function create()
         {

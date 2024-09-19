@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" href="https://fonts.gstatic.com/s/i/materialicons/school/v6/24px.svg" type="image/svg+xml">
-    <title>SMP 3 Muhammadiyah | Kehadiran Siswa</title>
+    <title>SMP 3 Muhammadiyah | Kehadiran Guru</title>
 
     <!-- Bootstrap -->
     <link href="{{asset('lte/vendors/bootstrap/dist/css/bootstrap.min.css')}}" rel="stylesheet">
@@ -43,7 +43,7 @@
         <div class="col-md-3 left_col">
           <div class="left_col scroll-view">
             <div class="navbar nav_title" style="border: 0;">
-              <a href={{route('dashboard.teacher.index')}} class="site_title"><i class="fa fa-server"></i><span> Form Guru</span></a>
+              <a href={{route('dashboard.teacher.index')}} class="site_title"><i class="fa fa-server"></i><span> Form Siswa</span></a>
             </div>
   
             <div class="clearfix"></div>
@@ -61,33 +61,34 @@
               </div>
             </div>
             <!-- /menu profile quick info -->
-
+  
             <br />
-
+  
             <!-- sidebar menu -->
             
+            
             <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
-              <div class="menu_section">
-                <h3>General</h3>
-                
-                <ul class="nav side-menu">
-                
-                
-                  <li><a href="{{route('dashboard.teacher.index')}}"><i class="fa fa-plus"></i> Buat Qr Code Kehadiran</a></li>
-                  <li><a href="{{route('dashboard.teacher_scan.scan')}}"><i class="fa fa-qrcode"></i> Scan Qr</a></li>
-                  <li><a href="{{route('dashboard.student_attend.index')}}"><i class="fa fa-list"></i> Kehadiran Siswa</a></li>
-                  <li><a href="{{route('dashboard.teacher_attend.index')}}"><i class="fa fa-list"></i> Kehadiran Guru</a></li>
-                  <li><a href="{{route('dashboard.teacher_schedule.index')}}"><i class="fa fa-clipboard"></i> Jadwal Pelajaran </a></li>
+                <div class="menu_section">
+                  <h3>General</h3>
                   
-                </ul>
-              </div>
-
-
-
+                  <ul class="nav side-menu">
+                  
+                  
+                    <li><a href="{{route('dashboard.teacher.index')}}"><i class="fa fa-plus"></i> Buat Qr Code Kehadiran</a></li>
+                    <li><a href="{{route('dashboard.teacher_scan.scan')}}"><i class="fa fa-qrcode"></i> Scan Qr</a></li>
+                    <li><a href="{{route('dashboard.student_attend.index')}}"><i class="fa fa-list"></i> Kehadiran Siswa</a></li>
+                    <li><a href="{{route('dashboard.teacher_attend.index')}}"><i class="fa fa-list"></i> Kehadiran Guru</a></li>
+                    <li><a href="{{route('dashboard.teacher_schedule.index')}}"><i class="fa fa-clipboard"></i> Jadwal Pelajaran </a></li>
+                    
+                  </ul>
+                </div>
   
-            </div>
-            <!-- /sidebar menu -->
-
+  
+  
+    
+              </div>
+              <!-- /sidebar menu -->
+  
             <!-- /menu footer buttons -->
             <div class="sidebar-footer hidden-small">
               <a data-toggle="tooltip" data-placement="top" title="Settings">
@@ -110,7 +111,7 @@
             <!-- /menu footer buttons -->
           </div>
         </div>
-
+  
         <!-- top navigation -->
         <div class="top_nav">
           <div class="nav_menu">
@@ -133,7 +134,7 @@
                     <a class="dropdown-item"  href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><i class="fa fa-sign-out pull-right"></i> Log Out</a>
                   </div>
                 </li>
-
+  
                 <li role="presentation" class="nav-item dropdown open">
                   
                  
@@ -143,13 +144,14 @@
           </div>
         </div>
         <!-- /top navigation -->
+  
 
         <!-- page content -->
         <div class="right_col" role="main">
           <div class="">
             <div class="page-title">
               <div class="title_left">
-                <h3>Tabel Kehadiran Siswa</h3>
+                <h3>Tabel Kehadiran Guru</h3>
               </div>
 
               <div class="title_right">
@@ -225,7 +227,7 @@
         <!-- footer content -->
         <footer>
           <div class="pull-right">
-            Gentelella - Bootstrap Admin Template by <a href="https://colorlib.com">Colorlib</a>
+            SMP 3 Muhammadiyah
           </div>
           <div class="clearfix"></div>
         </footer>

@@ -1,1 +1,0 @@
-<!-- melihat jadwal kelas -->

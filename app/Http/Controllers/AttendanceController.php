@@ -87,7 +87,8 @@ class AttendanceController extends Controller
 
     public function student_index()
     {
-        return view('student.dashboard.index');
+        $user = Auth::user();
+        return view('student.dashboard.index', compact('user'));
     }
 
     /**

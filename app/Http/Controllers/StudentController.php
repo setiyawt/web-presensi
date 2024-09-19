@@ -52,6 +52,21 @@ class StudentController extends Controller
         
     }
 
+    public function indexStudentAttend(){
+        $user = Auth::user(); // Dapatkan user yang sedang login
+    
+        // Ambil attendance hanya untuk user yang sedang login
+        $attendances = Attendance::where('user_id', $user->id)
+            ->orderBy('id', 'DESC')
+            ->get();
+    
+        return view('student.student_attendance.index', [
+            'attendances' => $attendances,
+            'user' => $user, // Bisa juga ditambahkan untuk menampilkan info user di view
+        ]);
+    }
+    
+
     public function scopeRole($query, $roleName)
     {
         return $query->whereHas('roles', function($q) use ($roleName) {

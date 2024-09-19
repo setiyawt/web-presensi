@@ -183,6 +183,11 @@ Route::middleware('auth')->group(function () {
         ->middleware('role:teacher')
         ->name('teacher_schedule.index');
 
+        // untuk menampilkan jadwal guru itu sendiri
+        Route::get('/student/schedule/show', [EachScheduleController::class, 'indexStudentSchedule'])
+        ->middleware('role:student')
+        ->name('student_schedule.index');
+
 
 
         //Untuk menampilkan seluruh pelajaran
@@ -209,6 +214,17 @@ Route::middleware('auth')->group(function () {
         Route::get('/student_attend/show/students', [StudentController::class, 'indexStudentTeacher'])
         ->middleware('role:teacher')
         ->name('student_attend.index');
+
+        //Untuk menampilkan seluruh kehadiran student disisi student itu sendiri
+        Route::get('/student/show', [StudentController::class, 'indexStudentAttend'])
+        ->middleware('role:student')
+        ->name('student_attendance.index');
+
+        //Untuk menampilkan seluruh kehadiran teacher disisi teacher itu sendiri
+        Route::get('/teacher/show', [TeacherController::class, 'indexTeacherAttend'])
+        ->middleware('role:teacher')
+        ->name('teacher_attend.index');
+
 
         //Untuk menampilkan seluruh data admin
         Route::get('/admin_list/show/index', [AdminController::class, 'index'])

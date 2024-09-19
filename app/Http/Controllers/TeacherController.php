@@ -74,7 +74,20 @@ class TeacherController extends Controller
         $user = Auth::user();
         return view('admin.teacher_list.create', compact('user'));
     }
-   
+    
+    public function indexTeacherAttend(){
+        $user = Auth::user(); // Dapatkan user yang sedang login
+    
+        // Ambil attendance hanya untuk user yang sedang login
+        $attendances = Attendance::where('user_id', $user->id)
+            ->orderBy('id', 'DESC')
+            ->get();
+    
+        return view('teacher.teacher_attend.index', [
+            'attendances' => $attendances,
+            'user' => $user, // Bisa juga ditambahkan untuk menampilkan info user di view
+        ]);
+    }
 
     /**
      * Store a newly created resource in storage.

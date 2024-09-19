@@ -7,7 +7,7 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" href="https://fonts.gstatic.com/s/i/materialicons/school/v6/24px.svg" type="image/svg+xml">
-	<title>SMP 3 Muhammadiyah | Buat Qr Code Presensi</title>
+	<title>SMP 3 Muhammadiyah | Halaman Guru</title>
 
 	<!-- Bootstrap -->
     <link href="{{asset('lte/vendors/bootstrap/dist/css/bootstrap.min.css')}}" rel="stylesheet">
@@ -78,7 +78,7 @@
                   <li><a href="{{route('dashboard.teacher.index')}}"><i class="fa fa-plus"></i> Buat Qr Code Kehadiran</a></li>
                   <li><a href="{{route('dashboard.teacher_scan.scan')}}"><i class="fa fa-qrcode"></i> Scan Qr</a></li>
                   <li><a href="{{route('dashboard.student_attend.index')}}"><i class="fa fa-list"></i> Kehadiran Siswa</a></li>
-            
+                  <li><a href="{{route('dashboard.teacher_attend.index')}}"><i class="fa fa-list"></i> Kehadiran Guru</a></li>
                   <li><a href="{{route('dashboard.teacher_schedule.index')}}"><i class="fa fa-clipboard"></i> Jadwal Pelajaran </a></li>
                   
                 </ul>
