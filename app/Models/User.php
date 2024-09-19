@@ -77,4 +77,9 @@ class User extends Authenticatable
     public function admin(){
         return $this->hasOne(Admin::class, 'user_id');
     }
+
+    public function getProfilePhotoUrlAttribute()
+    {
+        return $this->photo ? asset('storage/' . $this->photo) : asset('images/default-image.jpg');
+    }
 }

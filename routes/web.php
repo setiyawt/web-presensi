@@ -179,7 +179,7 @@ Route::middleware('auth')->group(function () {
         ->name('each_schedule.index');
 
         // untuk menampilkan jadwal guru itu sendiri
-        Route::get('/teacher/schedule/show', [UserScheduleController::class, 'indexTeacherSchedule'])
+        Route::get('/teacher/schedule/show', [EachScheduleController::class, 'indexTeacherSchedule'])
         ->middleware('role:teacher')
         ->name('teacher_schedule.index');
 

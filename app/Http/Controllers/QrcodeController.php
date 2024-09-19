@@ -6,6 +6,7 @@ use App\Models\Course;
 use App\Models\Classroom;
 use App\Models\Qrcode;
 use Illuminate\Http\Request;
+
 use SimpleSoftwareIO\QrCode\Facades\QrCode as QrCodeGenerator;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\DB;
@@ -28,12 +29,13 @@ class QrcodeController extends Controller
      * Show the form for creating a new resource.
      */
     public function create()
-    {
+    {   
+        $user = Auth::user();
         $courses = Course::all();
         $classrooms = Classroom::all();
         $latestQrcode = Qrcode::latest()->first(); // Mengambil QR code terakhir
 
-        return view('teacher.qrcode.create', compact('courses', 'classrooms', 'latestQrcode'));
+        return view('teacher.qrcode.create', compact('user', 'courses', 'classrooms', 'latestQrcode'));
         
     }
 
@@ -55,7 +57,7 @@ class QrcodeController extends Controller
         DB::beginTransaction();
         try {
             // Generate QR code
-            QrCodeGenerator::format('png')->size(300)->generate($qrData, public_path($qrCodePath));
+            QrCode::format('png')->size(300)->generate($qrData, public_path($qrCodePath));
 
             // Simpan data QR Code ke tabel
             Qrcode::create([
@@ -118,7 +120,7 @@ class QrcodeController extends Controller
         DB::beginTransaction();
         try {
             // Generate QR code
-            QrCodeGenerator::format('png')->size(300)->generate($qrData, public_path($qrCodePath));
+            QrCode::format('png')->size(300)->generate($qrData, public_path($qrCodePath));
 
             // Simpan data QR Code ke tabel
             Qrcode::create([

@@ -26,12 +26,13 @@ class ClassroomController extends Controller
 
     public function take_classroom()
     {
+        $user = Auth::user();
         $courses = Course::all(); // Mengambil semua data dari tabel 'course'
         $classrooms = Classroom::all(); // Mengambil semua data dari tabel 'classroom'
         return view('teacher.dashboard.index', [
             'courses' => $courses,
             'classrooms' => $classrooms
-        ]);
+        ], compact('user'));
     }
 
 

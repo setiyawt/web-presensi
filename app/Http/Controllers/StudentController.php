@@ -38,6 +38,7 @@ class StudentController extends Controller
     public function indexStudentTeacher()
     {
         // Mengambil attendance yang user-nya memiliki role student
+        $user = Auth::user();
         $attendances = Attendance::whereHas('user', function($query) {
             $query->role('student'); // Pastikan 'student' adalah role yang sesuai.
         })
@@ -47,7 +48,7 @@ class StudentController extends Controller
 
         return view('teacher.student_attend.index', [
             'attendances' => $attendances,
-        ]);
+        ], compact('user'));
         
     }
 

@@ -237,7 +237,7 @@
                                           </button>
                                         </form>                                      
                                         
-                                        <form action="{{ route('dashboard.each_schedule.delete', $schedule->id) }}" method="POST" style="display: inline-block;" onsubmit="return confirm('Are you sure you want to delete this attendance?');">
+                                        <form action="{{ route('dashboard.each_schedule.delete', $schedule->id) }}" method="POST" style="display: inline-block;" onsubmit="return confirm('Apakah anda yakin ingin menghapus jadwal ini?');">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="btn btn-danger btn-sm">

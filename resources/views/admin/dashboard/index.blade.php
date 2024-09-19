@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 	  <link rel="icon" href="{{asset('lte/images/favicon.ico')}}" type="image/ico" />
     <link rel="icon" href="https://fonts.gstatic.com/s/i/materialicons/school/v6/24px.svg" type="image/svg+xml">
-    <title>SMP 3 Muhammadiyah</title>
+    <title>SMP 3 Muhammadiyah | Administrator</title>
 
     <!-- Bootstrap -->
     <link href="{{asset('lte/vendors/bootstrap/dist/css/bootstrap.min.css')}}" rel="stylesheet">

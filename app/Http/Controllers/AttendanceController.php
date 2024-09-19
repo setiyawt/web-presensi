@@ -141,7 +141,8 @@ class AttendanceController extends Controller
     }
     
     public function teacher_create_scan() {
-        return view('teacher.teacher_scan.scan');
+        $user = Auth::user();
+        return view('teacher.teacher_scan.scan', compact('user'));
     }
 
     public function teacher_scan(Request $request) {
