@@ -86,7 +86,7 @@
                   </form>
                </section>
                <footer class="login_content">
-                <p class="created-by">Crafted with <i class="fa fa-heart"></i> by <a href=""> setiyawt</a></p>
+                <p class="created-by">Crafted with <i class="fa fa-heart"></i> by <a href="https://www.linkedin.com/in/setiyawt/" target="_blank"> setiyawt</a></p>
                </footer>
             </div>
          
