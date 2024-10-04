@@ -202,40 +202,33 @@
 
         <!-- Grafik -->
 
-        <div class="page-title">
-              <div class="title_left">
-                <h3>Grafik Kehadiran Guru & Siswa</h3>
-                
-              </div>
-              <div class="title_right">
-                <div class="col-md-5 col-sm-5   form-group pull-right top_search"></div>
-              </div>
-        </div>
-
-          <!-- /top tiles -->
         <div class="row">
-          <div class="col-md-12 col-sm-8  ">
-                <div class="x_panel">
-                  <div class="x_title">
-                    <h2>Grafik Kehadiran<small>Guru & Siswa</small></h2>
-                    <ul class="nav navbar-left panel_toolbox">
-                      <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
-                      
-                      
-                    </ul>
-                    <div class="clearfix"></div>
+            <div class="col-md-12 col-sm-12 ">
+              <div class="dashboard_graph">
+
+                <div class="row x_title">
+                  <div class="col-md-6">
+                    <h3>Grafik Kehadiran <small>Siswa & Murid</small></h3>
                   </div>
-                  <div class="x_content">
+                  
+                </div>
+
+                <div class="col-md-9 col-sm-9 ">
+                  
                     <script>
                       var attendedStudentsPerDay = @json($attendedStudentsPerDay);
                       var attendedTeachersPerDay = @json($attendedTeachersPerDay);
                     </script>
                     <canvas id="attendanceChart" width="400" height="200"></canvas>
-                  </div>
+                  
                 </div>
-              </div>
+                
 
-        </div>
+                <div class="clearfix"></div>
+              </div>
+            </div>
+
+          </div>
 
 
 

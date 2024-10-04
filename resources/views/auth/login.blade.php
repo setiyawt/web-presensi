@@ -14,12 +14,32 @@
       <link href="{{asset('lte/build/css/custom.min.css')}}" rel="stylesheet">
       <meta name="robots" content="noindex, follow">
       <style>
-        
+         .footer {
+            display: flex;
+            justify-content: center;  /* Pusatkan secara horizontal */
+            align-items: center;      /* Pusatkan secara vertikal */
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            width: 100%;              /* Pastikan footer selebar layar */
+            height: 50px;             /* Atur tinggi footer sesuai kebutuhan */
+            padding: 10px;
+            background-color: #f5f5f5; /* Warna latar belakang footer */
+            z-index: 1000;            /* Pastikan footer berada di atas elemen lain */
+         }
 
-        .created-by {
+         body {
+            margin: 0;                /* Hapus margin body */
+            padding-bottom: 60px;     /* Tambahkan padding bawah agar konten tidak tertutup oleh footer */
+         }
+
+         .created-by {
             font-size: 12px;
             font-family: 'Courier New', Courier, monospace;
-        }
+            text-align: center;       /* Pusatkan teks */
+         }
+
 
         .visi {
             font-size: 14px; 
@@ -28,7 +48,7 @@
 
         #btn {
             background-color: rgb(42, 63, 84);
-            color: #fff;
+            color: #ffffff;
             padding-right: 50px;
             padding-left: 50px;
         }
@@ -85,9 +105,9 @@
                      </div>
                   </form>
                </section>
-               <footer class="login_content">
+               <div class="footer">
                 <p class="created-by">Crafted with <i class="fa fa-heart"></i> by <a href="https://www.linkedin.com/in/setiyawt/" target="_blank"> setiyawt</a></p>
-               </footer>
+               </div>
             </div>
          
         </div>

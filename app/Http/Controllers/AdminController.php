@@ -51,7 +51,7 @@ class AdminController extends Controller
     public function edit($userId){
         $admin = User::findOrFail($userId);
         $user = Auth::user();
-        return view('admin.admin_list.edit', compact('user', 'admin'));
+        return view('admin.admin_list.edit', compact('admin', 'user'));
     }
 
     public function store(Request $request)
@@ -99,16 +99,16 @@ class AdminController extends Controller
             'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
-        $user = User::findOrFail($userId);
+        $admin = User::findOrFail($userId);
 
         if ($request->hasFile('photo')) {
-            if ($user->photo) {
-                Storage::disk('public')->delete($user->photo);
+            if ($admin->photo) {
+                Storage::disk('public')->delete($admin->photo);
             }
 
             $path = $request->file('photo')->store('photos', 'public');
             if ($path) {
-                $user->photo = $path;
+                $admin->photo = $path;
                 Log::info('Photo updated: ' . $path); // Add logging
             } else {
                 Log::error('Failed to store photo'); // Log error if storage fails
@@ -116,14 +116,14 @@ class AdminController extends Controller
             }
         }
 
-        $user->name = $validated['name'];
-        $user->email = $validated['email'];
+        $admin->name = $validated['name'];
+        $admin->email = $validated['email'];
 
-        if ($user->save()) {
-            Log::info('User updated successfully: ' . $user->id); // Log successful update
+        if ($admin->save()) {
+            Log::info('User updated successfully: ' . $admin->id); // Log successful update
             return redirect()->route('dashboard.admin_list.index')->with('success', 'Data berhasil diubah.');
         } else {
-            Log::error('Failed to update user: ' . $user->id); // Log error if save fails
+            Log::error('Failed to update user: ' . $admin->id); // Log error if save fails
             return redirect()->back()->with('error', 'Failed to update user.');
         }
     }

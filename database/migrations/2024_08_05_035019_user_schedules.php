@@ -15,8 +15,10 @@ return new class extends Migration
             $table->id();
             $table->foreignId('course_id')->constrained()->onDelete('cascade');
             $table->foreignId('classroom_id')->constrained()->onDelete('cascade');
-            $table->timestamp('start_time');
-            $table->timestamp('end_time');
+            // $table->timestamp('start_time');
+            // $table->timestamp('end_time');
+            $table->timestamp('start_time')->default(DB::raw('CURRENT_TIMESTAMP'));
+            $table->timestamp('end_time')->default(DB::raw('CURRENT_TIMESTAMP')); 
             $table->softDeletes();
             $table->timestamps();
         });

@@ -189,19 +189,19 @@
 							<div class="x_content">
 								<br />
 
-								<form action="{{ route('dashboard.admin_list.update', $user->id) }}" method="POST" enctype="multipart/form-data">
+								<form action="{{ route('dashboard.admin_list.update', $admin->id) }}" method="POST" enctype="multipart/form-data">
                   @csrf
                   @method('PUT')
                   <div class="item form-group">
                       <label class="col-form-label col-md-3 col-sm-3 label-align" for="name">Nama<span class="required">*</span></label>
                       <div class="col-md-6 col-sm-6">
-                          <input type="text" name="name" id="name" class="form-control" value="{{ old('name', $user->name) }}" required>
+                          <input type="text" name="name" id="name" class="form-control" value="{{ old('name', $admin->name) }}" required>
                       </div>
                   </div>
                   <div class="item form-group">
                       <label class="col-form-label col-md-3 col-sm-3 label-align" for="email">Email<span class="required">*</span></label>
                       <div class="col-md-6 col-sm-6">
-                          <input type="email" name="email" id="email" class="form-control" value="{{ old('email', $user->email) }}" required>
+                          <input type="email" name="email" id="email" class="form-control" value="{{ old('email', $admin->email) }}" required>
                       </div>
                   </div>
                   <!-- Input untuk upload foto -->
