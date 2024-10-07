@@ -182,7 +182,7 @@
 					<div class="col-md-12 col-sm-12 ">
 						<div class="x_panel">
 							<div class="x_title">
-								<h2>Qr Code Guru dan Siswa<small>pada form di bawah ini</small></h2>
+								<h2>Scan Qr Code Guru dan Siswa<small>pada form di bawah ini</small></h2>
 								<ul class="nav navbar-right panel_toolbox">
 									<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
 									</li>
@@ -296,8 +296,10 @@
     <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
     <!-- Include the QRCode.js library -->
     <script src="https://unpkg.com/qrcode@1.5.1/build/qrcode.min.js"></script>
+    <script src="https://unpkg.com/html5-qrcode/minified/html5-qrcode.min.js"></script>
+
     <!-- Include the qrcodes.js -->
-    <script src="{{asset('js/scan.js')}}"></script>
+    <script src="{{asset('js/scan-teacher.js')}}"></script>
     
   </body>
 

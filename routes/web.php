@@ -150,8 +150,8 @@ Route::middleware('auth')->group(function () {
             ->middleware('role:teacher')
             ->name('qrcode.create');
             
-        Route::post('student/qrcode/create', [QRCodeController::class, 'store'])
-            ->middleware('role:teacher')
+        Route::post('student/qrcode', [QRCodeController::class, 'store'])
+            ->middleware('auth','role:teacher')
             ->name('qrcode.store');
 
         
@@ -365,7 +365,7 @@ Route::middleware('auth')->group(function () {
             ->middleware('role:admin')
             ->name('attendance.qrcode');
 
-        Route::post('teacher/qrcode/create', [QRCodeController::class, 'storeTeacherQr'])
+        Route::post('teacher/qrcode', [QRCodeController::class, 'storeTeacherQr'])
             ->middleware('role:admin')
             ->name('attendance.store');
 

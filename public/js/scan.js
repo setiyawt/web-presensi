@@ -1,13 +1,22 @@
 let html5QrCode;
 
 function initializeScanner() {
+    // Check if Html5Qrcode is defined
     if (typeof Html5Qrcode === "undefined") {
         console.error("Html5Qrcode is not defined. Retrying in 1 second...");
         setTimeout(initializeScanner, 1000);
         return;
     }
 
-    html5QrCode = new Html5Qrcode("reader");
+    const readerElement = document.getElementById("reader");
+
+    // Check if the reader element exists
+    if (!readerElement) {
+        console.error("HTML element with id 'reader' not found");
+        return; // Exit if the element is not found
+    }
+
+    html5QrCode = new Html5Qrcode(readerElement);
 
     html5QrCode.start(
         { facingMode: "environment" },
@@ -18,34 +27,25 @@ function initializeScanner() {
         console.error('Error starting QR Code scanner:', err);
         alert('Failed to start QR Code scanner. Please check your camera permissions.');
     });
-
-    // Generate a QR code for demonstration
-    QRCode.toCanvas(document.getElementById('qrcode'), 'http://jindo.dev.naver.com/collie', function (error) {
-        if (error) console.error(error);
-        console.log('QR code generated!');
-    });
 }
 
 // Function to handle successful QR code scan
 function onScanSuccess(decodedText) {
     console.log('Scanned QR code data:', decodedText);
-
     const qr_code_id = extractQrCodeId(decodedText);
-
+    
     if (qr_code_id === null) {
         alert('Error: Missing required data.');
         return;
     }
-
+    
     fetch('/dashboard/scan-qr', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
             'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
         },
-        body: JSON.stringify({
-            qr_code_id: qr_code_id,
-        })
+        body: JSON.stringify({ qr_code_id: qr_code_id })
     })
     .then(response => {
         if (!response.ok) {
@@ -63,7 +63,6 @@ function onScanSuccess(decodedText) {
     });
 }
 
-
 // Function to extract qr_code_id from the QR code data
 function extractQrCodeId(decodedText) {
     // Example: Assuming QR code data is space-separated
@@ -75,7 +74,6 @@ function extractQrCodeId(decodedText) {
     }
     return id;
 }
-
 
 // Function to handle QR code scan errors
 function onScanError(errorMessage) {

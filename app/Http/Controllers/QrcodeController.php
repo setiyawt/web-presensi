@@ -54,10 +54,16 @@ class QrcodeController extends Controller
         $qrData = $validatedData['course_id'] . ' ' . $validatedData['lesson_time'];
         $qrCodePath = 'qrcodes/' . uniqid() . '.png';
 
+        // Pastikan direktori ada
+        if (!file_exists(public_path('qrcodes'))) {
+            mkdir(public_path('qrcodes'), 0755, true);
+        }
+
         DB::beginTransaction();
         try {
             // Generate QR code
             QrCode::format('png')->size(300)->generate($qrData, public_path($qrCodePath));
+
 
             // Simpan data QR Code ke tabel
             Qrcode::create([
@@ -71,8 +77,8 @@ class QrcodeController extends Controller
             DB::commit();
 
             return redirect()->route('dashboard.qrcode.create')
-            ->with('success', 'QR Code created successfully')
-            ->with('qr_code_path', $qrCodePath); 
+                ->with('success', 'QR Code created successfully')
+                ->with('qr_code_path', $qrCodePath); 
         } catch (\Exception $e) {
             // Rollback transaksi jika ada kesalahan
             DB::rollBack();
@@ -80,6 +86,7 @@ class QrcodeController extends Controller
             return redirect()->back()->withInput()->withErrors(['error' => 'Failed to create QR Code. Please try again.']);
         }
     }
+
 
     public function indexTeacherQr() {
         $user = Auth::User();
@@ -106,43 +113,52 @@ class QrcodeController extends Controller
      * Store a newly created resource in storage.
      */
     public function storeTeacherQr(Request $request)
-    {
-        // Validasi input
-        $validatedData = $request->validate([
-            'course_id' => 'required|integer', 
-            'classroom_id' => 'required|integer', 
-            'lesson_time' => 'required|date',
+{
+    // Validasi input
+    $validatedData = $request->validate([
+        'course_id' => 'required|integer', 
+        'classroom_id' => 'required|integer', 
+        'lesson_time' => 'required|date',
+    ]);
+
+    // Siapkan data untuk QR Code
+    $qrData = $validatedData['course_id'] . ' ' . $validatedData['lesson_time'];
+    $qrCodePath = 'qrcodes/' . uniqid() . '.png';
+
+    // Mulai transaksi database
+    DB::beginTransaction();
+
+    try {
+        // Generate QR code dan simpan ke path yang ditentukan
+        QrCode::format('png')->size(300)->generate($qrData, public_path($qrCodePath));
+
+        // Simpan data QR Code ke tabel
+        Qrcode::create([
+            'course_id' => $validatedData['course_id'],
+            'classroom_id' => $validatedData['classroom_id'],
+            'lesson_time' => $validatedData['lesson_time'],
+            'qr_code_path' => $qrCodePath,
         ]);
 
-        $qrData = $validatedData['course_id'] . ' ' . $validatedData['lesson_time'];
-        $qrCodePath = 'qrcodes/' . uniqid() . '.png';
+        // Commit transaksi jika berhasil
+        DB::commit();
 
-        DB::beginTransaction();
-        try {
-            // Generate QR code
-            QrCode::format('png')->size(300)->generate($qrData, public_path($qrCodePath));
-
-            // Simpan data QR Code ke tabel
-            Qrcode::create([
-                'course_id' => $validatedData['course_id'],
-                'classroom_id' => $validatedData['classroom_id'],
-                'lesson_time' => $validatedData['lesson_time'],
-                'qr_code_path' => $qrCodePath,
-            ]);
-
-            // Commit transaksi
-            DB::commit();
-
-            return redirect()->route('dashboard.attendance.qrcode')
+        // Redirect dengan pesan sukses
+        return redirect()->route('dashboard.attendance.qrcode')
             ->with('success', 'QR Code created successfully')
             ->with('qr_code_path', $qrCodePath); 
-        } catch (\Exception $e) {
-            // Rollback transaksi jika ada kesalahan
-            DB::rollBack();
-            Log::error('QR Code creation failed: ' . $e->getMessage());
-            return redirect()->back()->withInput()->withErrors(['error' => 'Failed to create QR Code. Please try again.']);
-        }
+
+    } catch (\Exception $e) {
+        // Rollback transaksi jika terjadi kesalahan
+        DB::rollBack();
+
+        // Log error dan tampilkan pesan kesalahan
+        Log::error('QR Code creation failed: ' . $e->getMessage());
+        return redirect()->back()->withInput()->withErrors(['error' => 'Failed to create QR Code. Please try again.']);
     }
+}
+
+
 
 
 

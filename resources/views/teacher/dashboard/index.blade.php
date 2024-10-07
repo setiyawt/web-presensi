@@ -27,13 +27,25 @@
     <!-- Custom Theme Style -->
     <link href="{{asset('lte/build/css/custom.css')}}" rel="stylesheet">
 	<!-- bootstrap-wysiwyg -->
-	<link href="{{asset('ltevendors/google-code-prettify/bin/prettify.min.css')}}" rel="stylesheet">
+	<link href="{{asset('lte/vendors/google-code-prettify/bin/prettify.min.css')}}" rel="stylesheet">
 	<!-- Select2 -->
 	<link href="{{asset('lte/vendors/select2/dist/css/select2.min.css')}}" rel="stylesheet">
 	<!-- Switchery -->
 	<link href="{{asset('lte/vendors/switchery/dist/switchery.min.css')}}" rel="stylesheet">
 	<!-- starrr -->
 	<link href="{{asset('lte/vendors/starrr/dist/starrr.css')}}" rel="stylesheet">
+  {{-- !-- Include the html5-qrcode library --> --}}
+    <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
+    <!-- Include the QRCode.js library -->
+    {{-- <script src="https://unpkg.com/qrcode@1.5.1/build/qrcode.min.js"></script> --}}
+    <script src="https://unpkg.com/qrcode@1.4.4/build/qrcode.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/html5-qrcode/minified/html5-qrcode.min.js"></script>
+    
+
+
+    <!-- Include the qrcodes.js -->
+    <script src="{{asset('js/scan.js')}}"></script>
+  
 	
 
 </head>
@@ -175,13 +187,16 @@
 							<div class="x_content">
 								<br />
               
-              @if($errors -> any())
-               <ul>
-                 @foreach($errors->all() as $error)
-                      <li class="py-5 px-5 bg-red-700 text-red>{{ $error }}</li>
-                 @endforeach
-               </ul>
-              @endif              
+                @if ($errors->any())
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+                          
 								
               <form action="{{ route('dashboard.qrcode.store') }}" method="POST">
                 @csrf
@@ -293,9 +308,14 @@
     <!-- Include the html5-qrcode library -->
     <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
     <!-- Include the QRCode.js library -->
-    <script src="https://unpkg.com/qrcode@1.5.1/build/qrcode.min.js"></script>
+    
+    <script src="https://unpkg.com/qrcode@1.4.4/build/qrcode.min.js"></script>
+
     <!-- Include the qrcodes.js -->
-    <script src="{{asset('js/qrcodes.js')}}"></script>
+    <script src="{{asset('js/scan.js')}}"></script>
+    
+    <!-- Include the qrcodes.js -->
+    
     
   </body>
 
