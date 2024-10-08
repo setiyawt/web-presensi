@@ -28,7 +28,7 @@
     <!-- Custom Theme Style -->
     <link href="{{asset('lte/build/css/custom.css')}}" rel="stylesheet">
 	<!-- bootstrap-wysiwyg -->
-	<link href="{{asset('ltevendors/google-code-prettify/bin/prettify.min.css')}}" rel="stylesheet">
+	<link href="{{asset('lte/vendors/google-code-prettify/bin/prettify.min.css')}}" rel="stylesheet">
 	<!-- Select2 -->
 	<link href="{{asset('lte/vendors/select2/dist/css/select2.min.css')}}" rel="stylesheet">
 	<!-- Switchery -->
@@ -254,6 +254,7 @@
     <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
     <!-- Include the QRCode.js library -->
     <script src="https://unpkg.com/qrcode@1.5.1/build/qrcode.min.js"></script>
+
     
     <!-- Include the QRCode.js library -->
     <script src="{{asset('js/scan.js')}}"></script>"

@@ -305,10 +305,13 @@
 	<!-- Custom Theme Scripts -->
 	<script src="{{asset('lte/build/js/custom.min.js')}}"></script>
     <!-- Include the html5-qrcode library -->
-    <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
+    
     <!-- Include the QRCode.js library -->
     
     <script src="https://unpkg.com/qrcode@1.4.4/build/qrcode.min.js"></script>
+    <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
+    <!-- Include the QRCode.js library -->
+    <script src="https://unpkg.com/qrcode@1.5.1/build/qrcode.min.js"></script>
 
     <!-- Include the qrcodes.js -->
     <script src="{{asset('js/scan.js')}}"></script>
