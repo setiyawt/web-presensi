@@ -5,6 +5,7 @@
 	<!-- Meta, title, CSS, favicons, etc. -->
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="csrf-token" content="{{ csrf_token() }}">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" href="https://fonts.gstatic.com/s/i/materialicons/school/v6/24px.svg" type="image/svg+xml">
 	<title>SMP 3 Muhammadiyah | Buat Qr Code Kehadiran</title>
@@ -27,7 +28,7 @@
     <!-- Custom Theme Style -->
     <link href="{{asset('lte/build/css/custom.min.css')}}" rel="stylesheet">
 	<!-- bootstrap-wysiwyg -->
-	<link href="{{asset('ltevendors/google-code-prettify/bin/prettify.min.css')}}" rel="stylesheet">
+	<link href="{{asset('lte/vendors/google-code-prettify/bin/prettify.min.css')}}" rel="stylesheet">
 	<!-- Select2 -->
 	<link href="{{asset('lte/vendors/select2/dist/css/select2.min.css')}}" rel="stylesheet">
 	<!-- Switchery -->
@@ -236,6 +237,11 @@
                         </div>
                     </div>
                 </form>
+
+                <div id="qrcode-container" class="text-center mt-4" style="display: none;">
+                  <h4>Generated QR Code</h4>
+                  <div id="qrcode"></div>
+              </div>
               
 							</div>
 						</div>
@@ -305,8 +311,12 @@
 	<script src="{{asset('lte/vendors/starrr/dist/starrr.js')}}"></script>
 	<!-- Custom Theme Scripts -->
 	<script src="{{asset('lte/build/js/custom.min.js')}}"></script>
-  
-  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  <script src="https://unpkg.com/html5-qrcode/html5-qrcode.min.js"></script>
+
+
+
+  <script src="{{asset('js/scan-teacher.js')}}"></script>
     
   </body>
 

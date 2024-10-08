@@ -5,9 +5,11 @@
 	<!-- Meta, title, CSS, favicons, etc. -->
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="csrf-token" content="{{ csrf_token() }}">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" href="https://fonts.gstatic.com/s/i/materialicons/school/v6/24px.svg" type="image/svg+xml">
 	<title>SMP 3 Muhammadiyah | Halaman Guru</title>
+  
 
 	<!-- Bootstrap -->
     <link href="{{asset('lte/vendors/bootstrap/dist/css/bootstrap.min.css')}}" rel="stylesheet">
@@ -41,10 +43,6 @@
     <script src="https://unpkg.com/qrcode@1.4.4/build/qrcode.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/html5-qrcode/minified/html5-qrcode.min.js"></script>
     
-
-
-    <!-- Include the qrcodes.js -->
-    <script src="{{asset('js/scan.js')}}"></script>
   
 	
 
@@ -211,7 +209,7 @@
                           </select>
                       </div>
                   </div>
-              
+                  
                   <div class="item form-group">
                       <label class="col-form-label col-md-3 col-sm-3 label-align" for="classroom_id">Kelas <span class="required">*</span></label>
                       <div class="col-md-6 col-sm-6 ">
@@ -240,7 +238,8 @@
                   </div>
               </form>
               
-              
+              <div id="reader" style="width: 250px; height: 250px;"></div>
+
 
 							</div>
 						</div>
