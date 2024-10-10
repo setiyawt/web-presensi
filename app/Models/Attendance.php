@@ -10,7 +10,7 @@ class Attendance extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $fillable = ['qr_code_id', 'course_schedules_id', 'user_id'];
+    protected $fillable = ['qr_code_id', 'user_schedule_id', 'user_id'];
     
     
 
@@ -19,9 +19,9 @@ class Attendance extends Model
         return $this->belongsTo(Qrcode::class, 'qr_code_id');
     }
 
-    public function courseSchedule()
+    public function userSchedule()
     {
-        return $this->belongsTo(CourseSchedules::class, 'course_schedules_id');
+        return $this->belongsTo(UserSchedule::class, 'user_schedule_id');
     }
 
 

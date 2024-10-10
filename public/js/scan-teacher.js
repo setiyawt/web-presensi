@@ -20,20 +20,20 @@ function initializeScanner() {
     });
 
     // Generate a QR code for demonstration
-    QRCode.toCanvas(document.getElementById('qrcode'), 'http://jindo.dev.naver.com/collie', function (error) {
+    QRCode.toCanvas(document.getElementById('qrcode'), '25 2024-10-09T13:45', function (error) {
         if (error) console.error(error);
         console.log('QR code generated!');
     });
 }
 
-// Function to handle successful QR code scan
 function onScanSuccess(decodedText) {
     console.log('Scanned QR code data:', decodedText);
 
     const qr_code_id = extractQrCodeId(decodedText);
+    console.log('Extracted QR code ID:', qr_code_id);
 
     if (qr_code_id === null) {
-        alert('Error: Missing required data.');
+        alert('Error: Invalid QR code format.');
         return;
     }
 
@@ -63,12 +63,10 @@ function onScanSuccess(decodedText) {
     });
 }
 
-
-// Function to extract qr_code_id from the QR code data
 function extractQrCodeId(decodedText) {
-    // Example: Assuming QR code data is space-separated
     const parts = decodedText.split(' ');
     const id = parseInt(parts[0], 10);
+
     if (isNaN(id)) {
         console.error('Invalid QR code ID:', decodedText);
         return null;
@@ -76,11 +74,8 @@ function extractQrCodeId(decodedText) {
     return id;
 }
 
-
-// Function to handle QR code scan errors
 function onScanError(errorMessage) {
     console.error('QR Code scan error:', errorMessage);
 }
 
-// Initialize the HTML5 QR code scanner when the DOM is fully loaded
 document.addEventListener('DOMContentLoaded', initializeScanner);

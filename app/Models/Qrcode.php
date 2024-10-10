@@ -17,7 +17,6 @@ class Qrcode extends Model
         'qr_code_path',
     ];
 
-
     public function classroom()
     {
         return $this->belongsTo(Classroom::class, 'classroom_id');
@@ -28,7 +27,8 @@ class Qrcode extends Model
         return $this->belongsTo(Course::class, 'course_id');
     }
 
-    public function attendance(){
-        return $this->belongsTo(Attendance::class, 'qrcode_id');
+    public function attendances()
+    {
+        return $this->hasMany(Attendance::class, 'qr_code_id');
     }
 }

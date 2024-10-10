@@ -39,7 +39,7 @@
   {{-- !-- Include the html5-qrcode library --> --}}
     <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
     <!-- Include the QRCode.js library -->
-    {{-- <script src="https://unpkg.com/qrcode@1.5.1/build/qrcode.min.js"></script> --}}
+    
     <script src="https://unpkg.com/qrcode@1.4.4/build/qrcode.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/html5-qrcode/minified/html5-qrcode.min.js"></script>
     
@@ -238,8 +238,7 @@
                   </div>
               </form>
               
-              <div id="reader" style="width: 250px; height: 250px;"></div>
-
+             
 
 							</div>
 						</div>

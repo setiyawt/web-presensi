@@ -207,8 +207,8 @@
                 @endif
 
                 <!-- Placeholder for QR Code Scanner -->
-                <div id="qrcode"</div>
-
+                
+                  
 								
                                 
 							</div>

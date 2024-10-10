@@ -25,6 +25,6 @@ class Course extends Model
     }
 
     public function qrcode(){
-        return $this->belongsTo(Qrcode::class, 'courses_id');
+        return $this->belongsTo(Qrcode::class);
     }
 }

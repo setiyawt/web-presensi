@@ -18,6 +18,8 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->softDeletes();
             $table->timestamps();
+            $table->unique(['user_id', 'qr_code_id']);
+
         });
     }
 

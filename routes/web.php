@@ -155,7 +155,7 @@ Route::middleware('auth')->group(function () {
             ->name('qrcode.store');
 
         
-            
+        
         
 
 

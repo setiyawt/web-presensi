@@ -187,23 +187,12 @@
                                 <tbody>
                                   @foreach($attendances as $key => $attendance)
                                     <tr>
-                                      <!-- No: Menggunakan $key + 1 untuk menghasilkan nomor urut -->
                                       <td>{{ $key + 1 }}</td>
-                              
-                                      <!-- Nama: Mengambil dari relasi users melalui attendance -->
                                       <td>{{ $attendance->user ? $attendance->user->name : 'N/A' }}</td>
-                              
-                                      <!-- Kelas: Mengambil dari classroom melalui relasi di qrcodes -->
                                       <td>{{ $attendance->qrcode && $attendance->qrcode->classroom ? $attendance->qrcode->classroom->name : 'N/A' }}</td>
-
-                                      <!-- Mata Pelajaran: Mengambil dari course melalui relasi di qrcodes -->
                                       <td>{{ $attendance->qrcode && $attendance->qrcode->course ? $attendance->qrcode->course->name : 'N/A' }}</td>
-
-
-                              
-                                      <!-- Waktu Scan: Mengambil dari kolom scan_at -->
                                       <td>{{ $attendance->scan_at }}</td>
-                              
+                                                            
                                       
                                     </tr>
                                   @endforeach
